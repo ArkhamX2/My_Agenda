@@ -10,11 +10,20 @@
         MinHeight="400" MinWidth="380"
         ResizeMode="CanResizeWithGrip">
     
+    <!--<Window.DataContext >
+        <viewModel:MainViewModel/>
+    </Window.DataContext>-->
+
     <Window.DataContext >
-        <viewModel:MinSizeMainViewModel/>
+        <viewModel:MidSizeMainViewModel/>
     </Window.DataContext>
-  
-        <Grid>
+
+    <!--<Window.DataContext >
+        <viewModel:MinSizeMainViewModel/>
+    </Window.DataContext>-->
+
+
+    <Grid>
         
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />

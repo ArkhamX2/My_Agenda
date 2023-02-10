@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyAgenda.MVVM.View"
+             xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
+             xmlns:view="clr-namespace:MyAgenda.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="720">
+    <UserControl.DataContext >
+        <viewModel:HomeViewMode/>
+    </UserControl.DataContext>
     <ScrollViewer>
         <StackPanel>
             <TextBlock Text="Расписание"
@@ -30,8 +35,8 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
+                            <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
-
                     </Grid>
                 </Border>
 
@@ -40,15 +45,17 @@
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="90,15,0,45">
+                    <Grid>
                     <StackPanel>
-                        <TextBlock
+                            <TextBlock
                         Text="Вторник"
                         Foreground="Black"
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                    </StackPanel>
-
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
 
 
@@ -66,16 +73,17 @@
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="30,0,0,45">
+                    <Grid>
                     <StackPanel>
-                        <TextBlock
+                            <TextBlock
                         Text="Среда"
                         Foreground="Black"
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                    </StackPanel>
-
-
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
                 <Border
                 Width="270"
@@ -91,8 +99,9 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                        </StackPanel>
 
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
                     </Grid>
                 </Border>
 
@@ -105,16 +114,17 @@
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="30,0,0,15">
+                    <Grid>
                     <StackPanel>
-                        <TextBlock
+                            <TextBlock
                         Text="Пятница"
                         Foreground="Black"
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                    </StackPanel>
-
-
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
 
                 <Border Width="270" 
@@ -122,15 +132,17 @@
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="90,0,30,15">
-                    <StackPanel>
-                        <TextBlock
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock
                         Text="Суббота"
                         Foreground="Black"
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                    </StackPanel>
-
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
             </StackPanel>
         </StackPanel>

@@ -24,7 +24,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <!--#region Separator-->
-
+            <Line Grid.Row="1" Grid.ColumnSpan="3" X1="40" Y1="0" X2="230" Y2="0" Stroke="Black" StrokeThickness="1"></Line>
+            <Line Grid.Row="2" Grid.ColumnSpan="3" X1="40" Y1="0" X2="230" Y2="0" Stroke="Black" StrokeThickness="1"></Line>
+            <Line Grid.Row="3" Grid.ColumnSpan="3" X1="40" Y1="0" X2="230" Y2="0" Stroke="Black" StrokeThickness="1"></Line>
+            <Line Grid.Row="4" Grid.ColumnSpan="3" X1="40" Y1="0" X2="230" Y2="0" Stroke="Black" StrokeThickness="1"></Line>
             <!--#endregion-->
             <!--#region Time-->
             <TextBlock Grid.Column="0" Grid.Row="0"

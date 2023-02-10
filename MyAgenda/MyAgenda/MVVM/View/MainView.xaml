@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="1050">
     <UserControl.DataContext >
-        <viewModel:HomeViewModel1/>
+        <viewModel:HomeViewMode/>
     </UserControl.DataContext>
     <ScrollViewer>        
     <StackPanel>

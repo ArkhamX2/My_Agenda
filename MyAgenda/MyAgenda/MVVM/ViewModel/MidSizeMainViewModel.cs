@@ -8,7 +8,7 @@ using MyAgenda.Core;
 namespace MyAgenda.MVVM.ViewModel
 {
 
-    class MedSizeMainViewModel : ObservableObject
+    class MidSizeMainViewModel : ObservableObject
     {
         public MidSizeViewModel HomeVM { get; set; }
         private object _currentView;
@@ -22,7 +22,7 @@ namespace MyAgenda.MVVM.ViewModel
             }
         }
 
-        public MedSizeMainViewModel()
+        public MidSizeMainViewModel()
         {
             HomeVM = new MidSizeViewModel();
             CurrentView = HomeVM;

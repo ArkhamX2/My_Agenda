@@ -9,7 +9,7 @@
     
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type viewModel:HomeViewModel1}">
+            <DataTemplate DataType="{x:Type viewModel:HomeViewMode}">
                 <view:MainView/>
             </DataTemplate>
             
@@ -21,6 +21,15 @@
                 <view:MinSizeMainView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:DayViewModel}">
+                <view:DayView/>
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/TimeDayTextBlockTheme.xaml"/>
+                <ResourceDictionary Source="Theme/ModDayTextBoxTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

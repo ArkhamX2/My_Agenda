@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyAgenda.MVVM.ViewModel
 {
-    class HomeViewModel1 : ObservableObject
+    class HomeViewMode : ObservableObject
     {
         public DayViewModel DayVM { get; set; }
         private object _currentDayView;
@@ -22,7 +22,7 @@ namespace MyAgenda.MVVM.ViewModel
             }
         }
 
-        public HomeViewModel1()
+        public HomeViewMode()
         {
             DayVM = new DayViewModel();
             CurrentDayView = DayVM;

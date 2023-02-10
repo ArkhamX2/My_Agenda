@@ -8,54 +8,60 @@
              xmlns:view="clr-namespace:MyAgenda.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="720">
+    
     <UserControl.DataContext >
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
+    
     <ScrollViewer>
         <StackPanel>
+            
             <TextBlock Text="Расписание"
-                   Foreground="Black"
-                   FontSize="32"
-                   HorizontalAlignment="Left"
-                   Margin="0,0,0,10"/>
+                       Foreground="Black"
+                       FontSize="32"
+                       HorizontalAlignment="Left"
+                       Margin="0,0,0,10"/>
+            
             <StackPanel Orientation="Horizontal">
-                <Border
-                Width="270"
-                Height="300"
-                Background="AliceBlue"
-                CornerRadius="15"
-                Margin="30,15,0,45"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                
+                <Border Width="270"
+                        Height="300"
+                        Background="AliceBlue"
+                        CornerRadius="15"
+                        Margin="30,15,0,45"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    
                     <Grid>
                         <StackPanel>
-                            <TextBlock
-                        Text="Понедельник"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
+                            <TextBlock Text="Понедельник"
+                                       Foreground="Black"
+                                       FontSize="22"
+                                       HorizontalAlignment="Left"
+                                       Margin="10,5,10,10"/>
                             <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </Grid>
+                    
                 </Border>
 
                 <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="90,15,0,45">
+                        Height="300" 
+                        Background="AliceBlue" 
+                        CornerRadius="15"
+                        Margin="90,15,0,45">
+                    
                     <Grid>
-                    <StackPanel>
-                            <TextBlock
-                        Text="Вторник"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
+                        <StackPanel>
+                                <TextBlock Text="Вторник"
+                                           Foreground="Black"
+                                           FontSize="22"
+                                           HorizontalAlignment="Left"
+                                           Margin="10,5,10,10"/>
+                                <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </Grid>
+                    
                 </Border>
 
 
@@ -68,81 +74,86 @@
                     <Setter Property="Margin" Value="0,0,0,0"/>
                 </Style>
             </StackPanel.Resources>-->
+                
                 <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="30,0,0,45">
-                    <Grid>
-                    <StackPanel>
-                            <TextBlock
-                        Text="Среда"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-                <Border
-                Width="270"
-                Height="300"
-                Background="AliceBlue"
-                CornerRadius="15"
-                Margin="90,0,0,45">
+                        Height="300" 
+                        Background="AliceBlue" 
+                        CornerRadius="15"
+                        Margin="30,0,0,45">
+                    
                     <Grid>
                         <StackPanel>
-                            <TextBlock
-                        Text="Четверг"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
-
+                            <TextBlock Text="Среда"
+                                       Foreground="Black"
+                                       FontSize="22"
+                                       HorizontalAlignment="Left"
+                                       Margin="10,5,10,10"/>
                             <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </Grid>
+                    
+                </Border>
+                
+                <Border Width="270"
+                        Height="300"
+                        Margin="90,0,0,45"
+                        Background="AliceBlue"
+                        CornerRadius="15">
+                    
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Margin="10,5,10,10"
+                                       HorizontalAlignment="Left"
+                                       Foreground="Black"
+                                       FontSize="22"
+                                       Text="Четверг"/>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </Grid>
+                    
                 </Border>
 
 
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
+                
                 <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="30,0,0,15">
+                        Height="300" 
+                        Background="AliceBlue" 
+                        CornerRadius="15"
+                        Margin="30,0,0,15">
+                    
                     <Grid>
-                    <StackPanel>
-                            <TextBlock
-                        Text="Пятница"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
+                        <StackPanel>
+                            <TextBlock Text="Пятница"
+                                       Foreground="Black"
+                                       FontSize="22"
+                                       HorizontalAlignment="Left"
+                                       Margin="10,5,10,10"/>
                             <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </Grid>
+                    
                 </Border>
 
                 <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="90,0,30,15">
+                        Height="300" 
+                        Background="AliceBlue" 
+                        CornerRadius="15"
+                        Margin="90,0,30,15">
+                    
                     <Grid>
                         <StackPanel>
-                            <TextBlock
-                        Text="Суббота"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
+                            <TextBlock Text="Суббота"
+                                       Foreground="Black"
+                                       FontSize="22"
+                                       HorizontalAlignment="Left"
+                                       Margin="10,5,10,10"/>
                             <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </Grid>
+                    
                 </Border>
             </StackPanel>
         </StackPanel>

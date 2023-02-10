@@ -13,30 +13,32 @@
     </UserControl.DataContext>
     <ScrollViewer>        
     <StackPanel>
+        
         <TextBlock Text="Расписание"
                    Foreground="Black"
                    FontSize="32"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,10"/>
+        
         <StackPanel Orientation="Horizontal">
-            <Border
-                Width="270"
-                Height="300"
-                Background="AliceBlue"
-                CornerRadius="15"
-                Margin="30,15,0,45"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+            
+            <Border Width="270"
+                    Height="300"
+                    Background="AliceBlue"
+                    CornerRadius="15"
+                    Margin="30,15,0,45"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                
                 <Grid>
-                        <StackPanel>
-                            <TextBlock
-                        Text="Понедельник"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
-                        </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Понедельник"
+                                   Foreground="Black"
+                                   FontSize="22"
+                                   HorizontalAlignment="Left"
+                                   Margin="10,5,10,10"/>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
                     
                 </Grid>
             </Border>
@@ -46,17 +48,19 @@
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="90,15,0,45">
+                
                 <StackPanel>
-                    <TextBlock
-                        Text="Вторник"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
-                        <StackPanel>
-                            <ContentControl Content="{Binding CurrentDayView}" />
-                        </StackPanel>
+                    <TextBlock Text="Вторник"
+                               Foreground="Black"
+                               FontSize="22"
+                               HorizontalAlignment="Left"
+                               Margin="10,5,10,10"/>
+                    
+                    <StackPanel>
+                        <ContentControl Content="{Binding CurrentDayView}" />
                     </StackPanel>
+                    
+                </StackPanel>
                 
             </Border>
 
@@ -65,91 +69,95 @@
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="90,15,30,45">
-                <StackPanel>
-                    <TextBlock
-                        Text="Среда"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
-                        <StackPanel>
-                            <ContentControl Content="{Binding CurrentDayView}" />
-                        </StackPanel>
-                    </StackPanel>
                 
-
+                <StackPanel>
+                    
+                    <TextBlock Text="Среда"
+                               Foreground="Black"
+                               FontSize="22"
+                               HorizontalAlignment="Left"
+                               Margin="10,5,10,10"/>
+                    
+                    <StackPanel>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
+                    
+                </StackPanel>
+                
             </Border>
         </StackPanel>
-        
-        <StackPanel Orientation="Horizontal">
-            <!--На случай если не margin будет ломаться при масштаб-->
-            <!--<StackPanel.Resources>
+
+            <StackPanel Orientation="Horizontal">
+                <!--На случай если не margin будет ломаться при масштаб-->
+                <!--<StackPanel.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="Margin" Value="0,0,0,0"/>
                 </Style>
             </StackPanel.Resources>-->
-            <Border
-                Width="270"
-                Height="300"
-                Background="AliceBlue"
-                CornerRadius="15"
-                Margin="30,15,0,0">
-                <Grid>
-                    <StackPanel>
-                        <TextBlock
-                        Text="Четверг"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
+
+                <Border Width="270"
+                    Height="300"
+                    Background="AliceBlue"
+                    CornerRadius="15"
+                    Margin="30,15,0,0">
+
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Text="Четверг"
+                                   Foreground="Black"
+                                   FontSize="22"
+                                   HorizontalAlignment="Left"
+                                   Margin="10,5,10,10"/>
+
                             <StackPanel>
                                 <ContentControl Content="{Binding CurrentDayView}" />
                             </StackPanel>
+
                         </StackPanel>
 
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
 
-            <Border Width="270" 
+                <Border Width="270" 
                     Height="300" 
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="90,15,0,0">
-                <StackPanel>
-                    <TextBlock
-                        Text="Пятница"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
+
+                    <StackPanel>
+                        <TextBlock Text="Пятница"
+                               Foreground="Black"
+                               FontSize="22"
+                               HorizontalAlignment="Left"
+                               Margin="10,5,10,10"/>
+
                         <StackPanel>
                             <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </StackPanel>
-                
 
-            </Border>
 
-            <Border Width="270" 
+                </Border>
+
+                <Border Width="270" 
                     Height="300" 
                     Background="AliceBlue" 
                     CornerRadius="15"
                     Margin="90,15,30,0">
-                <StackPanel>
-                    <TextBlock
-                        Text="Суббота"
-                        Foreground="Black"
-                        FontSize="22"
-                        HorizontalAlignment="Left"
-                        Margin="10,5,10,10"/>
+                    <StackPanel>
+                        <TextBlock Text="Суббота"
+                               Foreground="Black"
+                               FontSize="22"
+                               HorizontalAlignment="Left"
+                               Margin="10,5,10,10"/>
+
                         <StackPanel>
                             <ContentControl Content="{Binding CurrentDayView}" />
                         </StackPanel>
                     </StackPanel>
-                
-            </Border>
-        </StackPanel>
 
-    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

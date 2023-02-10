@@ -6,13 +6,14 @@
              xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
              xmlns:view="clr-namespace:MyAgenda.MVVM.View"
              xmlns:viewModel1="Vie">
-    
+
     <Application.Resources>
         <ResourceDictionary>
+
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:MainView/>
             </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type viewModel:MidSizeViewModel}">
                 <view:MedSizeMainView/>
             </DataTemplate>
@@ -25,11 +26,18 @@
                 <view:DayView/>
             </DataTemplate>
 
+            <!--#region Style-->
+            <!--Styles-->
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/TimeDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ModDayTextBoxTheme.xaml"/>
+
+                <ResourceDictionary Source="Resources/Colors/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
+            <!--#endregion-->
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyAgenda.MVVM.View"
+             xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
+             xmlns:view="clr-namespace:MyAgenda.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="1050">
-    <ScrollViewer>
+    <UserControl.DataContext >
+        <viewModel:HomeViewModel1/>
+    </UserControl.DataContext>
+    <ScrollViewer>        
     <StackPanel>
         <TextBlock Text="Расписание"
                    Foreground="Black"
@@ -23,14 +28,15 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <Grid>
-                    <StackPanel>
-                        <TextBlock
+                        <StackPanel>
+                            <TextBlock
                         Text="Понедельник"
                         Foreground="Black"
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                    </StackPanel>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
                     
                 </Grid>
             </Border>
@@ -47,7 +53,10 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                </StackPanel>
+                        <StackPanel>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </StackPanel>
                 
             </Border>
 
@@ -63,7 +72,10 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                </StackPanel>
+                        <StackPanel>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </StackPanel>
                 
 
             </Border>
@@ -90,7 +102,10 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                    </StackPanel>
+                            <StackPanel>
+                                <ContentControl Content="{Binding CurrentDayView}" />
+                            </StackPanel>
+                        </StackPanel>
 
                 </Grid>
             </Border>
@@ -107,7 +122,10 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                </StackPanel>
+                        <StackPanel>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </StackPanel>
                 
 
             </Border>
@@ -124,7 +142,10 @@
                         FontSize="22"
                         HorizontalAlignment="Left"
                         Margin="10,5,10,10"/>
-                </StackPanel>
+                        <StackPanel>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+                    </StackPanel>
                 
             </Border>
         </StackPanel>

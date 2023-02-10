@@ -4,9 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyAgenda"
+        xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="550" Width="700"
+        MinHeight="400" MinWidth="550"
+        ResizeMode="CanResizeWithGrip">
+    
+    <Window.DataContext >
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    <Viewbox>
+        <Grid>
         
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="AliceBlue" />
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right" Grid.Row="0">
+            <TextBox Text="Время/дата" 
+                     IsReadOnly="True" 
+                     Focusable="False" 
+                     VerticalAlignment="Center"
+                     Width="150"
+                     Margin="5,0,5,0"
+                     FontSize="16">
+
+            </TextBox>
+                <Button Content="Студент" Margin="2,4,2,4" Width="100">
+                
+            </Button>
+                <Button Content="Преподватель" Margin="2,4,2,4" Width="100">
+
+            </Button>
+            <Button Content="Редактор" Margin="2,4,2,4" Width="100" >
+
+            </Button>
+            
+        </StackPanel>
+
+        <ContentControl Grid.Row="1"
+                        Margin="10"
+                        Content="{Binding CurrentView}"/>
+
     </Grid>
+    </Viewbox>
 </Window>

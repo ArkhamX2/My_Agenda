@@ -4,12 +4,21 @@
              xmlns:local="clr-namespace:MyAgenda"
              StartupUri="MainWindow.xaml"
              xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
-             xmlns:view="clr-namespace:MyAgenda.MVVM.View">
+             xmlns:view="clr-namespace:MyAgenda.MVVM.View"
+             xmlns:viewModel1="Vie">
     
     <Application.Resources>
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel1}">
                 <view:MainView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:MidSizeViewModel}">
+                <view:MedSizeMainView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MinSizeViewModel}">
+                <view:MinSizeMainView/>
             </DataTemplate>
 
         </ResourceDictionary>

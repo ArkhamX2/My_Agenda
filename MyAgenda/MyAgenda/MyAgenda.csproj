@@ -73,12 +73,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\MedSizeMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\MinSizeMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\ViewModel\HomeViewModel1.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MedSizeMainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MidSizeViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MinSizeMainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MinSizeViewModel.cs" />
     <Compile Include="MVVM\View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\MedSizeMainView.xaml.cs">
+      <DependentUpon>MedSizeMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\MinSizeMainView.xaml.cs">
+      <DependentUpon>MinSizeMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

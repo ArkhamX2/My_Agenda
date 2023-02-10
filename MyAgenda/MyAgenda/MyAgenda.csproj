@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HomeViewMode.cs" />
+    <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MidSizeMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MidSizeViewModel.cs" />

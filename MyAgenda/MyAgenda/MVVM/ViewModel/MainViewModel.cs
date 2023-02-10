@@ -9,7 +9,7 @@ namespace MyAgenda.MVVM.ViewModel
 {
     class MainViewModel : ObservableObject
     {
-        public HomeViewMode HomeVM { get; set; }
+        public HomeViewModel HomeVM { get; set; }
         private object _currentView;
 
         public object CurrentView
@@ -24,7 +24,7 @@ namespace MyAgenda.MVVM.ViewModel
 
         public MainViewModel()
         {
-            HomeVM = new HomeViewMode();
+            HomeVM = new HomeViewModel();
             CurrentView = HomeVM;
         }
     }

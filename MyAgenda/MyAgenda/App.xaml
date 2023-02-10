@@ -9,7 +9,7 @@
     
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type viewModel:HomeViewMode}">
+            <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:MainView/>
             </DataTemplate>
             

@@ -10,14 +10,44 @@ namespace MyAgenda.MVVM.ViewModel
     class MainViewModel : ObservableObject
     {
         public HomeViewModel HomeVM { get; set; }
-        private object _currentView;
 
-        public object CurrentView
+        public MedSizeViewModel MidVM { get; set; }
+
+        public MinSizeViewModel MinVM { get; set; }
+
+
+        private object _homeCurrentView;
+
+        private object _midCurrentView;
+
+        private object _minCurrentView;
+
+        public object HomeCurrentView
         {
-            get { return _currentView; }
-            set 
-            { 
-                _currentView = value;
+            get { return _homeCurrentView; }
+            set
+            {
+                _homeCurrentView = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public object MidCurrentView
+        {
+            get { return _midCurrentView; }
+            set
+            {
+                _midCurrentView = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public object MinCurrentView
+        {
+            get { return _minCurrentView; }
+            set
+            {
+                _minCurrentView = value;
                 OnPropertyChanged();
             }
         }
@@ -25,7 +55,14 @@ namespace MyAgenda.MVVM.ViewModel
         public MainViewModel()
         {
             HomeVM = new HomeViewModel();
-            CurrentView = HomeVM;
+            MidVM = new MedSizeViewModel();
+            MinVM = new MinSizeViewModel();
+
+            HomeCurrentView = HomeVM;
+
+            MidCurrentView = MidVM;
+
+            MinCurrentView = MinVM;
         }
     }
 }

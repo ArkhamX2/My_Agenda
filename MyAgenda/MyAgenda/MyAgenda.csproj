@@ -89,6 +89,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Theme\DayBorderAltTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\DayBorderTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\DayViewLineTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\MainDayTextBlockTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\MainWindowModeButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\MainWindowModeTextBoxTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\ModDayTextBoxTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,9 +135,7 @@
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MidSizeMainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MidSizeViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MinSizeMainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MedSizeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MinSizeViewModel.cs" />
     <Compile Include="MVVM\View\DayView.xaml.cs">
       <DependentUpon>DayView.xaml</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyAgenda.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,91 @@ namespace MyAgenda
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainViewModel ShowModel = new MainViewModel();
+        bool Visible=true;
+        int _Mode;
         public MainWindow()
         {
             InitializeComponent();
+
+            SizeChanged += MainWindow_SizeChanged;
+        }
+
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if(MainWind.ActualWidth>1100)
+            {
+                Content.Content = ShowModel.HomeCurrentView;
+            }
+            else
+                if (MainWind.ActualWidth > 740)
+            {
+                Content.Content = ShowModel.MidCurrentView;
+            }    
+            else
+                Content.Content = ShowModel.MinCurrentView;
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Visible)
+            {
+                YesVisible();
+            }
+            else
+            {
+                NoVisible();
+            }
+
+        }
+
+        void YesVisible ()
+        {
+            Visible = false;
+            Stud.Visibility = Visibility.Collapsed;
+            Teach.Visibility = Visibility.Collapsed;
+            Modif.Visibility = Visibility.Collapsed;
+            Enter.Visibility = Visibility.Collapsed;
+            Mode.Visibility = Visibility.Visible;
+            if (_Mode==1) Mode.Width = 185;
+            else if (_Mode==2) Mode.Width = 220;
+            else Mode.Width = 170;
+        }
+
+        void NoVisible ()
+        {
+            Visible = true;
+            Stud.Visibility = Visibility.Visible;
+            Teach.Visibility = Visibility.Visible;
+            Modif.Visibility = Visibility.Visible;
+            Enter.Visibility = Visibility.Visible;
+            Mode.Visibility = Visibility.Collapsed;
+            Mode.Width = 0;
+        }
+
+        private void Modif_Click(object sender, RoutedEventArgs e)
+        {
+            Mode.Text = "Вы в режиме редактора";
+            Mode.Width = 185;
+            _Mode = 1;
+            YesVisible();
+        }
+
+        private void Teach_Click(object sender, RoutedEventArgs e)
+        {
+            Mode.Text = "Вы в режиме преподователя";
+            Mode.Width = 220;
+            _Mode = 2;
+            YesVisible();
+        }
+
+        private void Stud_Click(object sender, RoutedEventArgs e)
+        {
+            Mode.Text = "Вы в режиме студента";
+            Mode.Width = 170;
+            _Mode = 3;
+            YesVisible();
         }
     }
 }

@@ -14,7 +14,7 @@
                 <view:MainView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:MidSizeViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:MedSizeViewModel}">
                 <view:MedSizeMainView/>
             </DataTemplate>
 
@@ -32,7 +32,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/TimeDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ModDayTextBoxTheme.xaml"/>
-
+                <ResourceDictionary Source="Theme/MainWindowModeButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/MainWindowModeTextBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayBorderTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayBorderAltTheme.xaml"/>
+                <ResourceDictionary Source="Theme/MainDayTextBlockTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayViewLineTheme.xaml"/>
                 <ResourceDictionary Source="Resources/Colors/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

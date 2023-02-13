@@ -12,16 +12,9 @@
     <UserControl.DataContext >
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">        
-    <StackPanel>
-        
-        <TextBlock Text="Расписание"
-                   Foreground="Black"
-                   FontSize="32"
-                   HorizontalAlignment="Left"
-                   Margin="0,0,0,10"/>
-        
-        <StackPanel Orientation="Horizontal">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
             
             <Border Width="270"
                     Height="300"

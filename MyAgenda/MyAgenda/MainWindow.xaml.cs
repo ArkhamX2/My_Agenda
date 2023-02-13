@@ -22,6 +22,7 @@ namespace MyAgenda
     public partial class MainWindow : Window
     {
         MainViewModel ShowModel = new MainViewModel();
+        bool Visible=true;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +44,61 @@ namespace MyAgenda
             }    
             else
                 Content.Content = ShowModel.MinCurrentView;
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Visible)
+            {
+                YesVisible();
+            }
+            else
+            {
+                NoVisible();
+            }
+
+        }
+
+        void YesVisible ()
+        {
+            Visible = false;
+            Stud.Visibility = Visibility.Collapsed;
+            Teach.Visibility = Visibility.Collapsed;
+            Modif.Visibility = Visibility.Collapsed;
+            Enter.Visibility = Visibility.Collapsed;
+            Mode.Visibility = Visibility.Visible;
+        }
+
+        void NoVisible ()
+        {
+            Visible = true;
+            Stud.Visibility = Visibility.Visible;
+            Teach.Visibility = Visibility.Visible;
+            Modif.Visibility = Visibility.Visible;
+            Enter.Visibility = Visibility.Visible;
+            Mode.Visibility = Visibility.Collapsed;
+            Mode.Width = 0;
+        }
+
+        private void Modif_Click(object sender, RoutedEventArgs e)
+        {
+            Mode.Text = "Вы в режиме редактора";
+            Mode.Width = 185;
+            YesVisible();
+        }
+
+        private void Teach_Click(object sender, RoutedEventArgs e)
+        {
+            Mode.Text = "Вы в режиме преподователя";
+            Mode.Width = 220;
+            YesVisible();
+        }
+
+        private void Stud_Click(object sender, RoutedEventArgs e)
+        {
+            Mode.Text = "Вы в режиме студента";
+            Mode.Width = 170;
+            YesVisible();
         }
     }
 }

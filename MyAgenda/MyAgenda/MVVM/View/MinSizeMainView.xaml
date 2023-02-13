@@ -11,7 +11,7 @@
     <UserControl.DataContext >
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
-    <ScrollViewer>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
             
             <TextBlock Text="Расписание"

@@ -28,22 +28,22 @@
             <Line Grid.Row="1" 
                   Grid.ColumnSpan="3" 
                   X1="40" Y1="0" X2="230" Y2="0" 
-                  Stroke="Black" StrokeThickness="1"></Line>
+                  Stroke="Black" StrokeThickness="0.65"></Line>
             
             <Line Grid.Row="2" 
                   Grid.ColumnSpan="3" 
                   X1="40" Y1="0" X2="230" Y2="0" 
-                  Stroke="Black" StrokeThickness="1"></Line>
+                  Stroke="Black" StrokeThickness="0.65"></Line>
             
             <Line Grid.Row="3" 
                   Grid.ColumnSpan="3" 
                   X1="40" Y1="0" X2="230" Y2="0" 
-                  Stroke="Black" StrokeThickness="1"></Line>
+                  Stroke="Black" StrokeThickness="0.65"></Line>
             
             <Line Grid.Row="4" 
                   Grid.ColumnSpan="3" 
                   X1="40" Y1="0" X2="230" Y2="0" 
-                  Stroke="Black" StrokeThickness="1"></Line>
+                  Stroke="Black" StrokeThickness="0.65"></Line>
             <!--#endregion-->
             
             <!--#region Time-->

@@ -15,40 +15,26 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-            
-            <Border Width="270"
-                    Height="300"
-                    Background="AliceBlue"
-                    CornerRadius="15"
-                    Margin="30,15,0,45"
+
+                <Border Style="{StaticResource DayBorderTheme}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                 
                 <Grid>
                     <StackPanel>
                         <TextBlock Text="Понедельник"
-                                   Foreground="Black"
-                                   FontSize="22"
-                                   HorizontalAlignment="Left"
-                                   Margin="10,5,10,10"/>
+                                   Style="{StaticResource MainDayTextBlockTheme}"/>
                         <ContentControl Content="{Binding CurrentDayView}" />
                     </StackPanel>
                     
                 </Grid>
             </Border>
-            
-            <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="90,15,0,45">
+
+                <Border Style="{StaticResource DayBorderAltTheme}">
                 
                 <StackPanel>
                     <TextBlock Text="Вторник"
-                               Foreground="Black"
-                               FontSize="22"
-                               HorizontalAlignment="Left"
-                               Margin="10,5,10,10"/>
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
                     
                     <StackPanel>
                         <ContentControl Content="{Binding CurrentDayView}" />
@@ -58,19 +44,12 @@
                 
             </Border>
 
-            <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="90,15,30,45">
+                <Border Style="{StaticResource DayBorderAltTheme}">
                 
                 <StackPanel>
                     
                     <TextBlock Text="Среда"
-                               Foreground="Black"
-                               FontSize="22"
-                               HorizontalAlignment="Left"
-                               Margin="10,5,10,10"/>
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
                     
                     <StackPanel>
                         <ContentControl Content="{Binding CurrentDayView}" />
@@ -89,19 +68,12 @@
                 </Style>
             </StackPanel.Resources>-->
 
-                <Border Width="270"
-                    Height="300"
-                    Background="AliceBlue"
-                    CornerRadius="15"
-                    Margin="30,15,0,0">
+                <Border Style="{StaticResource DayBorderTheme}">
 
                     <Grid>
                         <StackPanel>
                             <TextBlock Text="Четверг"
-                                   Foreground="Black"
-                                   FontSize="22"
-                                   HorizontalAlignment="Left"
-                                   Margin="10,5,10,10"/>
+                                   Style="{StaticResource MainDayTextBlockTheme}"/>
 
                             <StackPanel>
                                 <ContentControl Content="{Binding CurrentDayView}" />
@@ -112,18 +84,11 @@
                     </Grid>
                 </Border>
 
-                <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="90,15,0,0">
+                <Border Style="{StaticResource DayBorderAltTheme}">
 
                     <StackPanel>
                         <TextBlock Text="Пятница"
-                               Foreground="Black"
-                               FontSize="22"
-                               HorizontalAlignment="Left"
-                               Margin="10,5,10,10"/>
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
 
                         <StackPanel>
                             <ContentControl Content="{Binding CurrentDayView}" />
@@ -133,17 +98,10 @@
 
                 </Border>
 
-                <Border Width="270" 
-                    Height="300" 
-                    Background="AliceBlue" 
-                    CornerRadius="15"
-                    Margin="90,15,30,0">
+                <Border Style="{StaticResource DayBorderAltTheme}">
                     <StackPanel>
                         <TextBlock Text="Суббота"
-                               Foreground="Black"
-                               FontSize="22"
-                               HorizontalAlignment="Left"
-                               Margin="10,5,10,10"/>
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
 
                         <StackPanel>
                             <ContentControl Content="{Binding CurrentDayView}" />

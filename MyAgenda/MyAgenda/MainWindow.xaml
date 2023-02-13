@@ -37,63 +37,51 @@
                      HorizontalAlignment="Left"
                      Width="150"
                      Margin="5,0,5,0"
-                     FontSize="16">
+                     FontSize="16"
+                     >
 
             </TextBox>
             <TextBox x:Name="Enter"
                      Text="Войти как:" 
-                     IsReadOnly="True" 
-                     Focusable="False"
-                     Background="Transparent"
-                     BorderThickness="0"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Right"
+                     Style="{StaticResource MainWindowModeTextBoxTheme}"
                      Width="80"
                      Margin="5,0,5,0"
-                     FontSize="16">
+                     >
 
             </TextBox>
             <Button x:Name="Stud"
                     Content="Студент"
-                    Margin="2,4,2,4"
-                    Width="100"
+                    Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Stud_Click"
                     >
                 
             </Button>
             <Button x:Name="Teach"
                     Content="Преподватель"
-                    Margin="2,4,2,4"
-                    Width="100"
+                    Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Teach_Click"
                     >
 
             </Button>
             <Button x:Name="Modif"
                     Content="Редактор"
-                    Margin="2,4,2,4"
-                    Width="100"
+                    Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Modif_Click"
                     >
 
             </Button>
             <TextBox x:Name="Mode"
-                     Text="" 
-                     IsReadOnly="True" 
-                     Focusable="False"
-                     Background="Transparent"
-                     BorderThickness="0"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center"
+                     Style="{StaticResource MainWindowModeTextBoxTheme}"
                      Width="0"
                      Margin="0,0,0,0"
-                     FontSize="16">
+                     >
                 
             </TextBox>
             <Button Content="Меню" 
                     Margin="2,4,2,4"
                     Width="50"
-                    Click="MenuButton_Click" >
+                    Click="MenuButton_Click"
+                    >
                 
             </Button>
         </StackPanel>
@@ -102,6 +90,7 @@
                         Grid.Row="1"
                         Margin="10"                        
                         HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         Content="{Binding HomeCurrentView}"/>
 
     </Grid>

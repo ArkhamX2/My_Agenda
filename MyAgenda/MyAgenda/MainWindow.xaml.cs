@@ -23,6 +23,7 @@ namespace MyAgenda
     {
         MainViewModel ShowModel = new MainViewModel();
         bool Visible=true;
+        int _Mode;
         public MainWindow()
         {
             InitializeComponent();
@@ -67,6 +68,9 @@ namespace MyAgenda
             Modif.Visibility = Visibility.Collapsed;
             Enter.Visibility = Visibility.Collapsed;
             Mode.Visibility = Visibility.Visible;
+            if (_Mode==1) Mode.Width = 185;
+            else if (_Mode==2) Mode.Width = 220;
+            else Mode.Width = 170;
         }
 
         void NoVisible ()
@@ -84,6 +88,7 @@ namespace MyAgenda
         {
             Mode.Text = "Вы в режиме редактора";
             Mode.Width = 185;
+            _Mode = 1;
             YesVisible();
         }
 
@@ -91,6 +96,7 @@ namespace MyAgenda
         {
             Mode.Text = "Вы в режиме преподователя";
             Mode.Width = 220;
+            _Mode = 2;
             YesVisible();
         }
 
@@ -98,6 +104,7 @@ namespace MyAgenda
         {
             Mode.Text = "Вы в режиме студента";
             Mode.Width = 170;
+            _Mode = 3;
             YesVisible();
         }
     }

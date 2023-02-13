@@ -32,7 +32,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/TimeDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ModDayTextBoxTheme.xaml"/>
-
+                <ResourceDictionary Source="Theme/MainWindowModeButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/MainWindowModeTextBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayBorderTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayBorderAltTheme.xaml"/>
+                <ResourceDictionary Source="Theme/MainDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Resources/Colors/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

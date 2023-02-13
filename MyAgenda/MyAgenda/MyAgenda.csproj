@@ -99,6 +99,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Model\DataEntity.cs" />
+    <Compile Include="MVVM\Model\Data\Course.cs" />
+    <Compile Include="MVVM\Model\Data\Faculty.cs" />
+    <Compile Include="MVVM\Model\Data\Group.cs" />
+    <Compile Include="MVVM\Model\Data\Subject.cs" />
+    <Compile Include="MVVM\Model\Data\Teacher.cs" />
+    <Compile Include="MVVM\Model\Data\WeekType.cs" />
+    <Compile Include="MVVM\Model\Entity.cs" />
+    <Compile Include="MVVM\Model\IInitializable.cs" />
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
@@ -144,7 +153,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Resources\Images\" />
   </ItemGroup>

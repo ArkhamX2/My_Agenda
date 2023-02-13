@@ -53,7 +53,8 @@
 
         <ContentControl x:Name="Content"
                         Grid.Row="1"
-                        Margin="10"
+                        Margin="10"                        
+                        HorizontalAlignment="Center"
                         Content="{Binding HomeCurrentView}"/>
 
     </Grid>

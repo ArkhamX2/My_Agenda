@@ -37,15 +37,12 @@ namespace MyAgenda
                 Content.Content = ShowModel.HomeCurrentView;
             }
             else
-                if (MainWind.ActualWidth > 700)
+                if (MainWind.ActualWidth > 740)
             {
                 Content.Content = ShowModel.MidCurrentView;
             }    
             else
                 Content.Content = ShowModel.MinCurrentView;
-
-
-            //throw new NotImplementedException();
         }
     }
 }

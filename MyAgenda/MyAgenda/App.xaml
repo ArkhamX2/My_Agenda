@@ -14,7 +14,7 @@
                 <view:MainView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:MidSizeViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:MedSizeViewModel}">
                 <view:MedSizeMainView/>
             </DataTemplate>
 

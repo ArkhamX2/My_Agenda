@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyAgenda.MVVM.ViewModel
 {
-    class MidSizeViewModel
+    class MedSizeViewModel
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿<Window x:Class="MyAgenda.MainWindow"
+﻿<Window x:Name="MainWind"
+        x:Class="MyAgenda.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,15 +14,6 @@
     <Window.DataContext >
         <viewModel:MainViewModel/>
     </Window.DataContext>
-
-    <!--<Window.DataContext >
-        <viewModel:MidSizeMainViewModel/>
-    </Window.DataContext>-->
-
-    <!--<Window.DataContext >
-        <viewModel:MinSizeMainViewModel/>
-    </Window.DataContext>-->
-
 
     <Grid>
         
@@ -59,9 +51,10 @@
             
         </StackPanel>
 
-        <ContentControl Grid.Row="1"
+        <ContentControl x:Name="Content"
+                        Grid.Row="1"
                         Margin="10"
-                        Content="{Binding CurrentView}"/>
+                        Content="{Binding HomeCurrentView}"/>
 
     </Grid>
    

@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="MyAgenda.MVVM.View.MaxSizeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyAgenda.MVVM.View"
+             xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1270">
+    <UserControl.DataContext >
+        <viewModel:HomeViewModel/>
+    </UserControl.DataContext>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+
+            <Border Style="{StaticResource DayBorderMaxTheme}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Понедельник"
+                                   Style="{StaticResource MainDayTextBlockTheme}"/>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource DayBorderMaxTheme}">
+
+                <StackPanel>
+                    <TextBlock Text="Вторник"
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                    <StackPanel>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Border>
+
+            <Border Style="{StaticResource DayBorderMaxTheme}">
+
+                <StackPanel>
+
+                    <TextBlock Text="Среда"
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                    <StackPanel>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Border>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <!--На случай если не margin будет ломаться при масштаб-->
+            <!--<StackPanel.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                </Style>
+            </StackPanel.Resources>-->
+
+            <Border Style="{StaticResource DayBorderMaxTheme}">
+
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Четверг"
+                                   Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                        <StackPanel>
+                            <ContentControl Content="{Binding CurrentDayView}" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource DayBorderMaxTheme}">
+
+                <StackPanel>
+                    <TextBlock Text="Пятница"
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                    <StackPanel>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Border>
+
+            <Border Style="{StaticResource DayBorderMaxTheme}">
+                <StackPanel>
+                    <TextBlock Text="Суббота"
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                    <StackPanel>
+                        <ContentControl Content="{Binding CurrentDayView}" />
+                    </StackPanel>
+                </StackPanel>
+
+            </Border>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
+

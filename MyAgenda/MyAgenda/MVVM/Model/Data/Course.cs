@@ -3,9 +3,25 @@
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
+    /// Контейнер данных курса.
+    /// </summary>
+    internal class CourseData : DataContainer
+    {
+        /// <summary>
+        /// Идентификатор факультета.
+        /// </summary>
+        public int FacultyId { get; set; }
+
+        /// <summary>
+        /// Название.
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
     /// Курс.
     /// </summary>
-    internal class Course : DataEntity, IInitializable<Faculty>
+    internal class Course : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -32,11 +48,6 @@ namespace MyAgenda.MVVM.Model.Data
         public const string NameColumn = "name";
 
         /// <summary>
-        /// Минимальный идентификатор факультета.
-        /// </summary>
-        public const int FacultyIdMin = Faculty.IdMin;
-
-        /// <summary>
         /// Минимальная длина названия.
         /// </summary>
         public const int NameLengthMin = 1;
@@ -48,51 +59,50 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*  _       _ _   _       _ _          _     _
-         * (_)_ __ (_) |_(_) __ _| (_)______ _| |__ | | ___
-         * | | '_ \| | __| |/ _` | | |_  / _` | '_ \| |/ _ \
-         * | | | | | | |_| | (_| | | |/ / (_| | |_) | |  __/
-         * |_|_| |_|_|\__|_|\__,_|_|_/___\__,_|_.__/|_|\___|
+        /*      _       _                          _        _
+         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
+         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
+         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
+         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
          *
          */
-        #region IInitializable
+        #region DataContainer
 
         /// <summary>
-        /// Факультет.
+        /// Доступ к контейнеру данных.
         /// </summary>
-        private Faculty _faculty;
+        public static CourseData Container => new CourseData();
 
         /// <summary>
-        /// Доступ к факультету.
+        /// Преобразовать данные в новую сущность.
         /// </summary>
-        public Faculty Faculty
-        {
-            get => _faculty;
-            private set => _faculty = value;
-        }
-
-        /// <summary>
-        /// Проверить статус инициализации.
-        /// </summary>
-        /// <returns>Статус инициализации.</returns>
-        public bool IsInitialized()
-        {
-            return Faculty != null;
-        }
-
-        /// <summary>
-        /// Инициализировать данные.
-        /// </summary>
-        /// <param name="faculty">Факультет.</param>
+        /// <param name="data">Контейнер данных.</param>
+        /// <param name="faculty">Вложенная сущность.</param>
+        /// <returns>Новая сущность.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public void Initialize(Faculty faculty)
+        public static Course FromData(CourseData data, Faculty faculty)
         {
-            if (faculty.Id != FacultyId)
+            if (data.FacultyId != faculty.Id)
             {
-                throw new ArgumentException("Попытка инициализации с некорректной сущностью.");
+                throw new ArgumentException("Переданные контейнер и сущность не соответствуют друг другу.");
             }
 
-            Faculty = faculty;
+            return new Course(data.Id, faculty, data.Name);
+        }
+
+        /// <summary>
+        /// Получить контейнер данных для сущности.
+        /// </summary>
+        /// <returns>Контейнер данных.</returns>
+        public CourseData ToData()
+        {
+            CourseData data = Container;
+
+            data.Id = Id;
+            data.FacultyId = Faculty.Id;
+            data.Name = Name;
+
+            return data;
         }
 
         #endregion
@@ -107,9 +117,9 @@ namespace MyAgenda.MVVM.Model.Data
         #region Course
 
         /// <summary>
-        /// Идентификатор факультета.
+        /// Факультет.
         /// </summary>
-        private int _facultyId;
+        private Faculty _faculty;
 
         /// <summary>
         /// Название.
@@ -120,40 +130,21 @@ namespace MyAgenda.MVVM.Model.Data
         /// Конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="facultyId">Идентификатор факультета.</param>
+        /// <param name="faculty">Факультет.</param>
         /// <param name="name">Название.</param>
-        public Course(int id, int facultyId, string name) : base(id)
+        public Course(int id, Faculty faculty, string name) : base(id)
         {
-            FacultyId = facultyId;
+            Faculty = faculty;
             Name = name;
         }
 
         /// <summary>
-        /// Инициализируемый конструктор.
+        /// Доступ к факультету.
         /// </summary>
-        /// <param name="id">Идентификатор.</param>
-        /// <param name="faculty">Факультет.</param>
-        /// <param name="name">Название.</param>
-        public Course(int id, Faculty faculty, string name) : this(id, faculty.Id, name)
+        public Faculty Faculty
         {
-            Initialize(faculty);
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору факультета.
-        /// </summary>
-        public int FacultyId
-        {
-            get => _facultyId;
-            set
-            {
-                if (value < FacultyIdMin)
-                {
-                    throw new ArgumentException("Идентификатор факультета не может выходить за допустимые пределы.");
-                }
-
-                _facultyId = value;
-            }
+            get => _faculty;
+            set => _faculty = value;
         }
 
         /// <summary>

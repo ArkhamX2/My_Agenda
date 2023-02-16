@@ -3,6 +3,17 @@
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
+    /// Контейнер данных факультета.
+    /// </summary>
+    internal class FacultyData : DataContainer
+    {
+        /// <summary>
+        /// Название.
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
     /// Факультет.
     /// </summary>
     internal class Faculty : DataEntity
@@ -35,6 +46,46 @@ namespace MyAgenda.MVVM.Model.Data
         /// Максимальная длина названия.
         /// </summary>
         public const int NameLengthMax = 255;
+
+        #endregion
+
+        /*      _       _                          _        _
+         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
+         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
+         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
+         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+         *
+         */
+        #region DataContainer
+
+        /// <summary>
+        /// Доступ к контейнеру данных.
+        /// </summary>
+        public static FacultyData Container => new FacultyData();
+
+        /// <summary>
+        /// Преобразовать данные в новую сущность.
+        /// </summary>
+        /// <param name="data">Контейнер данных.</param>
+        /// <returns>Новая сущность.</returns>
+        public static Faculty FromData(FacultyData data)
+        {
+            return new Faculty(data.Id, data.Name);
+        }
+
+        /// <summary>
+        /// Получить контейнер данных для сущности.
+        /// </summary>
+        /// <returns>Контейнер данных.</returns>
+        public FacultyData ToData()
+        {
+            FacultyData data = Container;
+
+            data.Id = Id;
+            data.Name = Name;
+
+            return data;
+        }
 
         #endregion
 

@@ -1,11 +1,28 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
+    /// Контейнер данных группы.
+    /// </summary>
+    internal class GroupData : DataContainer
+    {
+        /// <summary>
+        /// Идентификатор курса.
+        /// </summary>
+        public int CourseId { get; set; }
+
+        /// <summary>
+        /// Код.
+        /// </summary>
+        public string Code { get; set; }
+    }
+
+    /// <summary>
     /// Группа.
     /// </summary>
-    internal class Group : DataEntity, IInitializable<Course>
+    internal class Group : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -32,11 +49,6 @@ namespace MyAgenda.MVVM.Model.Data
         public const string CodeColumn = "code";
 
         /// <summary>
-        /// Минимальный идентификатор факультета.
-        /// </summary>
-        public const int CourseIdMin = Course.IdMin;
-
-        /// <summary>
         /// Минимальная длина названия.
         /// </summary>
         public const int CodeLengthMin = 1;
@@ -48,51 +60,50 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*  _       _ _   _       _ _          _     _
-         * (_)_ __ (_) |_(_) __ _| (_)______ _| |__ | | ___
-         * | | '_ \| | __| |/ _` | | |_  / _` | '_ \| |/ _ \
-         * | | | | | | |_| | (_| | | |/ / (_| | |_) | |  __/
-         * |_|_| |_|_|\__|_|\__,_|_|_/___\__,_|_.__/|_|\___|
+        /*      _       _                          _        _
+         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
+         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
+         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
+         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
          *
          */
-        #region IInitializable
+        #region DataContainer
 
         /// <summary>
-        /// Курс.
+        /// Доступ к контейнеру данных.
         /// </summary>
-        private Course _course = null;
+        public static GroupData Container => new GroupData();
 
         /// <summary>
-        /// Доступ к курсу.
+        /// Преобразовать данные в новую сущность.
         /// </summary>
-        public Course Course
-        {
-            get => _course;
-            private set => _course = value;
-        }
-
-        /// <summary>
-        /// Проверить статус инициализации.
-        /// </summary>
-        /// <returns>Статус инициализации.</returns>
-        public bool IsInitialized()
-        {
-            return Course != null;
-        }
-
-        /// <summary>
-        /// Инициализировать данные.
-        /// </summary>
-        /// <param name="course">Курс.</param>
+        /// <param name="data">Контейнер данных.</param>
+        /// <param name="course">Вложенная сущность.</param>
+        /// <returns>Новая сущность.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public void Initialize(Course course)
+        public static Group FromData(GroupData data, Course course)
         {
-            if (course.Id != CourseId)
+            if (data.CourseId != course.Id)
             {
-                throw new ArgumentException("Попытка инициализации с некорректной сущностью.");
+                throw new ArgumentException("Переданные контейнер и сущность не соответствуют друг другу.");
             }
 
-            Course = course;
+            return new Group(data.Id, course, data.Code);
+        }
+
+        /// <summary>
+        /// Получить контейнер данных для сущности.
+        /// </summary>
+        /// <returns>Контейнер данных.</returns>
+        public GroupData ToData()
+        {
+            GroupData data = Container;
+
+            data.Id = Id;
+            data.CourseId = Course.Id;
+            data.Code = Code;
+
+            return data;
         }
 
         #endregion
@@ -107,9 +118,9 @@ namespace MyAgenda.MVVM.Model.Data
         #region Group
 
         /// <summary>
-        /// Идентификатор курса.
+        /// Курс.
         /// </summary>
-        private int _courseId;
+        private Course _course;
 
         /// <summary>
         /// Код.
@@ -120,40 +131,21 @@ namespace MyAgenda.MVVM.Model.Data
         /// Конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="courseId">Идентификатор курса.</param>
+        /// <param name="course">Курс.</param>
         /// <param name="code">Код.</param>
-        public Group(int id, int courseId, string code) : base(id)
+        public Group(int id, Course course, string code) : base(id)
         {
-            CourseId = courseId;
+            Course = course;
             Code = code;
         }
 
         /// <summary>
-        /// Инициализируемый конструктор.
+        /// Доступ к курсу.
         /// </summary>
-        /// <param name="id">Идентификатор.</param>
-        /// <param name="course">Курс.</param>
-        /// <param name="code">Код.</param>
-        public Group(int id, Course course, string code) : this(id, course.Id, code)
+        public Course Course
         {
-            Initialize(course);
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору курса.
-        /// </summary>
-        public int CourseId
-        {
-            get => _courseId;
-            set
-            {
-                if (value < CourseIdMin)
-                {
-                    throw new ArgumentException("Идентификатор курса не может выходить за допустимые пределы.");
-                }
-
-                _courseId = value;
-            }
+            get => _course;
+            set => _course = value;
         }
 
         /// <summary>

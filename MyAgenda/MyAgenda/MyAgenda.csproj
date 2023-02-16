@@ -127,11 +127,11 @@
     <Compile Include="MVVM\Model\Data\Course.cs" />
     <Compile Include="MVVM\Model\Data\Faculty.cs" />
     <Compile Include="MVVM\Model\Data\Group.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\DaySchedule.cs" />
     <Compile Include="MVVM\Model\Data\Subject.cs" />
     <Compile Include="MVVM\Model\Data\Teacher.cs" />
     <Compile Include="MVVM\Model\Data\WeekType.cs" />
     <Compile Include="MVVM\Model\Entity.cs" />
-    <Compile Include="MVVM\Model\IInitializable.cs" />
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />

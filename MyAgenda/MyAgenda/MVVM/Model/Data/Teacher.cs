@@ -3,6 +3,27 @@
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
+    /// Контейнер данных преподавателя.
+    /// </summary>
+    internal class TeacherData : DataContainer
+    {
+        /// <summary>
+        /// Имя.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Фамилия.
+        /// </summary>
+        public string Surname { get; set; }
+
+        /// <summary>
+        /// Отчество.
+        /// </summary>
+        public string Patronymic { get; set; }
+    }
+
+    /// <summary>
     /// Преподаватель.
     /// </summary>
     internal class Teacher : DataEntity
@@ -65,6 +86,57 @@ namespace MyAgenda.MVVM.Model.Data
         /// Максимальная длина отчества.
         /// </summary>
         public const int PatronymicLengthMax = 64;
+
+        #endregion
+
+        /*      _       _                          _        _
+         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
+         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
+         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
+         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+         *
+         */
+        #region DataContainer
+
+        /// <summary>
+        /// Доступ к контейнеру данных.
+        /// </summary>
+        public static TeacherData Container => new TeacherData();
+
+        /// <summary>
+        /// Преобразовать данные в новую сущность.
+        /// </summary>
+        /// <param name="data">Контейнер данных.</param>
+        /// <returns>Новая сущность.</returns>
+        public static Teacher FromData(TeacherData data)
+        {
+            if (String.IsNullOrWhiteSpace(data.Patronymic))
+            {
+                return new Teacher(data.Id, data.Name, data.Surname);
+            }
+
+            return new Teacher(data.Id, data.Name, data.Surname, data.Patronymic);
+        }
+
+        /// <summary>
+        /// Получить контейнер данных для сущности.
+        /// </summary>
+        /// <returns>Контейнер данных.</returns>
+        public TeacherData ToData()
+        {
+            TeacherData data = Container;
+
+            data.Id = Id;
+            data.Name = Name;
+            data.Surname = Surname;
+
+            if (HasPatronymic())
+            {
+                data.Patronymic = Patronymic;
+            }
+
+            return data;
+        }
 
         #endregion
 

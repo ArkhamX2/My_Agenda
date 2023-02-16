@@ -3,6 +3,17 @@
 namespace MyAgenda.MVVM.Model
 {
     /// <summary>
+    /// Контейнер для транспортировки данных.
+    /// </summary>
+    internal class DataContainer
+    {
+        /// <summary>
+        /// Идентификатор.
+        /// </summary>
+        public int Id { get; set; }
+    }
+
+    /// <summary>
     /// Сущность данных.
     /// TODO: Пересмотреть.
     /// </summary>
@@ -31,6 +42,11 @@ namespace MyAgenda.MVVM.Model
         /// Минимальный идентификатор.
         /// </summary>
         public const int IdMin = 0;
+
+        /// <summary>
+        /// Незаданный идентификатор.
+        /// </summary>
+        public const int IdUndefined = -1;
 
         #endregion
 

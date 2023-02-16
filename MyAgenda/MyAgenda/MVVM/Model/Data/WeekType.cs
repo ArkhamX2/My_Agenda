@@ -11,6 +11,17 @@
     }
 
     /// <summary>
+    /// Контейнер данных типа учебной недели.
+    /// </summary>
+    internal class WeekTypeData : DataContainer
+    {
+        /// <summary>
+        /// Текущий тип учебной недели в целочисленном представлении.
+        /// </summary>
+        public int Type { get; set; }
+    }
+
+    /// <summary>
     /// Тип учебой недели.
     /// TODO: Решить, как с этим работать.
     /// </summary>
@@ -34,6 +45,46 @@
         /// Название столбца с типом.
         /// </summary>
         public const string TypeColumn = "type";
+
+        #endregion
+
+        /*      _       _                          _        _
+         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
+         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
+         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
+         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+         *
+         */
+        #region DataContainer
+
+        /// <summary>
+        /// Доступ к контейнеру данных.
+        /// </summary>
+        public static WeekTypeData Container => new WeekTypeData();
+
+        /// <summary>
+        /// Преобразовать данные в новую сущность.
+        /// </summary>
+        /// <param name="data">Контейнер данных.</param>
+        /// <returns>Новая сущность.</returns>
+        public static WeekType FromData(WeekTypeData data)
+        {
+            return new WeekType(data.Id, (AvailableWeekType)data.Type);
+        }
+
+        /// <summary>
+        /// Получить контейнер данных для сущности.
+        /// </summary>
+        /// <returns>Контейнер данных.</returns>
+        public WeekTypeData ToData()
+        {
+            WeekTypeData data = Container;
+
+            data.Id = Id;
+            data.Type = (int)Type;
+
+            return data;
+        }
 
         #endregion
 

@@ -3,9 +3,30 @@
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
+    /// Контейнер данных занятия.
+    /// </summary>
+    internal class SubjectData : DataContainer
+    {
+        /// <summary>
+        /// Идентификатор преподавателя.
+        /// </summary>
+        public int TeacherId { get; set; }
+
+        /// <summary>
+        /// Название.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Кабинет.
+        /// </summary>
+        public string Classroom { get; set; }
+    }
+
+    /// <summary>
     /// Занятие.
     /// </summary>
-    internal class Subject : DataEntity, IInitializable<Teacher>
+    internal class Subject : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -37,18 +58,6 @@ namespace MyAgenda.MVVM.Model.Data
         public const string ClassroomColumn = "classroom";
 
         /// <summary>
-        /// Идентификатор несуществующего преподавателя.
-        /// </summary>
-        public const int TeacherIdUndefined = -1;
-
-        /// <summary>
-        /// Минимальный идентификатор преподавателя.
-        /// Так как преподаватель может быть не задан, используется
-        /// идентификатор несуществующего преподавателя в качестве минимального.
-        /// </summary>
-        public const int TeacherIdMin = TeacherIdUndefined;
-
-        /// <summary>
         /// Минимальная длина названия.
         /// </summary>
         public const int NameLengthMin = 1;
@@ -70,58 +79,79 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*  _       _ _   _       _ _          _     _
-         * (_)_ __ (_) |_(_) __ _| (_)______ _| |__ | | ___
-         * | | '_ \| | __| |/ _` | | |_  / _` | '_ \| |/ _ \
-         * | | | | | | |_| | (_| | | |/ / (_| | |_) | |  __/
-         * |_|_| |_|_|\__|_|\__,_|_|_/___\__,_|_.__/|_|\___|
+        /*      _       _                          _        _
+         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
+         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
+         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
+         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
          *
          */
-        #region IInitializable
+        #region DataContainer
 
         /// <summary>
-        /// Курс.
+        /// Доступ к контейнеру данных.
         /// </summary>
-        private Teacher _teacher = null;
+        public static SubjectData Container => new SubjectData();
 
         /// <summary>
-        /// Доступ к курсу.
+        /// Преобразовать данные в новую сущность.
         /// </summary>
-        public Teacher Teacher
+        /// <param name="data">Контейнер данных.</param>
+        /// <returns>Новая сущность.</returns>
+        public static Subject FromData(SubjectData data)
         {
-            get => _teacher;
-            private set => _teacher = value;
-        }
-
-        /// <summary>
-        /// Проверить статус инициализации.
-        /// </summary>
-        /// <returns>Статус инициализации.</returns>
-        public bool IsInitialized()
-        {
-            // Если преподаватель не задан.
-            if (TeacherId == TeacherIdUndefined)
+            if (String.IsNullOrWhiteSpace(data.Classroom))
             {
-                // Инициализация не нужна.
-                return true;
+                return new Subject(data.Id, data.Name);
             }
 
-            return Teacher != null;
+            return new Subject(data.Id, data.Name, data.Classroom);
         }
 
         /// <summary>
-        /// Инициализировать данные.
+        /// Преобразовать данные в новую сущность.
         /// </summary>
-        /// <param name="teacher">Преподаватель.</param>
+        /// <param name="data">Контейнер данных.</param>
+        /// <param name="teacher">Вложенная сущность.</param>
+        /// <returns>Новая сущность.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public void Initialize(Teacher teacher)
+        public static Subject FromData(SubjectData data, Teacher teacher)
         {
-            if (teacher.Id != TeacherId)
+            if (data.TeacherId != teacher.Id)
             {
-                throw new ArgumentException("Попытка инициализации с некорректной сущностью.");
+                throw new ArgumentException("Переданные контейнер и сущность не соответствуют друг другу.");
             }
 
-            Teacher = teacher;
+            if (String.IsNullOrWhiteSpace(data.Classroom))
+            {
+                return new Subject(data.Id, teacher, data.Name);
+            }
+
+            return new Subject(data.Id, teacher, data.Name);
+        }
+
+        /// <summary>
+        /// Получить контейнер данных для сущности.
+        /// </summary>
+        /// <returns>Контейнер данных.</returns>
+        public SubjectData ToData()
+        {
+            SubjectData data = Container;
+
+            data.Id = Id;
+            data.Name = Name;
+
+            if (HasTeacher())
+            {
+                data.TeacherId = Teacher.Id;
+            }
+
+            if (HasClassroom())
+            {
+                data.Classroom = Classroom;
+            }
+
+            return data;
         }
 
         #endregion
@@ -136,9 +166,10 @@ namespace MyAgenda.MVVM.Model.Data
         #region Subject
 
         /// <summary>
-        /// Идентификатор преподавателя.
+        /// Преподаватель.
+        /// Может быть не задан.
         /// </summary>
-        private int _teacherId = TeacherIdUndefined;
+        private Teacher _teacher = null;
 
         /// <summary>
         /// Название.
@@ -147,6 +178,7 @@ namespace MyAgenda.MVVM.Model.Data
 
         /// <summary>
         /// Кабинет.
+        /// Может быть не задан.
         /// </summary>
         private string _classroom = String.Empty;
 
@@ -164,63 +196,43 @@ namespace MyAgenda.MVVM.Model.Data
         /// Базовый конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="teacherId">Идентификатор преподавателя.</param>
         /// <param name="name">Название.</param>
-        public Subject(int id, int teacherId, string name) : this(id, name)
+        /// <param name="classroom">Кабинет.</param>
+        public Subject(int id, string name, string classroom) : this(id, name)
         {
-            TeacherId = teacherId;
+            Classroom = classroom;
+        }
+
+        /// <summary>
+        /// Базовый конструктор.
+        /// </summary>
+        /// <param name="id">Идентификатор.</param>
+        /// <param name="teacher">Преподаватель.</param>
+        /// <param name="name">Название.</param>
+        public Subject(int id, Teacher teacher, string name) : this(id, name)
+        {
+            Teacher = teacher;
         }
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="teacherId">Идентификатор преподавателя.</param>
+        /// <param name="teacher">Преподаватель.</param>
         /// <param name="name">Название.</param>
         /// <param name="classroom">Кабинет.</param>
-        public Subject(int id, int teacherId, string name, string classroom) : this(id, teacherId, name)
+        public Subject(int id, Teacher teacher, string name, string classroom) : this(id, teacher, name)
         {
             Classroom = classroom;
         }
 
         /// <summary>
-        /// Инициализируемый базовый конструктор.
+        /// Доступ к преподавателю.
         /// </summary>
-        /// <param name="id">Идентификатор.</param>
-        /// <param name="teacher">Преподаватель.</param>
-        /// <param name="name">Название.</param>
-        public Subject(int id, Teacher teacher, string name) : this(id, teacher.Id, name)
+        public Teacher Teacher
         {
-            Initialize(teacher);
-        }
-
-        /// <summary>
-        /// Инициализируемый конструктор.
-        /// </summary>
-        /// <param name="id">Идентификатор.</param>
-        /// <param name="teacher">Преподаватель.</param>
-        /// <param name="name">Название.</param>
-        /// <param name="classroom">Кабинет.</param>
-        public Subject(int id, Teacher teacher, string name, string classroom) : this(id, teacher.Id, name, classroom)
-        {
-            Initialize(teacher);
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору преподавателя.
-        /// </summary>
-        public int TeacherId
-        {
-            get => _teacherId;
-            set
-            {
-                if (value < TeacherIdMin)
-                {
-                    throw new ArgumentException("Идентификатор преподавателя не может выходить за допустимые пределы.");
-                }
-
-                _teacherId = value;
-            }
+            get => _teacher;
+            set => _teacher = value;
         }
 
         /// <summary>
@@ -265,9 +277,9 @@ namespace MyAgenda.MVVM.Model.Data
         /// Проверить наличие преподавателя.
         /// </summary>
         /// <returns>Статус проверки.</returns>
-        public bool HasTeacherId()
+        public bool HasTeacher()
         {
-            return TeacherId != TeacherIdUndefined;
+            return Teacher != null;
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
            x:Key="TimeDayTextBlockTheme">
         <Setter Property="Margin" Value="5,5,5,0" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="{DynamicResource MainForegroundColor}" />
         <Setter Property="FontSize" Value="12.6" />
     </Style>
 </ResourceDictionary>

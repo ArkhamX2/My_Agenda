@@ -4,7 +4,7 @@
            x:Key="DayBorderMaxTheme">
         <Setter Property="Width" Value="360"/>
         <Setter Property="Height" Value="390"/>
-        <Setter Property="Background" Value="AliceBlue"/>
+        <Setter Property="Background" Value="{DynamicResource DayBackgroundColor}"/>
         <Setter Property="CornerRadius" Value="15"/>
         <Setter Property="Margin" Value="30,15,30,45"/>
     </Style>

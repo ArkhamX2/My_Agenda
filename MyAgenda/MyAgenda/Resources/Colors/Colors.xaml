@@ -4,6 +4,5 @@
     <SolidColorBrush x:Key="MainWindowBackgroundColor" Color="White" />
     <SolidColorBrush x:Key="MainForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="DayBackgroundColor" Color="AliceBlue" />
-    
 
 </ResourceDictionary>

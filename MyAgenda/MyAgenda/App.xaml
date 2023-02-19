@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml"
              xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
              xmlns:view="clr-namespace:MyAgenda.MVVM.View"
-             xmlns:viewModel1="Vie">
+             >
 
     <Application.Resources>
         <ResourceDictionary>
@@ -21,10 +21,15 @@
             <DataTemplate DataType="{x:Type viewModel:MinSizeViewModel}">
                 <view:MinSizeMainView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:MaxSizeViewModel}">
+                <view:MaxSizeView/>
+            </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:DayViewModel}">
                 <view:DayView/>
             </DataTemplate>
+            
 
             <!--#region Style-->
             <!--Styles-->
@@ -36,8 +41,11 @@
                 <ResourceDictionary Source="Theme/MainWindowModeTextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DayBorderTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DayBorderAltTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayBorderMaxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MainDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DayViewLineTheme.xaml"/>
+                
+                
                 <ResourceDictionary Source="Resources/Colors/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

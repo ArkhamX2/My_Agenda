@@ -131,6 +131,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Model\Blueprint.cs" />
     <Compile Include="MVVM\Model\Column.cs" />
     <Compile Include="MVVM\Model\DataEntity.cs" />
     <Compile Include="MVVM\Model\Data\Course.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="MVVM\Model\Data\Teacher.cs" />
     <Compile Include="MVVM\Model\Data\WeekType.cs" />
     <Compile Include="MVVM\Model\Entity.cs" />
+    <Compile Include="MVVM\Model\ReferenceLink.cs" />
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />

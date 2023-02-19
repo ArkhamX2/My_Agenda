@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
 
 namespace MyAgenda.MVVM.Model
 {
@@ -30,8 +31,7 @@ namespace MyAgenda.MVVM.Model
     /// <summary>
     /// Столбец.
     /// </summary>
-    /// <typeparam name="T">Тип данных. Допускаются в соответствии с совместимыми типами: int, string.</typeparam>
-    internal class Column<T>
+    internal class Column
     {
         /// <summary>
         /// Максимальная длина данных по-умолчанию.
@@ -46,7 +46,7 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Совместимый тип данных.
         /// </summary>
-        private ColumnDataType _dataType = GetDataType();
+        private ColumnDataType _dataType;
 
         /// <summary>
         /// Максимальная длина данных.
@@ -71,21 +71,18 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Данные.
         /// </summary>
-        private T _data = default;
+        private object _data = null;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="name">Название.</param>
+        /// <param name="dataType">Совместимый тип данных.</param>
         /// <exception cref="ArgumentException"></exception>
-        public Column(string name)
+        public Column(string name, ColumnDataType dataType)
         {
             Name = name;
-
-            if (!IsDataTypeAllowed(DataType))
-            {
-                throw new ArgumentException("Родовой параметр класса не совместим с типами данных столбца.");
-            }
+            DataType = dataType;
         }
 
         /// <summary>
@@ -103,7 +100,15 @@ namespace MyAgenda.MVVM.Model
         public ColumnDataType DataType
         {
             get => _dataType;
-            set => _dataType = value;
+            set
+            {
+                if (!IsDataTypeAllowed(value))
+                {
+                    throw new ArgumentException("Недопустимо использование указанного типа данных.");
+                }
+
+                _dataType = value;
+            }
         }
 
         /// <summary>
@@ -156,24 +161,30 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Доступ к данным.
         /// </summary>
-        public T Data
+        public object Data
         {
             get => _data;
-            set => _data = value;
+            set
+            {
+                DataType = GetDataType(value);
+
+                _data = value;
+            }
         }
 
         /// <summary>
-        /// Определить совместимый тип данных на основании родового параметра.
+        /// Определить совместимый тип данных.
         /// </summary>
+        /// <param name="data">Данные.</param>
         /// <returns>Совместимый тип данных.</returns>
-        private static ColumnDataType GetDataType()
+        private static ColumnDataType GetDataType(object data)
         {
-            if (typeof(T) == typeof(int))
+            if (data.GetType() == typeof(int))
             {
                 return ColumnDataType.Int;
             }
 
-            if (typeof(T) == typeof(string))
+            if (data.GetType() == typeof(string))
             {
                 return ColumnDataType.Varchar;
             }

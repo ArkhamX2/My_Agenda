@@ -5,7 +5,7 @@
     /// </summary>
     public enum AvailableWeekType
     {
-        None,
+        Incorrect,
         Red,
         Blue
     }
@@ -100,7 +100,7 @@
         /// <summary>
         /// Текущий тип учебной недели.
         /// </summary>
-        private AvailableWeekType _type = AvailableWeekType.None;
+        private AvailableWeekType _type = AvailableWeekType.Incorrect;
 
         /// <summary>
         /// Пустой конструктор.

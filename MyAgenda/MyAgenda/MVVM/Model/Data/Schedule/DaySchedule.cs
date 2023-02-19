@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace MyAgenda.MVVM.Model.Data.Schedule
 {
@@ -101,7 +97,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
                     throw new ArgumentException("Переданные контейнер и список сущностей не соответствуют друг другу.");
                 }
 
-                if (data.SubjectIdList[i] != IdUndefined && subjectList[i] == null)
+                if (subjectList[i] == null)
                 {
                     throw new ArgumentException("Переданные контейнер и список сущностей не соответствуют друг другу.");
                 }

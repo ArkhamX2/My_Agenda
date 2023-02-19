@@ -123,11 +123,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Model\Column.cs" />
     <Compile Include="MVVM\Model\DataEntity.cs" />
     <Compile Include="MVVM\Model\Data\Course.cs" />
     <Compile Include="MVVM\Model\Data\Faculty.cs" />
     <Compile Include="MVVM\Model\Data\Group.cs" />
     <Compile Include="MVVM\Model\Data\Schedule\DaySchedule.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\WeekSchedule.cs" />
     <Compile Include="MVVM\Model\Data\Subject.cs" />
     <Compile Include="MVVM\Model\Data\Teacher.cs" />
     <Compile Include="MVVM\Model\Data\WeekType.cs" />

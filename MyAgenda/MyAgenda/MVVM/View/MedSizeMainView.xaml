@@ -23,7 +23,7 @@
                         VerticalAlignment="Center">
                     
                     <Grid>
-                        <Image x:Name="CurMon" 
+                        <Image x:Name="MondayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
@@ -40,7 +40,7 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
-                        <Image x:Name="CurTue" 
+                        <Image x:Name="TuesdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
@@ -68,7 +68,7 @@
                 <Border Style="{StaticResource DayBorderTheme}">
                     
                     <Grid>
-                        <Image x:Name="CurWed" 
+                        <Image x:Name="WednesdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
@@ -85,7 +85,7 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
-                        <Image x:Name="CurThu" 
+                        <Image x:Name="ThuesdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
@@ -107,7 +107,7 @@
                 <Border Style="{StaticResource DayBorderTheme}">
                     
                     <Grid>
-                        <Image x:Name="CurFri" 
+                        <Image x:Name="FridayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
@@ -124,7 +124,7 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
-                        <Image x:Name="CurSat" 
+                        <Image x:Name="SaturdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">

@@ -39,42 +39,42 @@ namespace MyAgenda.MVVM.View
             if (myCalendar.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2 == 0)
             {
                 var uriSource = new Uri("/Resources/Images/BlueDot.png", UriKind.Relative);
-                CurMon.Source = new BitmapImage(uriSource);
-                CurTue.Source = new BitmapImage(uriSource);
-                CurWed.Source = new BitmapImage(uriSource);
-                CurThu.Source = new BitmapImage(uriSource);
-                CurFri.Source = new BitmapImage(uriSource);
-                CurSat.Source = new BitmapImage(uriSource);
+                MondayMark.Source = new BitmapImage(uriSource);
+                TuesdayMark.Source = new BitmapImage(uriSource);
+                WednesdayMark.Source = new BitmapImage(uriSource);
+                ThuesdayMark.Source = new BitmapImage(uriSource);
+                FridayMark.Source = new BitmapImage(uriSource);
+                SaturdayMark.Source = new BitmapImage(uriSource);
             }
 
             DateTime DT = DateTime.Now;
             if (DT.DayOfWeek == DayOfWeek.Monday)
             {
-                CurMon.Visibility = Visibility.Visible;
+                MondayMark.Visibility = Visibility.Visible;
             }
             else if (DT.DayOfWeek == DayOfWeek.Tuesday)
             {
-                CurTue.Visibility = Visibility.Visible;
+                TuesdayMark.Visibility = Visibility.Visible;
                 Scroll.ScrollToVerticalOffset(360);
             }
             else if (DT.DayOfWeek == DayOfWeek.Wednesday)
             {
-                CurWed.Visibility = Visibility.Visible;
+                WednesdayMark.Visibility = Visibility.Visible;
                 Scroll.ScrollToVerticalOffset(720);
             }
             else if (DT.DayOfWeek == DayOfWeek.Thursday)
             {
-                CurThu.Visibility = Visibility.Visible;
+                ThuesdayMark.Visibility = Visibility.Visible;
                 Scroll.ScrollToVerticalOffset(1080);
             }
             else if (DT.DayOfWeek == DayOfWeek.Friday)
             {
-                CurFri.Visibility = Visibility.Visible;
+                FridayMark.Visibility = Visibility.Visible;
                 Scroll.ScrollToVerticalOffset(1440);
             }
             else if (DT.DayOfWeek == DayOfWeek.Saturday)
             {
-                CurSat.Visibility = Visibility.Visible;
+                SaturdayMark.Visibility = Visibility.Visible;
                 Scroll.ScrollToVerticalOffset(1800);
             }
         }

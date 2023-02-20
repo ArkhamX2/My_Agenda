@@ -13,138 +13,138 @@
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
     <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto">
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
 
-                <Border Style="{StaticResource DayBorderTheme}"
+                    <Border Style="{StaticResource DayBorderTheme}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                
-                <Grid>
-                        <Image x:Name="MondayMark" 
+
+                        <Grid>
+                            <Image x:Name="MondayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
-                        </Image>
+                            </Image>
 
-                        <StackPanel>
-                        <TextBlock Text="Понедельник"
+                            <StackPanel>
+                                <TextBlock Text="Понедельник"
                                    Style="{StaticResource MainDayTextBlockTheme}"/>
-                        <ContentControl Content="{Binding CurrentDayView}" />
-                    </StackPanel>
-                    
-                </Grid>
-            </Border>
-
-                <Border Style="{StaticResource DayBorderAltTheme}">
-                    <Grid>
-                        <Image x:Name="TuesdayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
-                        </Image>
-                        <StackPanel>
-                            <TextBlock Text="Вторник"
-                               Style="{StaticResource MainDayTextBlockTheme}"/>
-
-                            <StackPanel>
                                 <ContentControl Content="{Binding CurrentDayView}" />
                             </StackPanel>
 
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                        </Grid>
+                    </Border>
 
-                <Border Style="{StaticResource DayBorderAltTheme}">
-                    <Grid>
-                        <Image x:Name="WednesdayMark" 
+                    <Border Style="{StaticResource DayBorderAltTheme}">
+                        <Grid>
+                            <Image x:Name="TuesdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
-                        </Image>
-                        <StackPanel>
-
-                            <TextBlock Text="Среда"
+                            </Image>
+                            <StackPanel>
+                                <TextBlock Text="Вторник"
                                Style="{StaticResource MainDayTextBlockTheme}"/>
 
-                            <StackPanel>
-                                <ContentControl Content="{Binding CurrentDayView}" />
+                                <StackPanel>
+                                    <ContentControl Content="{Binding CurrentDayView}" />
+                                </StackPanel>
+
                             </StackPanel>
+                        </Grid>
+                    </Border>
 
-                        </StackPanel>
-                    </Grid>
-                </Border>
-        </StackPanel>
+                    <Border Style="{StaticResource DayBorderAltTheme}">
+                        <Grid>
+                            <Image x:Name="WednesdayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                            </Image>
+                            <StackPanel>
 
-            <StackPanel Orientation="Horizontal">
-                <!--На случай если не margin будет ломаться при масштаб-->
-                <!--<StackPanel.Resources>
+                                <TextBlock Text="Среда"
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                                <StackPanel>
+                                    <ContentControl Content="{Binding CurrentDayView}" />
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <!--На случай если не margin будет ломаться при масштаб-->
+                    <!--<StackPanel.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="Margin" Value="0,0,0,0"/>
                 </Style>
             </StackPanel.Resources>-->
 
-                <Border Style="{StaticResource DayBorderTheme}">
+                    <Border Style="{StaticResource DayBorderTheme}">
 
-                    <Grid>
-                        <Image x:Name="ThuesdayMark" 
+                        <Grid>
+                            <Image x:Name="ThuesdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
-                        </Image>
-                        <StackPanel>
-                            <TextBlock Text="Четверг"
+                            </Image>
+                            <StackPanel>
+                                <TextBlock Text="Четверг"
                                    Style="{StaticResource MainDayTextBlockTheme}"/>
 
-                            <StackPanel>
-                                <ContentControl Content="{Binding CurrentDayView}" />
+                                <StackPanel>
+                                    <ContentControl Content="{Binding CurrentDayView}" />
+                                </StackPanel>
+
                             </StackPanel>
 
-                        </StackPanel>
+                        </Grid>
+                    </Border>
 
-                    </Grid>
-                </Border>
+                    <Border Style="{StaticResource DayBorderAltTheme}">
+                        <Grid>
 
-                <Border Style="{StaticResource DayBorderAltTheme}">
-                    <Grid>
-                        
-                        <Image x:Name="FridayMark" 
+                            <Image x:Name="FridayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
-                        </Image>
-                        
-                        <StackPanel>
-                            <TextBlock Text="Пятница"
-                               Style="{StaticResource MainDayTextBlockTheme}"/>
+                            </Image>
 
                             <StackPanel>
-                                <ContentControl Content="{Binding CurrentDayView}" />
+                                <TextBlock Text="Пятница"
+                               Style="{StaticResource MainDayTextBlockTheme}"/>
+
+                                <StackPanel>
+                                    <ContentControl Content="{Binding CurrentDayView}" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
 
 
-                    </Grid>
-                </Border>
+                        </Grid>
+                    </Border>
 
-                <Border Style="{StaticResource DayBorderAltTheme}">
-                    <Grid>
-                        <Image x:Name="SaturdayMark" 
+                    <Border Style="{StaticResource DayBorderAltTheme}">
+                        <Grid>
+                            <Image x:Name="SaturdayMark" 
                                Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
-                        </Image>
-                        <StackPanel>
-                            <TextBlock Text="Суббота"
+                            </Image>
+                            <StackPanel>
+                                <TextBlock Text="Суббота"
                                Style="{StaticResource MainDayTextBlockTheme}"/>
 
-                            <StackPanel>
-                                <ContentControl Content="{Binding CurrentDayView}" />
+                                <StackPanel>
+                                    <ContentControl Content="{Binding CurrentDayView}" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                        </Grid>
+                    </Border>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
 </UserControl>

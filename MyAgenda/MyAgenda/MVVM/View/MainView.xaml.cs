@@ -38,7 +38,7 @@ namespace MyAgenda.MVVM.View
 
             if (myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW)%2==0)
             {
-                var uriSource = new Uri("Images/BlueDot.png", UriKind.Relative);
+                var uriSource = new Uri("/Resources/Images/BlueDot.png", UriKind.Relative);
                 CurMon.Source = new BitmapImage(uriSource);
                 CurTue.Source = new BitmapImage(uriSource);
                 CurWed.Source = new BitmapImage(uriSource);

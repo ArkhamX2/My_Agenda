@@ -30,22 +30,12 @@
 
         <StackPanel  Orientation="Horizontal"
                      HorizontalAlignment="Right" Grid.Row="0">
-            <TextBox Text="Время/дата" 
-                     IsReadOnly="True" 
-                     Focusable="False" 
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Width="150"
-                     Margin="5,0,5,0"
-                     FontSize="16"
-                     >
-
-            </TextBox>
             <TextBox x:Name="Enter"
                      Text="Войти как:" 
                      Style="{StaticResource MainWindowModeTextBoxTheme}"
                      Width="80"
                      Margin="5,0,5,0"
+                     Visibility="Collapsed"
                      >
 
             </TextBox>
@@ -53,6 +43,7 @@
                     Content="Студент"
                     Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Stud_Click"
+                    Visibility="Collapsed"
                     >
                 
             </Button>
@@ -60,6 +51,7 @@
                     Content="Преподватель"
                     Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Teach_Click"
+                    Visibility="Collapsed"
                     >
 
             </Button>
@@ -67,6 +59,7 @@
                     Content="Редактор"
                     Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Modif_Click"
+                    Visibility="Collapsed"
                     >
 
             </Button>

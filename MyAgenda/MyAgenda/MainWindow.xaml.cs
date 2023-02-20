@@ -22,7 +22,7 @@ namespace MyAgenda
     public partial class MainWindow : Window
     {
         MainViewModel ShowModel = new MainViewModel();
-        bool Visible=true;
+        bool Visible=false;
         int _Mode;
         public MainWindow()
         {

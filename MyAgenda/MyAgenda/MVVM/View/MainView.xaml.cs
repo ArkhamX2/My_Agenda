@@ -63,14 +63,17 @@ namespace MyAgenda.MVVM.View
             else if (DT.DayOfWeek == DayOfWeek.Thursday)
             {
                 CurThu.Visibility = Visibility.Visible;
+                Scroll.ScrollToVerticalOffset(360);
             }
             else if (DT.DayOfWeek == DayOfWeek.Friday)
             {
                 CurFri.Visibility = Visibility.Visible;
+                Scroll.ScrollToVerticalOffset(360);
             }
             else if (DT.DayOfWeek == DayOfWeek.Saturday)
             {
                 CurSat.Visibility = Visibility.Visible;
+                Scroll.ScrollToVerticalOffset(360);
             }
         }
     }

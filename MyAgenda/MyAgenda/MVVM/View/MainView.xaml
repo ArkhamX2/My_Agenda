@@ -12,7 +12,7 @@
     <UserControl.DataContext >
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <StackPanel Orientation="Horizontal">
 

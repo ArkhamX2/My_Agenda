@@ -11,7 +11,7 @@
     <UserControl.DataContext >
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,-10,0">
+    <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto" Margin="0,0,-10,0">
         <StackPanel>        
             <StackPanel Orientation="Horizontal">
                 <Border Style="{StaticResource DayBorderTheme}"

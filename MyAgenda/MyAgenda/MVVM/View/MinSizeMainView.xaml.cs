@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,53 @@ namespace MyAgenda.MVVM.View
         public MinSizeMainView()
         {
             InitializeComponent();
+
+            CurDayOutline();
+        }
+
+        void CurDayOutline()
+        {
+            CultureInfo myCI = new CultureInfo("en-US");
+            System.Globalization.Calendar myCal = myCI.Calendar;
+            CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+
+            if (myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2 == 0)
+            {
+                var uriSource = new Uri("Images/BlueDot.png", UriKind.Relative);
+                CurMon.Source = new BitmapImage(uriSource);
+                CurTue.Source = new BitmapImage(uriSource);
+                CurWed.Source = new BitmapImage(uriSource);
+                CurThu.Source = new BitmapImage(uriSource);
+                CurFri.Source = new BitmapImage(uriSource);
+                CurSat.Source = new BitmapImage(uriSource);
+            }
+
+            DateTime DT = DateTime.Now;
+            if (DT.DayOfWeek == DayOfWeek.Monday)
+            {
+                CurMon.Visibility = Visibility.Visible;
+            }
+            else if (DT.DayOfWeek == DayOfWeek.Tuesday)
+            {
+                CurTue.Visibility = Visibility.Visible;
+            }
+            else if (DT.DayOfWeek == DayOfWeek.Wednesday)
+            {
+                CurWed.Visibility = Visibility.Visible;
+            }
+            else if (DT.DayOfWeek == DayOfWeek.Thursday)
+            {
+                CurThu.Visibility = Visibility.Visible;
+            }
+            else if (DT.DayOfWeek == DayOfWeek.Friday)
+            {
+                CurFri.Visibility = Visibility.Visible;
+            }
+            else if (DT.DayOfWeek == DayOfWeek.Saturday)
+            {
+                CurSat.Visibility = Visibility.Visible;
+            }
         }
     }
 }

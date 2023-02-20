@@ -18,6 +18,7 @@ namespace MyAgenda.MVVM.ViewModel
         public MaxSizeViewModel MaxVM { get; set; }
 
 
+
         private object _homeCurrentView;
 
         private object _midCurrentView;
@@ -69,8 +70,11 @@ namespace MyAgenda.MVVM.ViewModel
         public MainViewModel()
         {
             HomeVM = new HomeViewModel();
+
             MidVM = new MedSizeViewModel();
+
             MinVM = new MinSizeViewModel();
+
             MaxVM = new MaxSizeViewModel();
 
             HomeCurrentView = HomeVM;

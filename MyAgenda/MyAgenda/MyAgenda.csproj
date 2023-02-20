@@ -194,5 +194,11 @@
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Resources\Images\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MVVM\View\Images\RedDot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MVVM\View\Images\BlueDot.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

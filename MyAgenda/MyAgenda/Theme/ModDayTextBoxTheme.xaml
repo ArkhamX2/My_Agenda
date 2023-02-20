@@ -4,7 +4,7 @@
            x:Key="ModDayTextBoxTheme">
         <Setter Property="MinWidth" Value="30"/>
         <Setter Property="MinHeight" Value="30"/>
-        <Setter Property="Margin" Value="5,5,3,0"/>
+        <Setter Property="Margin" Value="5,5,5,0"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="BorderThickness" Value="0"/>

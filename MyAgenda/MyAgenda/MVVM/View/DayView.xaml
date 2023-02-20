@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MyAgenda.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="270">
-    
+
     <Grid>
         <Grid Grid.Row="2" Background="Transparent">
             

@@ -23,6 +23,11 @@
                         VerticalAlignment="Center">
                     
                     <Grid>
+                        <Image x:Name="CurMon" 
+                               Source="images\RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Понедельник"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -35,6 +40,11 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
+                        <Image x:Name="CurTue" 
+                               Source="images\RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                                 <TextBlock Text="Вторник"
                                            Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -58,6 +68,11 @@
                 <Border Style="{StaticResource DayBorderTheme}">
                     
                     <Grid>
+                        <Image x:Name="CurWed" 
+                               Source="images\RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Среда"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -70,6 +85,11 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
+                        <Image x:Name="CurThu" 
+                               Source="images\RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Style="{StaticResource MainDayTextBlockTheme}"
                                        Text="Четверг"/>
@@ -87,6 +107,11 @@
                 <Border Style="{StaticResource DayBorderTheme}">
                     
                     <Grid>
+                        <Image x:Name="CurFri" 
+                               Source="images\RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Пятница"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -99,6 +124,11 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
+                        <Image x:Name="CurSat" 
+                               Source="images\RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Суббота"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>

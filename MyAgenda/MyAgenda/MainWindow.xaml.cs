@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -63,6 +64,7 @@ namespace MyAgenda
                 NoVisible();
             }
 
+
         }
 
         void YesVisible ()
@@ -76,6 +78,15 @@ namespace MyAgenda
             if (_Mode==1) Mode.Width = 185;
             else if (_Mode==2) Mode.Width = 220;
             else Mode.Width = 170;
+
+            DoubleAnimation topMenuAnimation = new DoubleAnimation();
+            topMenuAnimation.From = TopMenu.ActualWidth;
+            if (_Mode == 1) topMenuAnimation.To = 235;
+            else if (_Mode == 2) topMenuAnimation.To = 270;
+            else topMenuAnimation.To = 220;
+            
+            topMenuAnimation.Duration = TimeSpan.FromMilliseconds(500);
+            TopMenu.BeginAnimation(StackPanel.WidthProperty, topMenuAnimation);
         }
 
         void NoVisible ()
@@ -87,6 +98,12 @@ namespace MyAgenda
             Enter.Visibility = Visibility.Visible;
             Mode.Visibility = Visibility.Collapsed;
             Mode.Width = 0;
+
+            DoubleAnimation topMenuAnimation = new DoubleAnimation();
+            topMenuAnimation.From = TopMenu.ActualWidth;
+            topMenuAnimation.To = 455;
+            topMenuAnimation.Duration = TimeSpan.FromMilliseconds(500);
+            TopMenu.BeginAnimation(StackPanel.WidthProperty, topMenuAnimation);
         }
 
         private void Modif_Click(object sender, RoutedEventArgs e)

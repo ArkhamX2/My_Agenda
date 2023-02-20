@@ -19,7 +19,7 @@
                         VerticalAlignment="Center">
                     <Grid>
                         <Image x:Name="CurMon" 
-                               Source="images\RedDot.png" 
+                               Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
                         </Image>
@@ -39,7 +39,7 @@
                         >
                     <Grid>
                         <Image x:Name="CurTue" 
-                               Source="images\RedDot.png" 
+                               Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
                         </Image>
@@ -57,7 +57,7 @@
                         >
                     <Grid>
                         <Image x:Name="CurWed" 
-                               Source="images\RedDot.png" 
+                               Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
                         </Image>
@@ -76,7 +76,7 @@
                         >
                     <Grid>
                             <Image x:Name="CurThu" 
-                               Source="images\RedDot.png" 
+                               Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
                             </Image>
@@ -95,7 +95,7 @@
                         >
                     <Grid>
                         <Image x:Name="CurFri" 
-                               Source="images\RedDot.png" 
+                               Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
                         </Image>
@@ -123,7 +123,7 @@
                         >
                     <Grid>
                         <Image x:Name="CurSat" 
-                               Source="images\RedDot.png" 
+                               Source="/Resources/Images/RedDot.png" 
                                Margin="219,10,2,256" 
                                Visibility="Collapsed">
                         </Image>

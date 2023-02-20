@@ -34,7 +34,12 @@ namespace MyAgenda
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if(MainWind.ActualWidth>1100)
+            if (MainWind.ActualWidth > 1270)
+            {
+                Content.Content = ShowModel.MaxCurrentView;
+            }
+            else
+                if (MainWind.ActualWidth > 1100)
             {
                 Content.Content = ShowModel.HomeCurrentView;
             }
@@ -42,11 +47,6 @@ namespace MyAgenda
                 if (MainWind.ActualWidth > 740)
             {
                 Content.Content = ShowModel.MidCurrentView;
-            }    
-            else
-                if (MainWind.ActualWidth>1270 )
-            {
-                Content.Content = ShowModel.MaxCurrentView;
             }
             else
                 Content.Content = ShowModel.MinCurrentView;

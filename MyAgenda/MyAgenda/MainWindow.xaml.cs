@@ -44,6 +44,11 @@ namespace MyAgenda
                 Content.Content = ShowModel.MidCurrentView;
             }    
             else
+                if (MainWind.ActualWidth>1270 )
+            {
+                Content.Content = ShowModel.MaxCurrentView;
+            }
+            else
                 Content.Content = ShowModel.MinCurrentView;
         }
 

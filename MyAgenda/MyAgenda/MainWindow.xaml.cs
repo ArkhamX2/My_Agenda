@@ -36,7 +36,7 @@ namespace MyAgenda
         {
             if (MainWind.ActualWidth > 1270 && MainWind.ActualHeight > 950)
             {
-                Content.Content = ShowModel.MaxCurrentView;
+                //Content.Content = ShowModel.MaxCurrentView;
             }
             else
                 if (MainWind.ActualWidth > 1100)

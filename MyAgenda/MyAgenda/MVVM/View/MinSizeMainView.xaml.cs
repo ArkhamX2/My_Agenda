@@ -31,11 +31,12 @@ namespace MyAgenda.MVVM.View
         void CurDayOutline()
         {
             CultureInfo myCI = new CultureInfo("en-US");
-            System.Globalization.Calendar myCal = myCI.Calendar;
+            System.Globalization.Calendar myCalendar = myCI.Calendar;
             CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
             DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
 
-            if (myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2 == 0)
+
+            if (myCalendar.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2 == 0)
             {
                 var uriSource = new Uri("/Resources/Images/BlueDot.png", UriKind.Relative);
                 CurMon.Source = new BitmapImage(uriSource);

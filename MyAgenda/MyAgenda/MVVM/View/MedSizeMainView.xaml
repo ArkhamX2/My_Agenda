@@ -54,12 +54,6 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <!--На случай если не margin будет ломаться при масштаб-->
-                <!--<StackPanel.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Margin" Value="0,0,0,0"/>
-                </Style>
-            </StackPanel.Resources>-->
 
                 <Border Style="{StaticResource DayBorderTheme}">
                     

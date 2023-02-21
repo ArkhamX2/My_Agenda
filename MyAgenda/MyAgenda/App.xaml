@@ -21,10 +21,6 @@
             <DataTemplate DataType="{x:Type viewModel:MinSizeViewModel}">
                 <view:MinSizeMainView/>
             </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type viewModel:MaxSizeViewModel}">
-                <view:MaxSizeView/>
-            </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:DayViewModel}">
                 <view:DayView/>

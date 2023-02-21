@@ -1,0 +1,61 @@
+﻿<Page x:Class="MyAgenda.MVVM.View.Regin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MyAgenda.MVVM.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Regin">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-80,0,0">
+            <Label Content="Введите логин:" 
+               HorizontalAlignment="Left"
+               FontSize="25"
+               VerticalAlignment="Center"/>
+            <TextBox x:Name="login" 
+                 HorizontalAlignment="Left" 
+                 FontSize="25"
+                 Width="350"
+                 />
+            <Label Content="Введите пароль:" 
+               HorizontalAlignment="Left" 
+               FontSize="25"
+               VerticalAlignment="Center"/>
+            <PasswordBox x:Name="password" 
+                     HorizontalAlignment="Left" 
+                     FontSize="25"
+                     VerticalAlignment="Center" 
+                     Width="350"/>
+            <Label Content="Повторите пароль:" 
+               HorizontalAlignment="Left" 
+                   FontSize="25"
+               VerticalAlignment="Top"/>
+            <PasswordBox x:Name="password_Copy" 
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" 
+                         FontSize="25"
+                     Width="350"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button x:Name="regin" 
+                Click="regin_Click" 
+                Content="Регистрация" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                        Margin="0,0,113,0"
+                        FontSize="25"
+                />
+                
+                <Button x:Name="back" 
+                Click="back_Click" 
+                Content="Отмена"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                        FontSize="25"
+                />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

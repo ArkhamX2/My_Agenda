@@ -1,6 +1,8 @@
-﻿using MyAgenda.MVVM.ViewModel;
+﻿using MyAgenda.MVVM.View;
+using MyAgenda.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,18 +31,37 @@ namespace MyAgenda
         {
             InitializeComponent();
 
+            OpenPage(pages.login);
+
             SizeChanged += MainWindow_SizeChanged;
         }
 
+        public enum pages
+        {
+            login,
+            regin
+        }
+
+
+
+        public void OpenPage(pages pages)
+        {
+            if (pages== pages.login)
+            {
+                frame.Navigate(new Login(this));
+            } else if(pages == pages.regin)
+                frame.Navigate(new Regin(this));
+        }
+
+        public DataTable Select(string selectSQL)
+        {
+            DataTable dataTable = new DataTable("dataBase");
+            return dataTable;
+        }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (MainWind.ActualWidth > 1270 && MainWind.ActualHeight > 950)
-            {
-                //Content.Content = ShowModel.MaxCurrentView;
-            }
-            else
-                if (MainWind.ActualWidth > 1100)
+            if (MainWind.ActualWidth > 1100)
             {
                 Content.Content = ShowModel.HomeCurrentView;
             }
@@ -67,7 +88,7 @@ namespace MyAgenda
 
         }
 
-        void YesVisible ()
+        void YesVisible()
         {
             Visible = false;
             Stud.Visibility = Visibility.Collapsed;
@@ -75,8 +96,8 @@ namespace MyAgenda
             Modif.Visibility = Visibility.Collapsed;
             Enter.Visibility = Visibility.Collapsed;
             Mode.Visibility = Visibility.Visible;
-            if (_Mode==1) Mode.Width = 185;
-            else if (_Mode==2) Mode.Width = 220;
+            if (_Mode == 1) Mode.Width = 185;
+            else if (_Mode == 2) Mode.Width = 220;
             else Mode.Width = 170;
 
             DoubleAnimation topMenuAnimation = new DoubleAnimation();
@@ -84,12 +105,12 @@ namespace MyAgenda
             if (_Mode == 1) topMenuAnimation.To = 235;
             else if (_Mode == 2) topMenuAnimation.To = 270;
             else topMenuAnimation.To = 220;
-            
-            topMenuAnimation.Duration = TimeSpan.FromMilliseconds(500);
+
+            topMenuAnimation.Duration = TimeSpan.FromMilliseconds(250);
             TopMenu.BeginAnimation(StackPanel.WidthProperty, topMenuAnimation);
         }
 
-        void NoVisible ()
+        void NoVisible()
         {
             Visible = true;
             Stud.Visibility = Visibility.Visible;

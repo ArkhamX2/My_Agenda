@@ -73,11 +73,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\MainView.xaml">
+    <Page Include="MVVM\View\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MaxSizeView.xaml">
+    <Page Include="MVVM\View\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -86,6 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\MinSizeMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Regin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,23 +151,25 @@
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MaxSizeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MedSizeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MinSizeViewModel.cs" />
     <Compile Include="MVVM\View\DayView.xaml.cs">
       <DependentUpon>DayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\MaxSizeView.xaml.cs">
-      <DependentUpon>MaxSizeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\MedSizeMainView.xaml.cs">
       <DependentUpon>MedSizeMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\MinSizeMainView.xaml.cs">
       <DependentUpon>MinSizeMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Regin.xaml.cs">
+      <DependentUpon>Regin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

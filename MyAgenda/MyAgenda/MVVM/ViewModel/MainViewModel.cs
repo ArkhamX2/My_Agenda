@@ -14,18 +14,12 @@ namespace MyAgenda.MVVM.ViewModel
         public MedSizeViewModel MidVM { get; set; }
 
         public MinSizeViewModel MinVM { get; set; }
-        
-        public MaxSizeViewModel MaxVM { get; set; }
-
-
 
         private object _homeCurrentView;
 
         private object _midCurrentView;
 
         private object _minCurrentView;
-
-        private object _maxCurrentView;
 
         public object HomeCurrentView
         {
@@ -57,16 +51,6 @@ namespace MyAgenda.MVVM.ViewModel
             }
         }
 
-        public object MaxCurrentView
-        {
-            get { return _maxCurrentView; }
-            set
-            {
-                _maxCurrentView = value;
-                OnPropertyChanged();
-            }
-        }
-
         public MainViewModel()
         {
             HomeVM = new HomeViewModel();
@@ -75,15 +59,12 @@ namespace MyAgenda.MVVM.ViewModel
 
             MinVM = new MinSizeViewModel();
 
-            MaxVM = new MaxSizeViewModel();
-
             HomeCurrentView = HomeVM;
 
             MidCurrentView = MidVM;
 
             MinCurrentView = MinVM;
 
-            MaxCurrentView = MaxVM;
         }
     }
 }

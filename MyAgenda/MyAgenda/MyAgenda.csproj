@@ -131,6 +131,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Model\ComparableObject.cs" />
     <Compile Include="MVVM\Model\IIndirectlySchemable.cs" />
     <Compile Include="MVVM\Model\ISchemable.cs" />
     <Compile Include="MVVM\Model\Schema.cs" />

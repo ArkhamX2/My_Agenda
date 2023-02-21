@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model
     /// <summary>
     /// Схема таблицы.
     /// </summary>
-    internal class Schema
+    internal class Schema : ComparableObject
     {
         /// <summary>
         /// Название таблицы.
@@ -257,40 +257,55 @@ namespace MyAgenda.MVVM.Model
             return ToCreateQuery();
         }
 
-        /// <summary>
-        /// Получить уникальный хеш объекта.
-        /// </summary>
-        /// <returns>Хеш объекта.</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        #region ComparableObject
 
         /// <summary>
-        /// Сравнить указанный объект с текущим.
+        /// Проверить образец на сходство с экземпляром.
         /// </summary>
-        /// <param name="obj">Объект.</param>
-        /// <returns>Статус сравнения.</returns>
-        public override bool Equals(object obj)
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (obj.GetType() != GetType())
+            if (sample.GetType() != GetType())
             {
                 return false;
             }
 
-            if ((obj as Schema).Name != Name)
+            Schema schema = sample as Schema;
+
+            if (schema.Name != Name)
             {
                 return false;
             }
 
-            foreach (Column item in (obj as Schema).ColumnList)
+            foreach (Column item in ColumnList)
             {
-                if (!HasColumn(item.Name))
+                if (!schema.HasColumn(item.Name))
                 {
                     return false;
                 }
 
-                if (!item.Equals(GetColumn(item.Name)))
+                if (!item.IsSameAsObject(schema.GetColumn(item.Name)))
+                {
+                    return false;
+                }
+            }
+
+            foreach (ReferenceLink linkA in ReferenceList)
+            {
+                bool found = false;
+
+                foreach (ReferenceLink linkB in schema.ReferenceList)
+                {
+                    if (!linkA.IsSameAsObject(linkB))
+                    {
+                        found = true;
+
+                        break;
+                    }
+                }
+
+                if (!found)
                 {
                     return false;
                 }
@@ -298,5 +313,62 @@ namespace MyAgenda.MVVM.Model
 
             return true;
         }
+
+        /// <summary>
+        /// Проверить экземпляр на сходство с образцом.
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsSample(ComparableObject sample)
+        {
+            if (sample.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Schema schema = sample as Schema;
+
+            if (schema.Name != Name)
+            {
+                return false;
+            }
+
+            foreach (Column item in schema.ColumnList)
+            {
+                if (!HasColumn(item.Name))
+                {
+                    return false;
+                }
+
+                if (!item.IsSameAsObject(GetColumn(item.Name)))
+                {
+                    return false;
+                }
+            }
+
+            foreach (ReferenceLink linkA in schema.ReferenceList)
+            {
+                bool found = false;
+
+                foreach (ReferenceLink linkB in ReferenceList)
+                {
+                    if (!linkA.IsSameAsObject(linkB))
+                    {
+                        found = true;
+
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

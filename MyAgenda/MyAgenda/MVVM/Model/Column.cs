@@ -62,34 +62,49 @@ namespace MyAgenda.MVVM.Model
             return "INT";
         }
 
-        /// <summary>
-        /// Получить уникальный хеш объекта.
-        /// </summary>
-        /// <returns>Хеш объекта.</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        #region ComparableObject
 
         /// <summary>
-        /// Сравнить указанный объект с текущим.
+        /// Проверить образец на сходство с экземпляром.
         /// </summary>
-        /// <param name="obj">Объект.</param>
-        /// <returns>Статус сравнения.</returns>
-        public override bool Equals(object obj)
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (obj.GetType() != GetType())
+            if (sample.GetType() != GetType())
             {
                 return false;
             }
 
-            if ((obj as Column).Name != Name)
+            if (!HandleIsSameAsObject(sample as IntColumn))
             {
                 return false;
             }
 
             return true;
         }
+
+        /// <summary>
+        /// Проверить образец на полное сходство с экземпляром.
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsExactSameAsObject(ComparableObject sample)
+        {
+            if (!IsSameAsObject(sample))
+            {
+                return false;
+            }
+
+            if (!HandleIsExactSameAsObject(sample as StringColumn))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -171,40 +186,62 @@ namespace MyAgenda.MVVM.Model
             return $"VARCHAR({MaxLength})";
         }
 
-        /// <summary>
-        /// Получить уникальный хеш объекта.
-        /// </summary>
-        /// <returns>Хеш объекта.</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        #region ComparableObject
 
         /// <summary>
-        /// Сравнить указанный объект с текущим.
+        /// Проверить образец на сходство с экземпляром.
         /// </summary>
-        /// <param name="obj">Объект.</param>
-        /// <returns>Статус сравнения.</returns>
-        public override bool Equals(object obj)
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (obj.GetType() != GetType())
+            if (sample.GetType() != GetType())
             {
                 return false;
             }
 
-            if ((obj as Column).Name != Name)
+            StringColumn column = sample as StringColumn;
+
+            if (!HandleIsSameAsObject(column))
+            {
+                return false;
+            }
+
+            if (column.MaxLength != MaxLength)
             {
                 return false;
             }
 
             return true;
         }
+
+        /// <summary>
+        /// Проверить образец на полное сходство с экземпляром.
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsExactSameAsObject(ComparableObject sample)
+        {
+            if (!IsSameAsObject(sample))
+            {
+                return false;
+            }
+
+            if (!HandleIsExactSameAsObject(sample as StringColumn))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// Столбец.
     /// </summary>
-    internal abstract class Column
+    internal abstract class Column : ComparableObject
     {
         /// <summary>
         /// Название.
@@ -336,5 +373,54 @@ namespace MyAgenda.MVVM.Model
 
             return result;
         }
+
+        #region ComparableObject
+
+        /// <summary>
+        /// Обработать проверку образца на сходство с экземпляром.
+        /// </summary>
+        /// <param name="column">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public bool HandleIsSameAsObject(Column column)
+        {
+            if (column.IsNullable != IsNullable)
+            {
+                return false;
+            }
+
+            if (column.IsPrimaryKey != IsPrimaryKey)
+            {
+                return false;
+            }
+
+            if (column.IsAutoIncrementable != IsAutoIncrementable)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Обработать проверку образца на полное сходство с экземпляром.
+        /// </summary>
+        /// <param name="column">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public bool HandleIsExactSameAsObject(Column column)
+        {
+            if (!HandleIsSameAsObject(column))
+            {
+                return false;
+            }
+
+            if (column.Data != Data)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

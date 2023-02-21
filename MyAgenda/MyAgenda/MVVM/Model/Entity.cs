@@ -3,7 +3,7 @@
     /// <summary>
     /// Базовая сущность.
     /// </summary>
-    internal abstract class Entity
+    internal abstract class Entity : ComparableObject
     {
         // PASS.
     }

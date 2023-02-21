@@ -5,7 +5,7 @@ namespace MyAgenda.MVVM.Model
     /// <summary>
     /// Ссылка на таблицу.
     /// </summary>
-    internal class ReferenceLink
+    internal class ReferenceLink : ComparableObject
     {
         /// <summary>
         /// Столбец - внешний ключ.
@@ -99,5 +99,41 @@ namespace MyAgenda.MVVM.Model
         {
             return $"FOREIGN KEY (\"{ColumnName}\") REFERENCES \"{ReferenceTableName}\" (\"{ReferenceColumnName}\")";
         }
+
+        #region ComparableObject
+
+        /// <summary>
+        /// Проверить образец на сходство с экземпляром.
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsObject(ComparableObject sample)
+        {
+            if (sample.GetType() != GetType())
+            {
+                return false;
+            }
+
+            ReferenceLink link = sample as ReferenceLink;
+
+            if (link.ColumnName != ColumnName)
+            {
+                return false;
+            }
+
+            if (link.ReferenceTableName != ReferenceTableName)
+            {
+                return false;
+            }
+
+            if (link.ReferenceColumnName != ReferenceColumnName)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

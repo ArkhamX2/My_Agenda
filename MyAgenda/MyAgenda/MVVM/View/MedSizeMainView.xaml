@@ -13,7 +13,7 @@
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+    <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto" >
         <StackPanel>
             
             <StackPanel Orientation="Horizontal">
@@ -23,6 +23,11 @@
                         VerticalAlignment="Center">
                     
                     <Grid>
+                        <Image x:Name="MondayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Понедельник"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -35,6 +40,11 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
+                        <Image x:Name="TuesdayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                                 <TextBlock Text="Вторник"
                                            Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -58,6 +68,11 @@
                 <Border Style="{StaticResource DayBorderTheme}">
                     
                     <Grid>
+                        <Image x:Name="WednesdayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Среда"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -70,6 +85,11 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
+                        <Image x:Name="ThuesdayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Style="{StaticResource MainDayTextBlockTheme}"
                                        Text="Четверг"/>
@@ -87,6 +107,11 @@
                 <Border Style="{StaticResource DayBorderTheme}">
                     
                     <Grid>
+                        <Image x:Name="FridayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Пятница"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
@@ -99,6 +124,11 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     
                     <Grid>
+                        <Image x:Name="SaturdayMark" 
+                               Source="/Resources/Images/RedDot.png" 
+                               Margin="219,10,2,256" 
+                               Visibility="Collapsed">
+                        </Image>
                         <StackPanel>
                             <TextBlock Text="Суббота"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>

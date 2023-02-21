@@ -9,43 +9,30 @@
         mc:Ignorable="d"
         Title="Расписание" Height="550" Width="700"
         MinHeight="400" MinWidth="380"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        >
     
     <Window.DataContext >
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.Row="0">
-            <Rectangle.Fill>
-                <SolidColorBrush Color="AliceBlue" />
-            </Rectangle.Fill>
-        </Rectangle>
-
-        <StackPanel  Orientation="Horizontal"
-                     HorizontalAlignment="Right" Grid.Row="0">
-            <TextBox Text="Время/дата" 
-                     IsReadOnly="True" 
-                     Focusable="False" 
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Width="150"
-                     Margin="5,0,5,0"
-                     FontSize="16"
-                     >
-
-            </TextBox>
+        <StackPanel  x:Name="TopMenu"
+                     
+                     Orientation="Horizontal"
+                     HorizontalAlignment="Right" Grid.Row="0" Width="50">
             <TextBox x:Name="Enter"
                      Text="Войти как:" 
                      Style="{StaticResource MainWindowModeTextBoxTheme}"
                      Width="80"
                      Margin="5,0,5,0"
+                     Visibility="Collapsed"
                      >
 
             </TextBox>
@@ -53,6 +40,7 @@
                     Content="Студент"
                     Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Stud_Click"
+                    Visibility="Collapsed"
                     >
                 
             </Button>
@@ -60,6 +48,7 @@
                     Content="Преподватель"
                     Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Teach_Click"
+                    Visibility="Collapsed"
                     >
 
             </Button>
@@ -67,6 +56,7 @@
                     Content="Редактор"
                     Style="{StaticResource MainWindowModeButtonTheme}"
                     Click="Modif_Click"
+                    Visibility="Collapsed"
                     >
 
             </Button>
@@ -77,18 +67,22 @@
                      >
                 
             </TextBox>
-            <Button Content="Меню" 
+            <Button x:Name="Menu"
                     Margin="2,4,2,4"
                     Width="50"
+                    Background="Transparent"
+                    BorderThickness="0"
                     Click="MenuButton_Click"
                     >
-                
+                <Image Source="Resources\Images\Menu.png"                    
+                    >                    
+                </Image>
             </Button>
         </StackPanel>
 
         <ContentControl x:Name="Content"
                         Grid.Row="1"
-                        Margin="10"                        
+                        Margin="10,0,10,0"                        
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Content="{Binding HomeCurrentView}"/>

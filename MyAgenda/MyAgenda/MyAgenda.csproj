@@ -192,7 +192,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Fonts\" />
-    <Folder Include="Resources\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\RedDot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BlueDot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Menu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

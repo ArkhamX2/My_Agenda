@@ -5,6 +5,6 @@
         <Setter Property="Foreground" Value="{DynamicResource MainForegroundColor}"/>
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="10,5,10,10"/>
+        <Setter Property="Margin" Value="15,10,15,15"/>
     </Style>
 </ResourceDictionary>

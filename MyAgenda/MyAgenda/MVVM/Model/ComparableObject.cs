@@ -38,7 +38,7 @@
         {
             // Переопредели меня.
 
-            return Equals(sample);
+            return IsSameAsObject(sample);
         }
 
         /// <summary>

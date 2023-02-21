@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type Image}"
+           x:Key="DayDotTheme">
+        <Setter Property="Source" Value="/Resources/Images/RedDot.png"/>
+        <Setter Property="Margin" Value="219,10,2,256"/>
+        <Setter Property="Width" Value="18"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+    
+</ResourceDictionary>

@@ -135,6 +135,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Model\IIndirectlySchemable.cs" />
+    <Compile Include="MVVM\Model\ISchemable.cs" />
     <Compile Include="MVVM\Model\Schema.cs" />
     <Compile Include="MVVM\Model\Column.cs" />
     <Compile Include="MVVM\Model\DataEntity.cs" />

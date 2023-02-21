@@ -131,7 +131,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MVVM\Model\Blueprint.cs" />
+    <Compile Include="MVVM\Model\Schema.cs" />
     <Compile Include="MVVM\Model\Column.cs" />
     <Compile Include="MVVM\Model\DataEntity.cs" />
     <Compile Include="MVVM\Model\Data\Course.cs" />

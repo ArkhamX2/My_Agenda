@@ -41,7 +41,7 @@ namespace MyAgenda.MVVM.Model
         /// <param name="foreignKey">Внешний ключ.</param>
         /// <param name="reference">Таблица, на которую ведет ссылка.</param>
         /// <param name="referenceColumnName">Название столбца - внутреннего ключа.</param>
-        public ReferenceLink(Column foreignKey, Blueprint reference, string referenceColumnName) : this(foreignKey.Name, reference.Name, referenceColumnName)
+        public ReferenceLink(Column foreignKey, Schema reference, string referenceColumnName) : this(foreignKey.Name, reference.Name, referenceColumnName)
         {
             bool found = false;
 

@@ -44,6 +44,7 @@
                 <ResourceDictionary Source="Theme/DayBorderMaxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MainDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DayViewLineTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayDotTheme.xaml"/>
 
                 <ResourceDictionary Source="Resources/Colors/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>

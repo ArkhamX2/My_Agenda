@@ -21,9 +21,7 @@
                     VerticalAlignment="Center">
                     <Grid>
                         <Image x:Name="MondayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
+                               Style="{StaticResource DayDotTheme}">
                         </Image>
 
                         <StackPanel>
@@ -37,9 +35,7 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     <Grid>
                         <Image x:Name="TuesdayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
+                              Style="{StaticResource DayDotTheme}">
                         </Image>
                         <StackPanel>
                             <TextBlock Text="Вторник"
@@ -56,9 +52,7 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     <Grid>
                         <Image x:Name="WednesdayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
+                               Style="{StaticResource DayDotTheme}">
                         </Image>
                         <StackPanel>
 
@@ -86,9 +80,7 @@
 
                     <Grid>
                         <Image x:Name="ThuesdayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
+                               Style="{StaticResource DayDotTheme}">
                         </Image>
                         <StackPanel>
                             <TextBlock Text="Четверг"
@@ -107,9 +99,7 @@
                     <Grid>
 
                         <Image x:Name="FridayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
+                               Style="{StaticResource DayDotTheme}">
                         </Image>
 
                         <StackPanel>
@@ -128,9 +118,7 @@
                 <Border Style="{StaticResource DayBorderAltTheme}">
                     <Grid>
                         <Image x:Name="SaturdayMark" 
-                               Source="/Resources/Images/RedDot.png" 
-                               Margin="219,10,2,256" 
-                               Visibility="Collapsed">
+                               Style="{StaticResource DayDotTheme}">
                         </Image>
                         <StackPanel>
                             <TextBlock Text="Суббота"

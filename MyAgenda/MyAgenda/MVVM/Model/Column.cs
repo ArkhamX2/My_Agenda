@@ -1,36 +1,102 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace MyAgenda.MVVM.Model
 {
     /// <summary>
-    /// Совместимые типы данных для столбца.
-    /// TODO: Добавить больше?
+    /// Столбец типа INT в SQL.
+    /// Соответствует int в C#.
     /// </summary>
-    internal enum ColumnDataType
+    internal class IntColumn : Column
     {
         /// <summary>
-        /// Некорректный тип данных.
+        /// Конструктор.
         /// </summary>
-        Incorrect,
+        /// <param name="name">Название.</param>
+        public IntColumn(string name) : base(name)
+        {
+            // PASS.
+        }
 
         /// <summary>
-        /// Тип данных INT в SQL.
-        /// Соответствует int в C#.
+        /// Доступ к данным.
         /// </summary>
-        Int,
+        public override object Data
+        {
+            get => _data;
+            set
+            {
+                if (!IsDataTypeAllowed(value))
+                {
+                    throw new ArgumentException("Допускается использование данных только целочисленного типа.");
+                }
+
+                _data = value;
+            }
+        }
 
         /// <summary>
-        /// Тип данных VARCHAR в SQL.
-        /// Соответствует string в C#.
+        /// Проверить корректность типа данных.
         /// </summary>
-        Varchar
+        /// <param name="data">Данные.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsDataTypeAllowed(object data)
+        {
+            return data is int;
+        }
+
+        /// <summary>
+        /// Проверить тип данных на возможность автоматического инкременирования.
+        /// </summary>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsDataTypeAutoIncrementable()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Получить представление типа данных в виде строки.
+        /// </summary>
+        /// <returns>Строка в формате SQL.</returns>
+        public override string DataTypeAsString()
+        {
+            return "INT";
+        }
+
+        /// <summary>
+        /// Получить уникальный хеш объекта.
+        /// </summary>
+        /// <returns>Хеш объекта.</returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Сравнить указанный объект с текущим.
+        /// </summary>
+        /// <param name="obj">Объект.</param>
+        /// <returns>Статус сравнения.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            if ((obj as Column).Name != Name)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     /// <summary>
-    /// Столбец.
+    /// Столбец типа VARCHAR в SQL.
+    /// Соответствует string в C#.
     /// </summary>
-    internal class Column
+    internal class StringColumn : Column
     {
         /// <summary>
         /// Максимальная длина данных по-умолчанию.
@@ -38,19 +104,112 @@ namespace MyAgenda.MVVM.Model
         public const int DefaultMaxLength = 255;
 
         /// <summary>
+        /// Максимальная длина данных.
+        /// </summary>
+        private int _maxLength;
+
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="name">Название.</param>
+        public StringColumn(string name, int maxLength = DefaultMaxLength) : base(name)
+        {
+            MaxLength = maxLength;
+        }
+
+        /// <summary>
+        /// Доступ к максимальной длине данных.
+        /// </summary>
+        public int MaxLength
+        {
+            get => _maxLength;
+            set => _maxLength = value;
+        }
+
+        /// <summary>
+        /// Доступ к данным.
+        /// </summary>
+        public override object Data
+        {
+            get => _data;
+            set
+            {
+                if (!IsDataTypeAllowed(value))
+                {
+                    throw new ArgumentException("Допускается использование данных только строкового типа.");
+                }
+
+                _data = value;
+            }
+        }
+
+        /// <summary>
+        /// Проверить корректность типа данных.
+        /// </summary>
+        /// <param name="data">Данные.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsDataTypeAllowed(object data)
+        {
+            return data is string;
+        }
+
+        /// <summary>
+        /// Проверить тип данных на возможность автоматического инкременирования.
+        /// </summary>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsDataTypeAutoIncrementable()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Получить представление типа данных в виде строки.
+        /// </summary>
+        /// <returns>Строка в формате SQL.</returns>
+        public override string DataTypeAsString()
+        {
+            return $"VARCHAR({MaxLength})";
+        }
+
+        /// <summary>
+        /// Получить уникальный хеш объекта.
+        /// </summary>
+        /// <returns>Хеш объекта.</returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Сравнить указанный объект с текущим.
+        /// </summary>
+        /// <param name="obj">Объект.</param>
+        /// <returns>Статус сравнения.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            if ((obj as Column).Name != Name)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Столбец.
+    /// </summary>
+    internal abstract class Column
+    {
+        /// <summary>
         /// Название.
         /// </summary>
         private string _name;
-
-        /// <summary>
-        /// Совместимый тип данных.
-        /// </summary>
-        private ColumnDataType _dataType;
-
-        /// <summary>
-        /// Максимальная длина данных.
-        /// </summary>
-        private int _maxLength = DefaultMaxLength;
 
         /// <summary>
         /// Статус возможности использования значения null.
@@ -70,18 +229,15 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Данные.
         /// </summary>
-        private object _data = null;
+        protected object _data = null;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="name">Название.</param>
-        /// <param name="dataType">Совместимый тип данных.</param>
-        /// <exception cref="ArgumentException"></exception>
-        public Column(string name, ColumnDataType dataType)
+        public Column(string name)
         {
             Name = name;
-            DataType = dataType;
         }
 
         /// <summary>
@@ -91,32 +247,6 @@ namespace MyAgenda.MVVM.Model
         {
             get => _name;
             set => _name = value;
-        }
-
-        /// <summary>
-        /// Доступ к совместимому типу данных.
-        /// </summary>
-        public ColumnDataType DataType
-        {
-            get => _dataType;
-            set
-            {
-                if (!IsDataTypeAllowed(value))
-                {
-                    throw new ArgumentException("Недопустимо использование указанного типа данных.");
-                }
-
-                _dataType = value;
-            }
-        }
-
-        /// <summary>
-        /// Доступ к максимальной длине данных.
-        /// </summary>
-        public int MaxLength
-        {
-            get => _maxLength;
-            set => _maxLength = value;
         }
 
         /// <summary>
@@ -140,17 +270,14 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Доступ к статусу автоматического инкременирования значения.
         /// </summary>
-        [RefreshProperties(RefreshProperties.All)]
         public bool IsAutoIncrementable
         {
             get => _isAutoIncrementable;
             set
             {
-                // TODO: Если данные по-умолчанию null?
-
-                if (!IsDataTypeAutoIncrementable(DataType))
+                if (!IsDataTypeAutoIncrementable())
                 {
-                    throw new ArgumentException("Автоматическое инкременирование невозможно с указанным типом данных.");
+                    throw new InvalidOperationException("Тип данных невозможно автоматически инкременировать.");
                 }
 
                 _isAutoIncrementable = value;
@@ -160,76 +287,39 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Доступ к данным.
         /// </summary>
-        public object Data
+        public abstract object Data
         {
-            get => _data;
-            set
-            {
-                DataType = GetDataType(value);
-
-                _data = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
-        /// Определить совместимый тип данных.
+        /// Проверить наличие данных.
+        /// </summary>
+        /// <returns>Статус проверки.</returns>
+        public bool HasData()
+        {
+            return Data != null;
+        }
+
+        /// <summary>
+        /// Проверить корректность типа данных.
         /// </summary>
         /// <param name="data">Данные.</param>
-        /// <returns>Совместимый тип данных.</returns>
-        private static ColumnDataType GetDataType(object data)
-        {
-            if (data.GetType() == typeof(int))
-            {
-                return ColumnDataType.Int;
-            }
-
-            if (data.GetType() == typeof(string))
-            {
-                return ColumnDataType.Varchar;
-            }
-
-            return ColumnDataType.Incorrect;
-        }
+        /// <returns>Статус проверки.</returns>
+        public abstract bool IsDataTypeAllowed(object data);
 
         /// <summary>
-        /// Проверить тип данных на совместимость.
+        /// Проверить тип данных на возможность автоматического инкременирования.
         /// </summary>
-        /// <param name="dataType">Тип данных.</param>
         /// <returns>Статус проверки.</returns>
-        private static bool IsDataTypeAllowed(ColumnDataType dataType)
-        {
-            return dataType != ColumnDataType.Incorrect;
-        }
-
-        /// <summary>
-        /// Проверить тип на возможность автоматического инкременирования.
-        /// </summary>
-        /// <param name="dataType">Тип данных.</param>
-        /// <returns>Статус проверки.</returns>
-        private static bool IsDataTypeAutoIncrementable(ColumnDataType dataType)
-        {
-            return dataType == ColumnDataType.Int;
-        }
+        public abstract bool IsDataTypeAutoIncrementable();
 
         /// <summary>
         /// Получить представление типа данных в виде строки.
         /// </summary>
-        /// <returns>Строка.</returns>
-        /// <exception cref="ArgumentException"></exception>
-        public string DataTypeToString()
-        {
-            if (DataType == ColumnDataType.Incorrect)
-            {
-                throw new ArgumentException("Использование указанного типа данных не допускается.");
-            }
-
-            if (DataType == ColumnDataType.Int)
-            {
-                return "INT";
-            }
-
-            return $"VARCHAR({MaxLength})";
-        }
+        /// <returns>Строка в формате SQL.</returns>
+        public abstract string DataTypeAsString();
 
         /// <summary>
         /// Получить представление в виде строки.
@@ -238,7 +328,7 @@ namespace MyAgenda.MVVM.Model
         /// <returns>Строка в формате SQL.</returns>
         public override string ToString()
         {
-            string result = $"\"{Name}\" {DataTypeToString()}";
+            string result = $"\"{Name}\" {DataTypeAsString()}";
 
             result += IsNullable ? "" : " NOT NULL";
             result += IsPrimaryKey ? " PRIMARY KEY" : "";

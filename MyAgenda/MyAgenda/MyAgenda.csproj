@@ -77,10 +77,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MaxSizeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MVVM\View\MedSizeMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,7 +147,6 @@
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MaxSizeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MedSizeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MinSizeViewModel.cs" />
     <Compile Include="MVVM\View\DayView.xaml.cs">
@@ -159,9 +154,6 @@
     </Compile>
     <Compile Include="MVVM\View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\MaxSizeView.xaml.cs">
-      <DependentUpon>MaxSizeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\MedSizeMainView.xaml.cs">
       <DependentUpon>MedSizeMainView.xaml</DependentUpon>

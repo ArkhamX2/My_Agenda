@@ -17,11 +17,22 @@
     </Window.DataContext>
 
     <Grid>
+        
+
 
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" 
+                 HorizontalAlignment="Left" 
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                 Width="150" 
+                 Margin="10,0,0,0"
+                 FontSize="14"
+                 Text="26.02.2023/22.02.2023" 
+                 IsReadOnly="True" 
+                 />
 
         <StackPanel  x:Name="TopMenu"
                      

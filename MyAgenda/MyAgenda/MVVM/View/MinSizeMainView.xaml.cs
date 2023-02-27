@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MyAgenda.MVVM.View
 {
@@ -21,10 +12,11 @@ namespace MyAgenda.MVVM.View
     /// </summary>
     public partial class MinSizeMainView : UserControl
     {
-        static CultureInfo myCI = new CultureInfo("en-US");
-        System.Globalization.Calendar myCalendar = myCI.Calendar;
-        CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
-        DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+        CultureInfo myCI = new CultureInfo("en-US");
+        System.Globalization.Calendar myCalendar;
+        CalendarWeekRule calendarWeekRule;
+        DayOfWeek firstDayOfWeek;
+
         DateTime DT = DateTime.Now;
 
         List<DayOfWeek> week = new List<DayOfWeek>() {
@@ -41,8 +33,15 @@ namespace MyAgenda.MVVM.View
         public MinSizeMainView()
         {
             InitializeComponent();
-
+            InitializeCalendar();
             CurrentDayOutline();
+        }
+
+        private void InitializeCalendar()
+        {
+            myCalendar = myCI.Calendar;
+            calendarWeekRule = myCI.DateTimeFormat.CalendarWeekRule;
+            firstDayOfWeek = myCI.DateTimeFormat.FirstDayOfWeek;
         }
 
         void CurrentDayOutline()
@@ -58,21 +57,9 @@ namespace MyAgenda.MVVM.View
 
         }
 
-        private int findCurrentDayIndex()
-        {
-            for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex++)
-            {
-                if (week[dayIndex] == DT.DayOfWeek)
-                {
-                    return dayIndex;
-                }
-            }
-            return 0;
-        }
-
         private bool IsEvenWeek()
         {
-            return myCalendar.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2 == 0;
+            return myCalendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek) % 2 == 0;
         }
 
         private void ChangeWeekType()
@@ -108,6 +95,17 @@ namespace MyAgenda.MVVM.View
                     SaturdayMark.Visibility = Visibility.Visible;
                     break;
             }
+        }
+        private int findCurrentDayIndex()
+        {
+            for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex++)
+            {
+                if (week[dayIndex] == DT.DayOfWeek)
+                {
+                    return dayIndex;
+                }
+            }
+            return 0;
         }
 
         private void ScrollToCurrentDay(int currentDayIndex)

@@ -22,11 +22,31 @@ namespace MyAgenda.MVVM.View
     /// </summary>
     public partial class MainView : UserControl
     {
+        CultureInfo myCI = new CultureInfo("en-US");
+        System.Globalization.Calendar myCalendar;
+        CalendarWeekRule calendarWeekRule;
+        DayOfWeek firstDayOfWeek;
+
+        DateTime DT = DateTime.Now;
+
+        List<DayOfWeek> week = new List<DayOfWeek>() {
+            DayOfWeek.Monday,
+            DayOfWeek.Tuesday,
+            DayOfWeek.Wednesday,
+            DayOfWeek.Thursday,
+            DayOfWeek.Friday,
+            DayOfWeek.Saturday,
+            DayOfWeek.Sunday };
+
+        const int DayCardHeight = 360;
+
         public MainView()
         {
             InitializeComponent();
 
-            CurDayOutline();
+            InitializeCalendar();
+
+            CurrentDayOutline();
 
             int nWidth = (int)SystemParameters.PrimaryScreenWidth;
             int nHieght = (int)SystemParameters.PrimaryScreenHeight;
@@ -35,53 +55,79 @@ namespace MyAgenda.MVVM.View
             ViewB.MaxHeight = nHieght-100;
         }
 
-
-        void CurDayOutline()
+        private void InitializeCalendar()
         {
-            CultureInfo myCI = new CultureInfo("en-US");
-            System.Globalization.Calendar myCalendar = myCI.Calendar;
-            CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
-            DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+            myCalendar = myCI.Calendar;
+            calendarWeekRule = myCI.DateTimeFormat.CalendarWeekRule;
+            firstDayOfWeek = myCI.DateTimeFormat.FirstDayOfWeek;
+        }
 
-            if (myCalendar.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW)%2==0)
+        void CurrentDayOutline()
+        {
+            if (IsEvenWeek())
             {
-                var uriSource = new Uri("/Resources/Images/BlueDot.png", UriKind.Relative);
-                MondayMark.Source = new BitmapImage(uriSource);
-                TuesdayMark.Source = new BitmapImage(uriSource);
-                WednesdayMark.Source = new BitmapImage(uriSource);
-                ThuesdayMark.Source = new BitmapImage(uriSource);
-                FridayMark.Source = new BitmapImage(uriSource);
-                SaturdayMark.Source = new BitmapImage(uriSource);
+                ChangeWeekType();
             }
 
-            DateTime DT = DateTime.Now;
-            if (DT.DayOfWeek == DayOfWeek.Monday)
+            ShowCurrentDayMark();
+
+            ScrollToCurrentDay(findCurrentDayTrioIndex());
+
+        }
+
+        private bool IsEvenWeek()
+        {
+            return myCalendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek) % 2 == 0;
+        }
+        private void ChangeWeekType()
+        {
+            var uriSource = new Uri("/Resources/Images/BlueDot.png", UriKind.Relative);
+            MondayMark.Source = new BitmapImage(uriSource);
+            TuesdayMark.Source = new BitmapImage(uriSource);
+            WednesdayMark.Source = new BitmapImage(uriSource);
+            ThuesdayMark.Source = new BitmapImage(uriSource);
+            FridayMark.Source = new BitmapImage(uriSource);
+            SaturdayMark.Source = new BitmapImage(uriSource);
+        }
+        private void ShowCurrentDayMark()
+        {
+            switch (DT.DayOfWeek)
             {
-                MondayMark.Visibility = Visibility.Visible;
+                case DayOfWeek.Monday:
+                    MondayMark.Visibility = Visibility.Visible;
+                    break;
+                case DayOfWeek.Tuesday:
+                    TuesdayMark.Visibility = Visibility.Visible;
+                    break;
+                case DayOfWeek.Wednesday:
+                    WednesdayMark.Visibility = Visibility.Visible;
+                    break;
+                case DayOfWeek.Thursday:
+                    ThuesdayMark.Visibility = Visibility.Visible;
+                    break;
+                case DayOfWeek.Friday:
+                    FridayMark.Visibility = Visibility.Visible;
+                    break;
+                case DayOfWeek.Saturday:
+                    SaturdayMark.Visibility = Visibility.Visible;
+                    break;
             }
-            else if (DT.DayOfWeek == DayOfWeek.Tuesday)
+        }
+        private int findCurrentDayTrioIndex()
+        {
+            for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex+=3)
             {
-                TuesdayMark.Visibility = Visibility.Visible;
+                if (week[dayIndex] == DT.DayOfWeek)
+                {
+                    return dayIndex/3;
+                }
             }
-            else if (DT.DayOfWeek == DayOfWeek.Wednesday)
-            {
-                WednesdayMark.Visibility = Visibility.Visible;
-            }
-            else if (DT.DayOfWeek == DayOfWeek.Thursday)
-            {
-                ThuesdayMark.Visibility = Visibility.Visible;
-                Scroll.ScrollToVerticalOffset(360);
-            }
-            else if (DT.DayOfWeek == DayOfWeek.Friday)
-            {
-                FridayMark.Visibility = Visibility.Visible;
-                Scroll.ScrollToVerticalOffset(360);
-            }
-            else if (DT.DayOfWeek == DayOfWeek.Saturday)
-            {
-                SaturdayMark.Visibility = Visibility.Visible;
-                Scroll.ScrollToVerticalOffset(360);
-            }
+            return 0;
+        }
+
+        private void ScrollToCurrentDay(int currentDayIndex)
+        {
+            Scroll.ScrollToVerticalOffset(DayCardHeight * currentDayIndex);
         }
     }
 }

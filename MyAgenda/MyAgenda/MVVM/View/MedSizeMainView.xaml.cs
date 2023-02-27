@@ -36,7 +36,7 @@ namespace MyAgenda.MVVM.View
 
             InitializeCalendar();
 
-            CurDayOutline();
+            CurrentDayOutline();
         }
 
         private void InitializeCalendar()
@@ -46,14 +46,13 @@ namespace MyAgenda.MVVM.View
             firstDayOfWeek = myCI.DateTimeFormat.FirstDayOfWeek;
         }
 
-        void CurDayOutline()
+        void CurrentDayOutline()
         {
 
             if (IsEvenWeek())
             {
                 ChangeWeekType();
             }
-
 
             ShowCurrentDayMark();
 
@@ -64,6 +63,7 @@ namespace MyAgenda.MVVM.View
         {
             return myCalendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek) % 2 == 0;
         }
+
         private void ChangeWeekType()
         {
             var uriSource = new Uri("/Resources/Images/BlueDot.png", UriKind.Relative);
@@ -74,6 +74,7 @@ namespace MyAgenda.MVVM.View
             FridayMark.Source = new BitmapImage(uriSource);
             SaturdayMark.Source = new BitmapImage(uriSource);
         }
+
         private void ShowCurrentDayMark()
         {
             switch (DT.DayOfWeek)

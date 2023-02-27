@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyAgenda.MVVM.Model
 {
     /// <summary>
     /// Контейнер для транспортировки данных.
+    /// TODO: Удалить DataContainer.
     /// </summary>
     internal class DataContainer
     {
@@ -17,7 +19,7 @@ namespace MyAgenda.MVVM.Model
     /// Сущность данных.
     /// TODO: Пересмотреть.
     /// </summary>
-    internal abstract class DataEntity : Entity
+    internal class DataEntity : Entity, ISchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -50,6 +52,70 @@ namespace MyAgenda.MVVM.Model
 
         #endregion
 
+        /*           _                          _     _
+         *  ___  ___| |__   ___ _ __ ___   __ _| |__ | | ___
+         * / __|/ __| '_ \ / _ \ '_ ` _ \ / _` | '_ \| |/ _ \
+         * \__ \ (__| | | |  __/ | | | | | (_| | |_) | |  __/
+         * |___/\___|_| |_|\___|_| |_| |_|\__,_|_.__/|_|\___|
+         *
+         */
+        #region ISchemable
+
+        /// <summary>
+        /// Доступ к схеме данных.
+        /// </summary>
+        public static Schema Schema => new Schema(Table, new List<Column>()
+        {
+            new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true }
+        });
+
+        /// <summary>
+        /// Доступ к идентификатору.
+        /// </summary>
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                if (value < IdMin)
+                {
+                    throw new ArgumentException("Идентификатор не может быть отрицательным.");
+                }
+
+                _id = value;
+            }
+        }
+
+        /// <summary>
+        /// Инициализировать сущность из схемы с данными.
+        /// </summary>
+        /// <param name="data">Схема, заполненная данными.</param>
+        /// <returns>Сущность.</returns>
+        public static ISchemable FromData(Schema data)
+        {
+            if (data == null || !data.IsSameAsObject(Schema))
+            {
+                throw new ArgumentException("Схема не соответствует схеме по-умолчанию.");
+            }
+
+            return new DataEntity(data.GetIntColumnData(IdColumn));
+        }
+
+        /// <summary>
+        /// Получить схему таблицы с данными.
+        /// </summary>
+        /// <returns>Схема, заполненная данными.</returns>
+        public Schema ToData()
+        {
+            Schema data = Schema;
+
+            data.SetColumnData(IdColumn, Id);
+
+            return data;
+        }
+        
+        #endregion
+
         /*      _       _                     _   _ _
          *   __| | __ _| |_ __ _    ___ _ __ | |_(_) |_ _   _
          *  / _` |/ _` | __/ _` |  / _ \ '_ \| __| | __| | | |
@@ -70,23 +136,6 @@ namespace MyAgenda.MVVM.Model
         public DataEntity(int id)
         {
             Id = id;
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору.
-        /// </summary>
-        public int Id
-        {
-            get => _id;
-            set
-            {
-                if (value < IdMin)
-                {
-                    throw new ArgumentException("Идентификатор не может быть отрицательным.");
-                }
-
-                _id = value;
-            }
         }
 
         #endregion

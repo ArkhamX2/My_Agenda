@@ -9,9 +9,9 @@
     internal interface IIndirectlySchemable : ISchemable
     {
         /// <summary>
-        /// Доступ к косвенному родителю.
+        /// Доступ к косвенному родителю со схемой таблицы.
         /// </summary>
-        ISchemable Parent
+        ISchemable Schemable
         {
             get;
         }

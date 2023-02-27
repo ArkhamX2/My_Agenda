@@ -1,32 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
-    /// Контейнер данных занятия.
-    /// </summary>
-    internal class SubjectData : DataContainer
-    {
-        /// <summary>
-        /// Идентификатор преподавателя.
-        /// </summary>
-        public int TeacherId { get; set; }
-
-        /// <summary>
-        /// Название.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Кабинет.
-        /// </summary>
-        public string Classroom { get; set; }
-    }
-
-    /// <summary>
     /// Занятие.
     /// </summary>
-    internal class Subject : DataEntity
+    internal class Subject : IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -40,7 +20,12 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public new const string Table = "subject";
+        public const string Table = "subject";
+
+        /// <summary>
+        /// Название столбца с идентификатором.
+        /// </summary>
+        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором преподавателя.
@@ -79,76 +64,126 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*      _       _                          _        _
-         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
-         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
-         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
-         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+        /*           _                          _     _
+         *  ___  ___| |__   ___ _ __ ___   __ _| |__ | | ___
+         * / __|/ __| '_ \ / _ \ '_ ` _ \ / _` | '_ \| |/ _ \
+         * \__ \ (__| | | |  __/ | | | | | (_| | |_) | |  __/
+         * |___/\___|_| |_|\___|_| |_| |_|\__,_|_.__/|_|\___|
          *
          */
-        #region DataContainer
+        #region ISchemable
 
         /// <summary>
-        /// Доступ к контейнеру данных.
+        /// Доступ к косвенному родителю со схемой таблицы.
         /// </summary>
-        public static SubjectData Container => new SubjectData();
-
-        /// <summary>
-        /// Преобразовать данные в новую сущность.
-        /// </summary>
-        /// <param name="data">Контейнер данных.</param>
-        /// <returns>Новая сущность.</returns>
-        public static Subject FromData(SubjectData data)
+        public ISchemable Schemable
         {
-            if (String.IsNullOrWhiteSpace(data.Classroom))
-            {
-                return new Subject(data.Id, data.Name);
-            }
-
-            return new Subject(data.Id, data.Name, data.Classroom);
+            get;
+            set;
         }
 
         /// <summary>
-        /// Преобразовать данные в новую сущность.
+        /// Доступ к идентификатору.
         /// </summary>
-        /// <param name="data">Контейнер данных.</param>
-        /// <param name="teacher">Вложенная сущность.</param>
-        /// <returns>Новая сущность.</returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static Subject FromData(SubjectData data, Teacher teacher)
+        public int Id
         {
-            if (data.TeacherId != teacher.Id)
-            {
-                throw new ArgumentException("Переданные контейнер и сущность не соответствуют друг другу.");
-            }
-
-            if (String.IsNullOrWhiteSpace(data.Classroom))
-            {
-                return new Subject(data.Id, teacher, data.Name);
-            }
-
-            return new Subject(data.Id, teacher, data.Name);
+            get => Schemable.Id;
+            set => Schemable.Id = value;
         }
 
         /// <summary>
-        /// Получить контейнер данных для сущности.
+        /// Доступ к схеме данных.
         /// </summary>
-        /// <returns>Контейнер данных.</returns>
-        public SubjectData ToData()
+        public static Schema Schema
         {
-            SubjectData data = Container;
+            get
+            {
+                List<Column> columnList = DataEntity.Schema.ColumnList;
 
-            data.Id = Id;
-            data.Name = Name;
+                columnList.Add(new IntColumn(TeacherIdColumn) { IsNullable = true });
+                columnList.Add(new StringColumn(NameColumn, NameLengthMax));
+                columnList.Add(new StringColumn(ClassroomColumn, ClassroomLengthMax) { IsNullable = true });
+
+                return new Schema(Table, columnList, new List<ReferenceLink>()
+                {
+                    new ReferenceLink(TeacherIdColumn, Teacher.Table, Teacher.IdColumn)
+                });
+            }
+        }
+
+        /// <summary>
+        /// Инициализировать сущность из схемы с данными.
+        /// </summary>
+        /// <param name="data">Схема, заполненная данными.</param>
+        /// <returns>Сущность.</returns>
+        public static Subject FromData(Schema data)
+        {
+            // Базовый уровень валидации.
+            DataEntity.FromData(data);
+
+            if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
+            {
+                return new Subject(
+                    data.GetIntColumnData(IdColumn),
+                    data.GetStringColumnData(NameColumn));
+            }
+
+            return new Subject(
+                data.GetIntColumnData(IdColumn),
+                data.GetStringColumnData(NameColumn),
+                data.GetStringColumnData(ClassroomColumn));
+        }
+
+        /// <summary>
+        /// Инициализировать сущность из схемы с данными.
+        /// </summary>
+        /// <param name="data">Схема, заполненная данными.</param>
+        /// <param name="teacher">Зависимая сущность.</param>
+        /// <returns>Сущность.</returns>
+        public static Subject FromData(Schema data, Teacher teacher)
+        {
+            // Базовый уровень валидации.
+            DataEntity.FromData(data);
+
+            if (data.GetIntColumnData(TeacherIdColumn) != teacher.Id)
+            {
+                throw new ArgumentException("Переданные схема с данными и сущность не соответствуют друг другу.");
+            }
+
+            if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
+            {
+                return new Subject(
+                    data.GetIntColumnData(IdColumn),
+                    teacher,
+                    data.GetStringColumnData(NameColumn));
+            }
+
+            return new Subject(
+                data.GetIntColumnData(IdColumn),
+                teacher,
+                data.GetStringColumnData(NameColumn),
+                data.GetStringColumnData(ClassroomColumn));
+        }
+
+        /// <summary>
+        /// Получить схему таблицы с данными.
+        /// </summary>
+        /// <returns>Схема, заполненная данными.</returns>
+        public Schema ToData()
+        {
+            Schema data = Schema;
+
+            data.SetColumnData(IdColumn, Id);
+            data.SetColumnData(NameColumn, Name);
 
             if (HasTeacher())
             {
-                data.TeacherId = Teacher.Id;
+                data.SetColumnData(TeacherIdColumn, Teacher.Id);
             }
 
             if (HasClassroom())
             {
-                data.Classroom = Classroom;
+                data.SetColumnData(ClassroomColumn, Classroom);
             }
 
             return data;
@@ -187,8 +222,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <param name="name">Название.</param>
-        public Subject(int id, string name) : base(id)
+        public Subject(int id, string name)
         {
+            Schemable = new DataEntity(id);
+
             Name = name;
         }
 

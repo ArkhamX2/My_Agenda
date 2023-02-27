@@ -1,32 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
-    /// Контейнер данных преподавателя.
-    /// </summary>
-    internal class TeacherData : DataContainer
-    {
-        /// <summary>
-        /// Имя.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Фамилия.
-        /// </summary>
-        public string Surname { get; set; }
-
-        /// <summary>
-        /// Отчество.
-        /// </summary>
-        public string Patronymic { get; set; }
-    }
-
-    /// <summary>
     /// Преподаватель.
     /// </summary>
-    internal class Teacher : DataEntity
+    internal class Teacher : IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -40,7 +20,12 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public new const string Table = "teacher";
+        public const string Table = "teacher";
+
+        /// <summary>
+        /// Название столбца с идентификатором.
+        /// </summary>
+        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с именем.
@@ -89,50 +74,90 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*      _       _                          _        _
-         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
-         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
-         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
-         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+        /*           _                          _     _
+         *  ___  ___| |__   ___ _ __ ___   __ _| |__ | | ___
+         * / __|/ __| '_ \ / _ \ '_ ` _ \ / _` | '_ \| |/ _ \
+         * \__ \ (__| | | |  __/ | | | | | (_| | |_) | |  __/
+         * |___/\___|_| |_|\___|_| |_| |_|\__,_|_.__/|_|\___|
          *
          */
-        #region DataContainer
+        #region ISchemable
 
         /// <summary>
-        /// Доступ к контейнеру данных.
+        /// Доступ к косвенному родителю со схемой таблицы.
         /// </summary>
-        public static TeacherData Container => new TeacherData();
-
-        /// <summary>
-        /// Преобразовать данные в новую сущность.
-        /// </summary>
-        /// <param name="data">Контейнер данных.</param>
-        /// <returns>Новая сущность.</returns>
-        public static Teacher FromData(TeacherData data)
+        public ISchemable Schemable
         {
-            if (String.IsNullOrWhiteSpace(data.Patronymic))
-            {
-                return new Teacher(data.Id, data.Name, data.Surname);
-            }
-
-            return new Teacher(data.Id, data.Name, data.Surname, data.Patronymic);
+            get;
+            set;
         }
 
         /// <summary>
-        /// Получить контейнер данных для сущности.
+        /// Доступ к идентификатору.
         /// </summary>
-        /// <returns>Контейнер данных.</returns>
-        public TeacherData ToData()
+        public int Id
         {
-            TeacherData data = Container;
+            get => Schemable.Id;
+            set => Schemable.Id = value;
+        }
 
-            data.Id = Id;
-            data.Name = Name;
-            data.Surname = Surname;
+        /// <summary>
+        /// Доступ к схеме данных.
+        /// </summary>
+        public static Schema Schema
+        {
+            get
+            {
+                List<Column> columnList = DataEntity.Schema.ColumnList;
+
+                columnList.Add(new StringColumn(NameColumn, NameLengthMax));
+                columnList.Add(new StringColumn(SurnameColumn, SurnameLengthMax));
+                columnList.Add(new StringColumn(PatronymicColumn, PatronymicLengthMax) { IsNullable = true });
+
+                return new Schema(Table, columnList);
+            }
+        }
+
+        /// <summary>
+        /// Инициализировать сущность из схемы с данными.
+        /// </summary>
+        /// <param name="data">Схема, заполненная данными.</param>
+        /// <returns>Сущность.</returns>
+        public static Teacher FromData(Schema data)
+        {
+            // Базовый уровень валидации.
+            DataEntity.FromData(data);
+
+            if (String.IsNullOrWhiteSpace(data.GetStringColumnData(PatronymicColumn)))
+            {
+                return new Teacher(
+                    data.GetIntColumnData(IdColumn),
+                    data.GetStringColumnData(NameColumn),
+                    data.GetStringColumnData(SurnameColumn));
+            }
+
+            return new Teacher(
+                data.GetIntColumnData(IdColumn),
+                data.GetStringColumnData(NameColumn),
+                data.GetStringColumnData(SurnameColumn),
+                data.GetStringColumnData(PatronymicColumn));
+        }
+
+        /// <summary>
+        /// Получить схему таблицы с данными.
+        /// </summary>
+        /// <returns>Схема, заполненная данными.</returns>
+        public Schema ToData()
+        {
+            Schema data = Schema;
+
+            data.SetColumnData(IdColumn, Id);
+            data.SetColumnData(NameColumn, Name);
+            data.SetColumnData(SurnameColumn, Surname);
 
             if (HasPatronymic())
             {
-                data.Patronymic = Patronymic;
+                data.SetColumnData(PatronymicColumn, Patronymic);
             }
 
             return data;
@@ -170,8 +195,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// <param name="id">Идентификатор.</param>
         /// <param name="name">Имя.</param>
         /// <param name="surname">Фамилия.</param>
-        public Teacher(int id, string name, string surname) : base(id)
+        public Teacher(int id, string name, string surname)
         {
+            Schemable = new DataEntity(id);
+
             Name = name;
             Surname = surname;
         }

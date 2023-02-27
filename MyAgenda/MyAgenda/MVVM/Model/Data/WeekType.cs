@@ -1,4 +1,6 @@
-﻿namespace MyAgenda.MVVM.Model.Data
+﻿using System.Collections.Generic;
+
+namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
     /// Доступные типы учебой недели.
@@ -9,23 +11,12 @@
         Red,
         Blue
     }
-
-    /// <summary>
-    /// Контейнер данных типа учебной недели.
-    /// </summary>
-    internal class WeekTypeData : DataContainer
-    {
-        /// <summary>
-        /// Текущий тип учебной недели в целочисленном представлении.
-        /// </summary>
-        public int Type { get; set; }
-    }
-
+    
     /// <summary>
     /// Тип учебой недели.
     /// TODO: Решить, как с этим работать.
     /// </summary>
-    internal class WeekType : DataEntity
+    internal class WeekType : IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -39,7 +30,12 @@
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public new const string Table = "week_type";
+        public const string Table = "week_type";
+
+        /// <summary>
+        /// Название столбца с идентификатором.
+        /// </summary>
+        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с типом.
@@ -48,40 +44,73 @@
 
         #endregion
 
-        /*      _       _                          _        _
-         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
-         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
-         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
-         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+        /*           _                          _     _
+         *  ___  ___| |__   ___ _ __ ___   __ _| |__ | | ___
+         * / __|/ __| '_ \ / _ \ '_ ` _ \ / _` | '_ \| |/ _ \
+         * \__ \ (__| | | |  __/ | | | | | (_| | |_) | |  __/
+         * |___/\___|_| |_|\___|_| |_| |_|\__,_|_.__/|_|\___|
          *
          */
-        #region DataContainer
+        #region ISchemable
 
         /// <summary>
-        /// Доступ к контейнеру данных.
+        /// Доступ к косвенному родителю со схемой таблицы.
         /// </summary>
-        public static WeekTypeData Container => new WeekTypeData();
-
-        /// <summary>
-        /// Преобразовать данные в новую сущность.
-        /// </summary>
-        /// <param name="data">Контейнер данных.</param>
-        /// <returns>Новая сущность.</returns>
-        public static WeekType FromData(WeekTypeData data)
+        public ISchemable Schemable
         {
-            return new WeekType(data.Id, (AvailableWeekType)data.Type);
+            get;
+            set;
         }
 
         /// <summary>
-        /// Получить контейнер данных для сущности.
+        /// Доступ к идентификатору.
         /// </summary>
-        /// <returns>Контейнер данных.</returns>
-        public WeekTypeData ToData()
+        public int Id
         {
-            WeekTypeData data = Container;
+            get => Schemable.Id;
+            set => Schemable.Id = value;
+        }
 
-            data.Id = Id;
-            data.Type = (int)Type;
+        /// <summary>
+        /// Доступ к схеме данных.
+        /// </summary>
+        public static Schema Schema
+        {
+            get
+            {
+                List<Column> columnList = DataEntity.Schema.ColumnList;
+
+                columnList.Add(new IntColumn(TypeColumn));
+
+                return new Schema(Table, columnList);
+            }
+        }
+
+        /// <summary>
+        /// Инициализировать сущность из схемы с данными.
+        /// </summary>
+        /// <param name="data">Схема, заполненная данными.</param>
+        /// <returns>Сущность.</returns>
+        public static WeekType FromData(Schema data)
+        {
+            // Базовый уровень валидации.
+            DataEntity.FromData(data);
+
+            return new WeekType(
+                data.GetIntColumnData(IdColumn),
+                (AvailableWeekType)data.GetIntColumnData(TypeColumn));
+        }
+
+        /// <summary>
+        /// Получить схему таблицы с данными.
+        /// </summary>
+        /// <returns>Схема, заполненная данными.</returns>
+        public Schema ToData()
+        {
+            Schema data = Schema;
+
+            data.SetColumnData(IdColumn, Id);
+            data.SetColumnData(TypeColumn, (int)Type);
 
             return data;
         }
@@ -105,9 +134,9 @@
         /// <summary>
         /// Пустой конструктор.
         /// </summary>
-        public WeekType(int id) : base(id)
+        public WeekType(int id)
         {
-            // PASS.
+            Schemable = new DataEntity(id);
         }
 
         /// <summary>

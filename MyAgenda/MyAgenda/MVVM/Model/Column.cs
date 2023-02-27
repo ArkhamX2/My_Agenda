@@ -121,13 +121,23 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Максимальная длина данных.
         /// </summary>
-        private int _maxLength;
+        private int _maxLength = DefaultMaxLength;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="name">Название.</param>
-        public StringColumn(string name, int maxLength = DefaultMaxLength) : base(name)
+        public StringColumn(string name) : base(name)
+        {
+            // PASS.
+        }
+
+        /// <summary>
+        /// Расширенный конструктор.
+        /// </summary>
+        /// <param name="name">Название.</param>
+        /// <param name="maxLength">Максимальная длина данных.</param>
+        public StringColumn(string name, int maxLength) : this(name)
         {
             MaxLength = maxLength;
         }

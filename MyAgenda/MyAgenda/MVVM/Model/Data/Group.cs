@@ -1,28 +1,12 @@
 ﻿using System;
-using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace MyAgenda.MVVM.Model.Data
 {
     /// <summary>
-    /// Контейнер данных группы.
-    /// </summary>
-    internal class GroupData : DataContainer
-    {
-        /// <summary>
-        /// Идентификатор курса.
-        /// </summary>
-        public int CourseId { get; set; }
-
-        /// <summary>
-        /// Код.
-        /// </summary>
-        public string Code { get; set; }
-    }
-
-    /// <summary>
     /// Группа.
     /// </summary>
-    internal class Group : DataEntity
+    internal class Group : IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -36,7 +20,12 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public new const string Table = "group";
+        public const string Table = "group";
+
+        /// <summary>
+        /// Название столбца с идентификатором.
+        /// </summary>
+        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором курса.
@@ -60,48 +49,85 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*      _       _                          _        _
-         *   __| | __ _| |_ __ _    ___ ___  _ __ | |_ __ _(_)_ __   ___ _ __
-         *  / _` |/ _` | __/ _` |  / __/ _ \| '_ \| __/ _` | | '_ \ / _ \ '__|
-         * | (_| | (_| | || (_| | | (_| (_) | | | | || (_| | | | | |  __/ |
-         *  \__,_|\__,_|\__\__,_|  \___\___/|_| |_|\__\__,_|_|_| |_|\___|_|
+        /*           _                          _     _
+         *  ___  ___| |__   ___ _ __ ___   __ _| |__ | | ___
+         * / __|/ __| '_ \ / _ \ '_ ` _ \ / _` | '_ \| |/ _ \
+         * \__ \ (__| | | |  __/ | | | | | (_| | |_) | |  __/
+         * |___/\___|_| |_|\___|_| |_| |_|\__,_|_.__/|_|\___|
          *
          */
-        #region DataContainer
+        #region ISchemable
 
         /// <summary>
-        /// Доступ к контейнеру данных.
+        /// Доступ к косвенному родителю со схемой таблицы.
         /// </summary>
-        public static GroupData Container => new GroupData();
-
-        /// <summary>
-        /// Преобразовать данные в новую сущность.
-        /// </summary>
-        /// <param name="data">Контейнер данных.</param>
-        /// <param name="course">Вложенная сущность.</param>
-        /// <returns>Новая сущность.</returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static Group FromData(GroupData data, Course course)
+        public ISchemable Schemable
         {
-            if (data.CourseId != course.Id)
-            {
-                throw new ArgumentException("Переданные контейнер и сущность не соответствуют друг другу.");
-            }
-
-            return new Group(data.Id, course, data.Code);
+            get;
+            set;
         }
 
         /// <summary>
-        /// Получить контейнер данных для сущности.
+        /// Доступ к идентификатору.
         /// </summary>
-        /// <returns>Контейнер данных.</returns>
-        public GroupData ToData()
+        public int Id
         {
-            GroupData data = Container;
+            get => Schemable.Id;
+            set => Schemable.Id = value;
+        }
 
-            data.Id = Id;
-            data.CourseId = Course.Id;
-            data.Code = Code;
+        /// <summary>
+        /// Доступ к схеме данных.
+        /// </summary>
+        public static Schema Schema
+        {
+            get
+            {
+                List<Column> columnList = DataEntity.Schema.ColumnList;
+
+                columnList.Add(new IntColumn(CourseIdColumn));
+                columnList.Add(new StringColumn(CodeColumn, CodeLengthMax));
+
+                return new Schema(Table, columnList, new List<ReferenceLink>()
+                {
+                    new ReferenceLink(CourseIdColumn, Course.Table, Course.IdColumn)
+                });
+            }
+        }
+
+        /// <summary>
+        /// Инициализировать сущность из схемы с данными.
+        /// </summary>
+        /// <param name="data">Схема, заполненная данными.</param>
+        /// <param name="course">Зависимая сущность.</param>
+        /// <returns>Сущность.</returns>
+        public static Group FromData(Schema data, Course course)
+        {
+            // Базовый уровень валидации.
+            DataEntity.FromData(data);
+
+            if (data.GetIntColumnData(CourseIdColumn) != course.Id)
+            {
+                throw new ArgumentException("Переданные схема с данными и сущность не соответствуют друг другу.");
+            }
+
+            return new Group(
+                data.GetIntColumnData(IdColumn),
+                course,
+                data.GetStringColumnData(CodeColumn));
+        }
+
+        /// <summary>
+        /// Получить схему таблицы с данными.
+        /// </summary>
+        /// <returns>Схема, заполненная данными.</returns>
+        public Schema ToData()
+        {
+            Schema data = Schema;
+
+            data.SetColumnData(IdColumn, Id);
+            data.SetColumnData(CourseIdColumn, Course.Id);
+            data.SetColumnData(CodeColumn, Code);
 
             return data;
         }
@@ -133,8 +159,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// <param name="id">Идентификатор.</param>
         /// <param name="course">Курс.</param>
         /// <param name="code">Код.</param>
-        public Group(int id, Course course, string code) : base(id)
+        public Group(int id, Course course, string code)
         {
+            Schemable = new DataEntity(id);
+
             Course = course;
             Code = code;
         }

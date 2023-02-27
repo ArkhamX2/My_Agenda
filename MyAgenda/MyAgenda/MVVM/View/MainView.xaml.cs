@@ -27,7 +27,14 @@ namespace MyAgenda.MVVM.View
             InitializeComponent();
 
             CurDayOutline();
+
+            int nWidth = (int)SystemParameters.PrimaryScreenWidth;
+            int nHieght = (int)SystemParameters.PrimaryScreenHeight;
+
+            ViewB.MaxWidth = nWidth-50;
+            ViewB.MaxHeight = nHieght-100;
         }
+
 
         void CurDayOutline()
         {

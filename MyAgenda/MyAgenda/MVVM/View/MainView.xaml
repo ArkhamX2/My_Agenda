@@ -13,7 +13,7 @@
         <viewModel:HomeViewModel/>
     </UserControl.DataContext>
     <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto">
-        <Viewbox MaxHeight="950" MaxWidth="1920">
+        <Viewbox x:Name="ViewB" MaxHeight="950" MaxWidth="1920">
         <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Border Style="{StaticResource DayBorderTheme}"

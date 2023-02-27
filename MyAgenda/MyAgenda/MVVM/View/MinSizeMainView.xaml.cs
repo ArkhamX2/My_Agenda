@@ -42,10 +42,10 @@ namespace MyAgenda.MVVM.View
         {
             InitializeComponent();
 
-            CurDayOutline();
+            CurrentDayOutline();
         }
 
-        void CurDayOutline()
+        void CurrentDayOutline()
         {
             if (IsEvenWeek())
             {
@@ -54,14 +54,22 @@ namespace MyAgenda.MVVM.View
 
             ShowCurrentDayMark();
 
-            for (int currentDayIndex = 0; currentDayIndex < week.Count - 1; currentDayIndex++)
+            ScrollToCurrentDay(findCurrentDayIndex());
+
+        }
+
+        private int findCurrentDayIndex()
+        {
+            for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex++)
             {
-                if (week[currentDayIndex] == DT.DayOfWeek)
+                if (week[dayIndex] == DT.DayOfWeek)
                 {
-                    ScrollToCurrentDay(currentDayIndex);
+                    return dayIndex;
                 }
             }
+            return 0;
         }
+
         private bool IsEvenWeek()
         {
             return myCalendar.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW) % 2 == 0;

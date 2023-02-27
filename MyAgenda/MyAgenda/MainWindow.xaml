@@ -31,8 +31,7 @@
                  Width="150" 
                  Margin="10,0,0,0"
                  FontSize="14"
-                 IsReadOnly="True" 
-                 />
+                 IsReadOnly="True" />
 
         <StackPanel  x:Name="TopMenu"
                      Grid.RowSpan="2"

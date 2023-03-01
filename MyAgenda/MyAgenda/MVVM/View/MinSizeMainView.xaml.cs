@@ -33,7 +33,9 @@ namespace MyAgenda.MVVM.View
         public MinSizeMainView()
         {
             InitializeComponent();
+
             InitializeCalendar();
+
             CurrentDayOutline();
         }
 

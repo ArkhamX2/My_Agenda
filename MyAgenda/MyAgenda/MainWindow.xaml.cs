@@ -15,6 +15,7 @@ namespace MyAgenda
         MainViewModel ShowModel = new MainViewModel();
         private bool isNavigationVisible = false;
         int _Mode;
+
         DoubleAnimation topMenuShowAnimation = new DoubleAnimation();
         DoubleAnimation topMenuHideAnimation = new DoubleAnimation();
 
@@ -41,11 +42,11 @@ namespace MyAgenda
         private void WeekDate()
         {
             DateTime datenow = DateTime.Now;
-            for (int i = 0; i < week.Count-1; i++)
+            for (int currentDayIndex = 0; currentDayIndex < week.Count-1; currentDayIndex++)
             {
-                if (week[i] == datenow.DayOfWeek)
+                if (week[currentDayIndex] == datenow.DayOfWeek)
                 {
-                    Date.Text = CalculateWeekBorders(datenow, i);
+                    Date.Text = CalculateWeekBorders(datenow, currentDayIndex);
                 }
             }
         }

@@ -153,17 +153,19 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         {
             get
             {
-                List<Column> columnList = DataEntity.Schema.ColumnList;
-
-                columnList.Add(new IntColumn(GroupIdColumn));
-                columnList.Add(new IntColumn(WeekTypeIdColumn));
-                columnList.Add(new IntColumn(FirstDayIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(SecondDayIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(ThirdDayIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(FourthDayIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(FifthDayIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(SixthDayIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(SeventhDayIdColumn) { IsNullable = true });
+                List<Column> columnList = new List<Column>
+                {
+                    new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
+                    new IntColumn(GroupIdColumn),
+                    new IntColumn(WeekTypeIdColumn),
+                    new IntColumn(FirstDayIdColumn) { IsNullable = true },
+                    new IntColumn(SecondDayIdColumn) { IsNullable = true },
+                    new IntColumn(ThirdDayIdColumn) { IsNullable = true },
+                    new IntColumn(FourthDayIdColumn) { IsNullable = true },
+                    new IntColumn(FifthDayIdColumn) { IsNullable = true },
+                    new IntColumn(SixthDayIdColumn) { IsNullable = true },
+                    new IntColumn(SeventhDayIdColumn) { IsNullable = true }
+                };
 
                 return new Schema(Table, columnList, new List<ReferenceLink>()
                 {
@@ -189,8 +191,10 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <returns>Сущность.</returns>
         public static WeekSchedule FromData(Schema data, Group group, WeekType weekType)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             if (data.GetIntColumnData(GroupIdColumn) != group.Id)
             {
@@ -218,8 +222,10 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <returns>Сущность.</returns>
         public static WeekSchedule FromData(Schema data, Group group, WeekType weekType, List<DayScheduleEntry> dayList)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             if (data.GetIntColumnData(GroupIdColumn) != group.Id)
             {

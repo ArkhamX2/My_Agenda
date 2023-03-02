@@ -1,23 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace MyAgenda.MVVM.Model
 {
     /// <summary>
-    /// Контейнер для транспортировки данных.
-    /// TODO: Удалить DataContainer.
-    /// </summary>
-    internal class DataContainer
-    {
-        /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        public int Id { get; set; }
-    }
-
-    /// <summary>
     /// Сущность данных.
-    /// TODO: Пересмотреть.
     /// </summary>
     internal class DataEntity : Entity, ISchemable
     {
@@ -29,11 +15,6 @@ namespace MyAgenda.MVVM.Model
          *
          */
         #region Constants
-
-        /// <summary>
-        /// Название таблицы.
-        /// </summary>
-        public const string Table = "";
 
         /// <summary>
         /// Название столбца с идентификатором.
@@ -62,14 +43,6 @@ namespace MyAgenda.MVVM.Model
         #region ISchemable
 
         /// <summary>
-        /// Доступ к схеме данных.
-        /// </summary>
-        public static Schema Schema => new Schema(Table, new List<Column>()
-        {
-            new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true }
-        });
-
-        /// <summary>
         /// Доступ к идентификатору.
         /// </summary>
         public int Id
@@ -87,31 +60,13 @@ namespace MyAgenda.MVVM.Model
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
-        /// </summary>
-        /// <param name="data">Схема, заполненная данными.</param>
-        /// <returns>Сущность.</returns>
-        public static ISchemable FromData(Schema data)
-        {
-            if (data == null || !data.IsSameAsObject(Schema))
-            {
-                throw new ArgumentException("Схема не соответствует схеме по-умолчанию.");
-            }
-
-            return new DataEntity(data.GetIntColumnData(IdColumn));
-        }
-
-        /// <summary>
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public Schema ToData()
+        /// <exception cref="NotSupportedException"></exception>
+        public virtual Schema ToData()
         {
-            Schema data = Schema;
-
-            data.SetColumnData(IdColumn, Id);
-
-            return data;
+            throw new NotSupportedException("Получение схемы для базовой сущности данных невозможно.");
         }
         
         #endregion

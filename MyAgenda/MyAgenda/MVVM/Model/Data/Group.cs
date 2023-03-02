@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// <summary>
     /// Группа.
     /// </summary>
-    internal class Group : Entity, IIndirectlySchemable
+    internal class Group : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -21,11 +21,6 @@ namespace MyAgenda.MVVM.Model.Data
         /// Название таблицы.
         /// </summary>
         public const string Table = "group";
-
-        /// <summary>
-        /// Название столбца с идентификатором.
-        /// </summary>
-        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором курса.
@@ -59,34 +54,18 @@ namespace MyAgenda.MVVM.Model.Data
         #region ISchemable
 
         /// <summary>
-        /// Доступ к косвенному родителю со схемой таблицы.
-        /// </summary>
-        public ISchemable Schemable
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору.
-        /// </summary>
-        public int Id
-        {
-            get => Schemable.Id;
-            set => Schemable.Id = value;
-        }
-
-        /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
         public static Schema Schema
         {
             get
             {
-                List<Column> columnList = DataEntity.Schema.ColumnList;
-
-                columnList.Add(new IntColumn(CourseIdColumn));
-                columnList.Add(new StringColumn(CodeColumn, CodeLengthMax));
+                List<Column> columnList = new List<Column>
+                {
+                    new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
+                    new IntColumn(CourseIdColumn),
+                    new StringColumn(CodeColumn, CodeLengthMax)
+                };
 
                 return new Schema(Table, columnList, new List<ReferenceLink>()
                 {
@@ -103,8 +82,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// <returns>Сущность.</returns>
         public static Group FromData(Schema data, Course course)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             if (data.GetIntColumnData(CourseIdColumn) != course.Id)
             {
@@ -121,7 +102,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public Schema ToData()
+        public override Schema ToData()
         {
             Schema data = Schema;
 
@@ -159,10 +140,8 @@ namespace MyAgenda.MVVM.Model.Data
         /// <param name="id">Идентификатор.</param>
         /// <param name="course">Курс.</param>
         /// <param name="code">Код.</param>
-        public Group(int id, Course course, string code)
+        public Group(int id, Course course, string code) : base(id)
         {
-            Schemable = new DataEntity(id);
-
             Course = course;
             Code = code;
         }

@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
     /// <summary>
     /// Учебный день.
     /// </summary>
-    internal class DaySchedule : Entity, IIndirectlySchemable
+    internal class DaySchedule : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -21,11 +21,6 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Название таблицы.
         /// </summary>
         public const string Table = "day_schedule";
-
-        /// <summary>
-        /// Название столбца с идентификатором.
-        /// </summary>
-        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором занятия.
@@ -119,39 +114,23 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         #region ISchemable
 
         /// <summary>
-        /// Доступ к косвенному родителю со схемой таблицы.
-        /// </summary>
-        public ISchemable Schemable
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору.
-        /// </summary>
-        public int Id
-        {
-            get => Schemable.Id;
-            set => Schemable.Id = value;
-        }
-
-        /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
         public static Schema Schema
         {
             get
             {
-                List<Column> columnList = DataEntity.Schema.ColumnList;
-
-                columnList.Add(new IntColumn(FirstSubjectIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(SecondSubjectIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(ThirdSubjectIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(FourthSubjectIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(FifthSubjectIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(SixthSubjectIdColumn) { IsNullable = true });
-                columnList.Add(new IntColumn(SeventhSubjectIdColumn) { IsNullable = true });
+                List<Column> columnList = new List<Column>
+                {
+                    new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
+                    new IntColumn(FirstSubjectIdColumn) { IsNullable = true },
+                    new IntColumn(SecondSubjectIdColumn) { IsNullable = true },
+                    new IntColumn(ThirdSubjectIdColumn) { IsNullable = true },
+                    new IntColumn(FourthSubjectIdColumn) { IsNullable = true },
+                    new IntColumn(FifthSubjectIdColumn) { IsNullable = true },
+                    new IntColumn(SixthSubjectIdColumn) { IsNullable = true },
+                    new IntColumn(SeventhSubjectIdColumn) { IsNullable = true }
+                };
 
                 return new Schema(Table, columnList, new List<ReferenceLink>()
                 {
@@ -173,8 +152,10 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <returns>Сущность.</returns>
         public static DaySchedule FromData(Schema data)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             return new DaySchedule(data.GetIntColumnData(IdColumn));
         }
@@ -187,8 +168,10 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <returns>Сущность.</returns>
         public static DaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             return new DaySchedule(data.GetIntColumnData(IdColumn), subjectList);
         }
@@ -197,7 +180,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public Schema ToData()
+        public override Schema ToData()
         {
             Schema data = Schema;
 
@@ -238,10 +221,8 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Конструктор учебного дня без занятий.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        public DaySchedule(int id)
+        public DaySchedule(int id) : base(id)
         {
-            Schemable = new DataEntity(id);
-
             // Заполнение списка занятий пустыми контейнерами.
             foreach (PositionType type in SubjectEntry.GetPositionTypeList())
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MyAgenda.MVVM.Model.Data
 {
@@ -16,7 +17,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// Тип учебой недели.
     /// TODO: Решить, как с этим работать.
     /// </summary>
-    internal class WeekType : Entity, IIndirectlySchemable
+    internal class WeekType : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -31,11 +32,6 @@ namespace MyAgenda.MVVM.Model.Data
         /// Название таблицы.
         /// </summary>
         public const string Table = "week_type";
-
-        /// <summary>
-        /// Название столбца с идентификатором.
-        /// </summary>
-        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с типом.
@@ -54,37 +50,13 @@ namespace MyAgenda.MVVM.Model.Data
         #region ISchemable
 
         /// <summary>
-        /// Доступ к косвенному родителю со схемой таблицы.
-        /// </summary>
-        public ISchemable Schemable
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору.
-        /// </summary>
-        public int Id
-        {
-            get => Schemable.Id;
-            set => Schemable.Id = value;
-        }
-
-        /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema
+        public static Schema Schema => new Schema(Table, new List<Column>
         {
-            get
-            {
-                List<Column> columnList = DataEntity.Schema.ColumnList;
-
-                columnList.Add(new IntColumn(TypeColumn));
-
-                return new Schema(Table, columnList);
-            }
-        }
+            new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
+            new IntColumn(TypeColumn)
+        });
 
         /// <summary>
         /// Инициализировать сущность из схемы с данными.
@@ -93,8 +65,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// <returns>Сущность.</returns>
         public static WeekType FromData(Schema data)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             return new WeekType(
                 data.GetIntColumnData(IdColumn),
@@ -105,7 +79,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public Schema ToData()
+        public override Schema ToData()
         {
             Schema data = Schema;
 
@@ -134,9 +108,9 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Пустой конструктор.
         /// </summary>
-        public WeekType(int id)
+        public WeekType(int id) : base(id)
         {
-            Schemable = new DataEntity(id);
+            // PASS.
         }
 
         /// <summary>

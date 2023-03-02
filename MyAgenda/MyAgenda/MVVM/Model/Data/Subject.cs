@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// <summary>
     /// Занятие.
     /// </summary>
-    internal class Subject : Entity, IIndirectlySchemable
+    internal class Subject : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -21,11 +21,6 @@ namespace MyAgenda.MVVM.Model.Data
         /// Название таблицы.
         /// </summary>
         public const string Table = "subject";
-
-        /// <summary>
-        /// Название столбца с идентификатором.
-        /// </summary>
-        public const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором преподавателя.
@@ -74,35 +69,19 @@ namespace MyAgenda.MVVM.Model.Data
         #region ISchemable
 
         /// <summary>
-        /// Доступ к косвенному родителю со схемой таблицы.
-        /// </summary>
-        public ISchemable Schemable
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Доступ к идентификатору.
-        /// </summary>
-        public int Id
-        {
-            get => Schemable.Id;
-            set => Schemable.Id = value;
-        }
-
-        /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
         public static Schema Schema
         {
             get
             {
-                List<Column> columnList = DataEntity.Schema.ColumnList;
-
-                columnList.Add(new IntColumn(TeacherIdColumn) { IsNullable = true });
-                columnList.Add(new StringColumn(NameColumn, NameLengthMax));
-                columnList.Add(new StringColumn(ClassroomColumn, ClassroomLengthMax) { IsNullable = true });
+                List<Column> columnList = new List<Column>
+                {
+                    new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
+                    new IntColumn(TeacherIdColumn) { IsNullable = true },
+                    new StringColumn(NameColumn, NameLengthMax),
+                    new StringColumn(ClassroomColumn, ClassroomLengthMax) { IsNullable = true }
+                };
 
                 return new Schema(Table, columnList, new List<ReferenceLink>()
                 {
@@ -118,8 +97,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// <returns>Сущность.</returns>
         public static Subject FromData(Schema data)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
             {
@@ -142,8 +123,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// <returns>Сущность.</returns>
         public static Subject FromData(Schema data, Teacher teacher)
         {
-            // Базовый уровень валидации.
-            DataEntity.FromData(data);
+            if (data == null || !data.IsSameAsSample(Schema))
+            {
+                throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
+            }
 
             if (data.GetIntColumnData(TeacherIdColumn) != teacher.Id)
             {
@@ -169,7 +152,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public Schema ToData()
+        public override Schema ToData()
         {
             Schema data = Schema;
 
@@ -222,10 +205,8 @@ namespace MyAgenda.MVVM.Model.Data
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <param name="name">Название.</param>
-        public Subject(int id, string name)
+        public Subject(int id, string name) : base(id)
         {
-            Schemable = new DataEntity(id);
-
             Name = name;
         }
 

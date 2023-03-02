@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// <summary>
     /// Преподаватель.
     /// </summary>
-    internal class Teacher : IIndirectlySchemable
+    internal class Teacher : Entity, IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___

@@ -16,7 +16,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// Тип учебой недели.
     /// TODO: Решить, как с этим работать.
     /// </summary>
-    internal class WeekType : IIndirectlySchemable
+    internal class WeekType : Entity, IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___

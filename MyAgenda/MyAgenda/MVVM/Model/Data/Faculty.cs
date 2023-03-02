@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// <summary>
     /// Факультет.
     /// </summary>
-    internal class Faculty : IIndirectlySchemable
+    internal class Faculty : Entity, IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___

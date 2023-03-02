@@ -6,7 +6,7 @@ namespace MyAgenda.MVVM.Model.Data
     /// <summary>
     /// Группа.
     /// </summary>
-    internal class Group : IIndirectlySchemable
+    internal class Group : Entity, IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___

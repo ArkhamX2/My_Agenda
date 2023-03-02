@@ -215,7 +215,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
     /// Представляет собой связь индекса, учебного дня и дополнительной информации
     /// для размещения в списке.
     /// </summary>
-    internal class DayPosition : EntityEntry
+    internal class DayScheduleEntry : EntityEntry
     {
         /// <summary>
         /// Получить день недели через тип позиции.
@@ -243,7 +243,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Конструктор пустого контейнера.
         /// </summary>
         /// <param name="type">Тип позиции.</param>
-        public DayPosition(PositionType type) : base(type)
+        public DayScheduleEntry(PositionType type) : base(type)
         {
             // PASS.
         }
@@ -253,7 +253,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// </summary>
         /// <param name="type">Тип позиции.</param>
         /// <param name="day">Учебный день.</param>
-        public DayPosition(PositionType type, DaySchedule day) : base(type, day)
+        public DayScheduleEntry(PositionType type, DaySchedule day) : base(type, day)
         {
             // PASS
         }

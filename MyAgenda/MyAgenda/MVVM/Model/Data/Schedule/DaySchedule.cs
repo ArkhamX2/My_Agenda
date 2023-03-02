@@ -102,11 +102,11 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Получить название столбца с идентификатором занятия через контейнер.
         /// </summary>
-        /// <param name="position">Контейнер занятия.</param>
+        /// <param name="entry">Контейнер занятия.</param>
         /// <returns>Название столбца с идентификатором занятия.</returns>
-        public static string GetIdColumnName(SubjectEntry position)
+        public static string GetIdColumnName(SubjectEntry entry)
         {
-            return GetIdColumnName(position.PositionType);
+            return GetIdColumnName(entry.PositionType);
         }
 
         /*           _                          _     _

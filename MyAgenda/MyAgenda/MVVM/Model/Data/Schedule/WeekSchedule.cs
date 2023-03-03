@@ -28,7 +28,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         private WeekType _weekType;
 
         /// <summary>
-        /// Список учебных дней.
+        /// Список контейнеров учебных дней.
         /// Каждый учебный день хранится в контейнере с закрепленной за ним позицией
         /// в списке и дополнительной связанной с ней информацией.
         /// </summary>
@@ -45,7 +45,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
             WeekType = weekType;
 
             // Заполнение списка учебных дней пустыми контейнерами.
-            foreach (PositionType type in DayScheduleEntry.GetPositionTypeList())
+            foreach (EntryPosition type in DayScheduleEntry.GetPositionTypeList())
             {
                 DayList[DayScheduleEntry.GetIndex(type)] = new DayScheduleEntry(type);
             }
@@ -56,7 +56,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// </summary>
         /// <param name="target">Сущность, для которой предназначено расписание..</param>
         /// <param name="weekType">Тип недели.</param>
-        /// <param name="dayList">Список учебных дней.</param>
+        /// <param name="dayList">Список контейнеров учебных дней.</param>
         /// <exception cref="ArgumentException"></exception>
         protected WeekSchedule(DataEntity target, WeekType weekType, List<DayScheduleEntry> dayList) : this(target, weekType)
         {
@@ -86,7 +86,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Доступ к списку учебных дней.
+        /// Доступ к списку контейнеров учебных дней.
         /// </summary>
         public List<DayScheduleEntry> DayList => _dayList;
 

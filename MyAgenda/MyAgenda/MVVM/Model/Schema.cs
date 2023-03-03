@@ -4,10 +4,144 @@ using System.Collections.Generic;
 namespace MyAgenda.MVVM.Model
 {
     /// <summary>
-    /// Схема таблицы.
+    /// Схема таблицы. Служит одновременно и как описание таблицы
+    /// в базе данных, и как контейнер для транспортировки данных
+    /// из провайдера в сущности.
     /// </summary>
     internal class Schema : ComparableObject
     {
+        /*                                            _     _              _     _           _
+         *   ___ ___  _ __ ___  _ __   __ _ _ __ __ _| |__ | | ___    ___ | |__ (_) ___  ___| |_
+         *  / __/ _ \| '_ ` _ \| '_ \ / _` | '__/ _` | '_ \| |/ _ \  / _ \| '_ \| |/ _ \/ __| __|
+         * | (_| (_) | | | | | | |_) | (_| | | | (_| | |_) | |  __/ | (_) | |_) | |  __/ (__| |_
+         *  \___\___/|_| |_| |_| .__/ \__,_|_|  \__,_|_.__/|_|\___|  \___/|_.__// |\___|\___|\__|
+         *                     |_|                                            |__/
+         */
+        #region ComparableObject
+
+        /// <summary>
+        /// Проверить образец на сходство с экземпляром.
+        /// TODO: Декомпозировать Schema.IsSameAsObject().
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsObject(ComparableObject sample)
+        {
+            if (sample.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Schema schema = sample as Schema;
+
+            if (schema.Name != Name)
+            {
+                return false;
+            }
+
+            foreach (Column item in ColumnList)
+            {
+                if (!schema.HasColumn(item.Name))
+                {
+                    return false;
+                }
+
+                if (!item.IsSameAsObject(schema.GetColumn(item.Name)))
+                {
+                    return false;
+                }
+            }
+
+            foreach (ReferenceLink linkA in ReferenceList)
+            {
+                bool found = false;
+
+                foreach (ReferenceLink linkB in schema.ReferenceList)
+                {
+                    if (!linkA.IsSameAsObject(linkB))
+                    {
+                        found = true;
+
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Проверить экземпляр на сходство с образцом.
+        /// TODO: Декомпозировать Schema.IsSameAsSample().
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsSample(ComparableObject sample)
+        {
+            if (sample.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Schema schema = sample as Schema;
+
+            if (schema.Name != Name)
+            {
+                return false;
+            }
+
+            foreach (Column item in schema.ColumnList)
+            {
+                if (!HasColumn(item.Name))
+                {
+                    return false;
+                }
+
+                if (!item.IsSameAsObject(GetColumn(item.Name)))
+                {
+                    return false;
+                }
+            }
+
+            foreach (ReferenceLink linkA in schema.ReferenceList)
+            {
+                bool found = false;
+
+                foreach (ReferenceLink linkB in ReferenceList)
+                {
+                    if (!linkA.IsSameAsObject(linkB))
+                    {
+                        found = true;
+
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        /*           _
+         *  ___  ___| |__   ___ _ __ ___   __ _
+         * / __|/ __| '_ \ / _ \ '_ ` _ \ / _` |
+         * \__ \ (__| | | |  __/ | | | | | (_| |
+         * |___/\___|_| |_|\___|_| |_| |_|\__,_|
+         *
+         */
+        #region Schema
+
         /// <summary>
         /// Название таблицы.
         /// </summary>
@@ -73,6 +207,8 @@ namespace MyAgenda.MVVM.Model
             {
                 bool found;
 
+                // Перекрестная проверка переданного списка ссылок
+                // и списка столбцов на соответствие.
                 foreach (ReferenceLink link in value)
                 {
                     found = false;
@@ -255,118 +391,6 @@ namespace MyAgenda.MVVM.Model
         public override string ToString()
         {
             return ToCreateQuery();
-        }
-
-        #region ComparableObject
-
-        /// <summary>
-        /// Проверить образец на сходство с экземпляром.
-        /// </summary>
-        /// <param name="sample">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsSameAsObject(ComparableObject sample)
-        {
-            if (sample.GetType() != GetType())
-            {
-                return false;
-            }
-
-            Schema schema = sample as Schema;
-
-            if (schema.Name != Name)
-            {
-                return false;
-            }
-
-            foreach (Column item in ColumnList)
-            {
-                if (!schema.HasColumn(item.Name))
-                {
-                    return false;
-                }
-
-                if (!item.IsSameAsObject(schema.GetColumn(item.Name)))
-                {
-                    return false;
-                }
-            }
-
-            foreach (ReferenceLink linkA in ReferenceList)
-            {
-                bool found = false;
-
-                foreach (ReferenceLink linkB in schema.ReferenceList)
-                {
-                    if (!linkA.IsSameAsObject(linkB))
-                    {
-                        found = true;
-
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Проверить экземпляр на сходство с образцом.
-        /// </summary>
-        /// <param name="sample">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsSameAsSample(ComparableObject sample)
-        {
-            if (sample.GetType() != GetType())
-            {
-                return false;
-            }
-
-            Schema schema = sample as Schema;
-
-            if (schema.Name != Name)
-            {
-                return false;
-            }
-
-            foreach (Column item in schema.ColumnList)
-            {
-                if (!HasColumn(item.Name))
-                {
-                    return false;
-                }
-
-                if (!item.IsSameAsObject(GetColumn(item.Name)))
-                {
-                    return false;
-                }
-            }
-
-            foreach (ReferenceLink linkA in schema.ReferenceList)
-            {
-                bool found = false;
-
-                foreach (ReferenceLink linkB in ReferenceList)
-                {
-                    if (!linkA.IsSameAsObject(linkB))
-                    {
-                        found = true;
-
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         #endregion

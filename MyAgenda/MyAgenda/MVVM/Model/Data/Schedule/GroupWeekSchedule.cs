@@ -5,6 +5,8 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
 {
     /// <summary>
     /// Учебная неделя для группы.
+    /// Косвенно наследует <see cref="ISchemable"/> через второго
+    /// родителя <see cref="DataEntity"/>.
     /// </summary>
     internal class GroupWeekSchedule : WeekSchedule, IIndirectlySchemable
     {
@@ -56,22 +58,22 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         #endregion
 
         /// <summary>
-        /// Получить тип позиции учебного дня через название столбца с идентификатором.
+        /// Получить позицию учебного дня через название столбца с идентификатором.
         /// </summary>
         /// <param name="columnName">Название столбца с идентификатором учебного дня.</param>
-        /// <returns>Тип позиции учебного дня.</returns>
+        /// <returns>Позиция учебного дня.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static PositionType GetPositionType(string columnName)
+        public static EntryPosition GetPositionType(string columnName)
         {
             switch (columnName)
             {
-                case FirstDayIdColumn: return PositionType.First;
-                case SecondDayIdColumn: return PositionType.Second;
-                case ThirdDayIdColumn: return PositionType.Third;
-                case FourthDayIdColumn: return PositionType.Fourth;
-                case FifthDayIdColumn: return PositionType.Fifth;
-                case SixthDayIdColumn: return PositionType.Sixth;
-                case SeventhDayIdColumn: return PositionType.Seventh;
+                case FirstDayIdColumn: return EntryPosition.First;
+                case SecondDayIdColumn: return EntryPosition.Second;
+                case ThirdDayIdColumn: return EntryPosition.Third;
+                case FourthDayIdColumn: return EntryPosition.Fourth;
+                case FifthDayIdColumn: return EntryPosition.Fifth;
+                case SixthDayIdColumn: return EntryPosition.Sixth;
+                case SeventhDayIdColumn: return EntryPosition.Seventh;
             }
 
             throw new ArgumentException("Некорректное название столбца.");
@@ -88,22 +90,22 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Получить название столбца с идентификатором учебного дня через тип позиции.
+        /// Получить название столбца с идентификатором учебного дня через позицию.
         /// </summary>
-        /// <param name="type">Тип позиции учебного дня.</param>
+        /// <param name="position">Позиция учебного дня.</param>
         /// <returns>Название столбца с идентификатором учебного дня.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static string GetIdColumnName(PositionType type)
+        public static string GetIdColumnName(EntryPosition position)
         {
-            switch (type)
+            switch (position)
             {
-                case PositionType.First: return FirstDayIdColumn;
-                case PositionType.Second: return SecondDayIdColumn;
-                case PositionType.Third: return ThirdDayIdColumn;
-                case PositionType.Fourth: return FourthDayIdColumn;
-                case PositionType.Fifth: return FifthDayIdColumn;
-                case PositionType.Sixth: return SixthDayIdColumn;
-                case PositionType.Seventh: return SeventhDayIdColumn;
+                case EntryPosition.First: return FirstDayIdColumn;
+                case EntryPosition.Second: return SecondDayIdColumn;
+                case EntryPosition.Third: return ThirdDayIdColumn;
+                case EntryPosition.Fourth: return FourthDayIdColumn;
+                case EntryPosition.Fifth: return FifthDayIdColumn;
+                case EntryPosition.Sixth: return SixthDayIdColumn;
+                case EntryPosition.Seventh: return SeventhDayIdColumn;
             }
 
             throw new ArgumentException("Внутренняя ошибка.");
@@ -116,7 +118,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <returns>Название столбца с идентификатором учебного дня.</returns>
         public static string GetIdColumnName(DayScheduleEntry entry)
         {
-            return GetIdColumnName(entry.PositionType);
+            return GetIdColumnName(entry.Position);
         }
 
         /*           _                          _     _
@@ -134,11 +136,11 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public ISchemable Schemable
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
-        /// Доступ к идентификатору.
+        /// Доступ к идентификатору при помощи косвенного родителя.
         /// </summary>
         public int Id
         {
@@ -183,12 +185,12 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать учебную неделю из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="group">Зависимая группа.</param>
-        /// <param name="weekType">Зависимый тип недели.</param>
-        /// <returns>Сущность.</returns>
+        /// <param name="group">Группа.</param>
+        /// <param name="weekType">Тип недели.</param>
+        /// <returns>Учебная неделя для группы.</returns>
         public static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -213,13 +215,13 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать учебную неделю из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="group">Зависимая группа.</param>
-        /// <param name="weekType">Зависимый тип недели.</param>
-        /// <param name="dayList">Список зависимых учебных дней.</param>
-        /// <returns>Сущность.</returns>
+        /// <param name="group">Группа.</param>
+        /// <param name="weekType">Тип недели.</param>
+        /// <param name="dayList">Список контейнеров учебных дней.</param>
+        /// <returns>Учебная неделя для группы.</returns>
         public static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType, List<DayScheduleEntry> dayList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -256,6 +258,8 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
             data.SetColumnData(GroupIdColumn, Group.Id);
             data.SetColumnData(WeekTypeIdColumn, WeekType.Id);
 
+            // "Расчехляем" контейнеры и вставляем учебные дни
+            // в нужные столбцы.
             foreach (DayScheduleEntry entry in DayList)
             {
                 if (entry.DaySchedule == null)
@@ -297,7 +301,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <param name="id">Идентификатор.</param>
         /// <param name="group">Группа.</param>
         /// <param name="weekType">Тип недели.</param>
-        /// <param name="dayList">Список учебных дней.</param>
+        /// <param name="dayList">Список контейнеров учебных дней.</param>
         /// <exception cref="ArgumentException"></exception>
         public GroupWeekSchedule(int id, Group group, WeekType weekType, List<DayScheduleEntry> dayList) : base(group, weekType, dayList)
         {

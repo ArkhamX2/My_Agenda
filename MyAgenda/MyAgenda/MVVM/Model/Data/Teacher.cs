@@ -49,6 +49,7 @@ namespace MyAgenda.MVVM.Model.Data
 
         /// <summary>
         /// Минимальная длина отчества.
+        /// Нулевое значение означает, что отчество может быть не задано.
         /// </summary>
         public const int PatronymicLengthMin = 0;
 
@@ -90,10 +91,10 @@ namespace MyAgenda.MVVM.Model.Data
         });
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать преподавателя из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <returns>Сущность.</returns>
+        /// <returns>Преподаватель.</returns>
         public static Teacher FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -101,6 +102,7 @@ namespace MyAgenda.MVVM.Model.Data
                 throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
             }
 
+            // Если отчество не задано.
             if (String.IsNullOrWhiteSpace(data.GetStringColumnData(PatronymicColumn)))
             {
                 return new Teacher(
@@ -159,6 +161,7 @@ namespace MyAgenda.MVVM.Model.Data
 
         /// <summary>
         /// Отчество.
+        /// Может быть не задано.
         /// </summary>
         private string _patronymic = String.Empty;
 
@@ -192,17 +195,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Name
         {
             get => _name;
-            set
-            {
-                value = value.Trim().ToLower();
-                
-                if (value.Length < NameLengthMin || value.Length > NameLengthMax)
-                {
-                    throw new ArgumentException("Длина имени не может выходить за допустимые пределы.");
-                }
-
-                _name = value;
-            }
+            set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         /// <summary>
@@ -211,17 +204,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Surname
         {
             get => _surname;
-            set
-            {
-                value = value.Trim().ToLower();
-
-                if (value.Length < SurnameLengthMin || value.Length > SurnameLengthMax)
-                {
-                    throw new ArgumentException("Длина фамилии не может выходить за допустимые пределы.");
-                }
-
-                _surname = value;
-            }
+            set => _surname = ValidateStringData(value, SurnameLengthMin, SurnameLengthMax);
         }
 
         /// <summary>
@@ -230,17 +213,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Patronymic
         {
             get => _patronymic;
-            set
-            {
-                value = value.Trim().ToLower();
-
-                if (value.Length < PatronymicLengthMin || value.Length > PatronymicLengthMax)
-                {
-                    throw new ArgumentException("Длина отчества не может выходить за допустимые пределы.");
-                }
-
-                _patronymic = value;
-            }
+            set => _patronymic = ValidateStringData(value, PatronymicLengthMin, PatronymicLengthMax);
         }
 
         /// <summary>

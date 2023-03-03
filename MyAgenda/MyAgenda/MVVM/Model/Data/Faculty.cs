@@ -58,10 +58,10 @@ namespace MyAgenda.MVVM.Model.Data
         });
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать факультет из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <returns>Сущность.</returns>
+        /// <returns>Факультет.</returns>
         public static Faculty FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -120,17 +120,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Name
         {
             get => _name;
-            set
-            {
-                value = value.Trim().ToLower();
-
-                if (value.Length < NameLengthMin || value.Length > NameLengthMax)
-                {
-                    throw new ArgumentException("Длина названия не может выходить за допустимые пределы.");
-                }
-
-                _name = value;
-            }
+            set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         #endregion

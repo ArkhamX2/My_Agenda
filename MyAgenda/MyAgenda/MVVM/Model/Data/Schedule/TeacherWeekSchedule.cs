@@ -33,7 +33,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// </summary>
         /// <param name="teacher">Преподаватель.</param>
         /// <param name="weekType">Тип недели.</param>
-        /// <param name="dayList">Список учебных дней.</param>
+        /// <param name="dayList">Список контейнеров учебных дней.</param>
         /// <exception cref="ArgumentException"></exception>
         public TeacherWeekSchedule(Teacher teacher, WeekType weekType, List<DayScheduleEntry> dayList) : base(teacher, weekType, dayList)
         {

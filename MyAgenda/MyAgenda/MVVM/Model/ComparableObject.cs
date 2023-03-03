@@ -13,7 +13,6 @@
         public virtual bool IsSameAsObject(ComparableObject sample)
         {
             // Переопредели меня.
-
             return sample.Equals(this);
         }
 
@@ -25,7 +24,6 @@
         public virtual bool IsExactSameAsObject(ComparableObject sample)
         {
             // Переопредели меня.
-
             return IsSameAsObject(sample);
         }
 
@@ -37,7 +35,6 @@
         public virtual bool IsSameAsSample(ComparableObject sample)
         {
             // Переопредели меня.
-
             return IsSameAsObject(sample);
         }
 
@@ -49,7 +46,6 @@
         public virtual bool IsExactSameAsSample(ComparableObject sample)
         {
             // Переопредели меня.
-
             return IsSameAsSample(sample);
         }
     }

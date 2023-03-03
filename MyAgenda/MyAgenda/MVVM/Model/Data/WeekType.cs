@@ -8,7 +8,6 @@ namespace MyAgenda.MVVM.Model.Data
     /// </summary>
     public enum AvailableWeekType
     {
-        Incorrect,
         Red,
         Blue
     }
@@ -59,10 +58,10 @@ namespace MyAgenda.MVVM.Model.Data
         });
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать тип недели из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <returns>Сущность.</returns>
+        /// <returns>Тип учебной недели.</returns>
         public static WeekType FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -103,21 +102,13 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Текущий тип учебной недели.
         /// </summary>
-        private AvailableWeekType _type = AvailableWeekType.Incorrect;
-
-        /// <summary>
-        /// Пустой конструктор.
-        /// </summary>
-        public WeekType(int id) : base(id)
-        {
-            // PASS.
-        }
+        private AvailableWeekType _type;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="type">Тип.</param>
-        public WeekType(int id, AvailableWeekType type) : this(id)
+        /// <param name="type">Тип недели.</param>
+        public WeekType(int id, AvailableWeekType type) : base(id)
         {
             Type = type;
         }

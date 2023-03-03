@@ -7,6 +7,58 @@ namespace MyAgenda.MVVM.Model
     /// </summary>
     internal class ReferenceLink : ComparableObject
     {
+        /*                                            _     _              _     _           _
+         *   ___ ___  _ __ ___  _ __   __ _ _ __ __ _| |__ | | ___    ___ | |__ (_) ___  ___| |_
+         *  / __/ _ \| '_ ` _ \| '_ \ / _` | '__/ _` | '_ \| |/ _ \  / _ \| '_ \| |/ _ \/ __| __|
+         * | (_| (_) | | | | | | |_) | (_| | | | (_| | |_) | |  __/ | (_) | |_) | |  __/ (__| |_
+         *  \___\___/|_| |_| |_| .__/ \__,_|_|  \__,_|_.__/|_|\___|  \___/|_.__// |\___|\___|\__|
+         *                     |_|                                            |__/
+         */
+        #region ComparableObject
+
+        /// <summary>
+        /// Проверить образец на сходство с экземпляром.
+        /// </summary>
+        /// <param name="sample">Образец.</param>
+        /// <returns>Статус проверки.</returns>
+        public override bool IsSameAsObject(ComparableObject sample)
+        {
+            if (sample.GetType() != GetType())
+            {
+                return false;
+            }
+
+            ReferenceLink link = sample as ReferenceLink;
+
+            if (link.ColumnName != ColumnName)
+            {
+                return false;
+            }
+
+            if (link.ReferenceTableName != ReferenceTableName)
+            {
+                return false;
+            }
+
+            if (link.ReferenceColumnName != ReferenceColumnName)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        /*            __                                _ _       _
+         *  _ __ ___ / _| ___ _ __ ___ _ __   ___ ___  | (_)_ __ | | __
+         * | '__/ _ \ |_ / _ \ '__/ _ \ '_ \ / __/ _ \ | | | '_ \| |/ /
+         * | | |  __/  _|  __/ | |  __/ | | | (_|  __/ | | | | | |   <
+         * |_|  \___|_|  \___|_|  \___|_| |_|\___\___| |_|_|_| |_|_|\_\
+         *
+         */
+        #region ReferenceLink
+
         /// <summary>
         /// Столбец - внешний ключ.
         /// </summary>
@@ -39,12 +91,13 @@ namespace MyAgenda.MVVM.Model
         /// Конструктор из объектов.
         /// </summary>
         /// <param name="foreignKey">Внешний ключ.</param>
-        /// <param name="reference">Таблица, на которую ведет ссылка.</param>
+        /// <param name="reference">Схема таблицы, на которую ведет ссылка.</param>
         /// <param name="referenceColumnName">Название столбца - внутреннего ключа.</param>
         public ReferenceLink(Column foreignKey, Schema reference, string referenceColumnName) : this(foreignKey.Name, reference.Name, referenceColumnName)
         {
             bool found = false;
 
+            // Поиск в переданной схеме указанного внутреннего ключа.
             foreach (Column item in reference.ColumnList)
             {
                 if (item.Name != referenceColumnName)
@@ -98,40 +151,6 @@ namespace MyAgenda.MVVM.Model
         public override string ToString()
         {
             return $"FOREIGN KEY (\"{ColumnName}\") REFERENCES \"{ReferenceTableName}\" (\"{ReferenceColumnName}\")";
-        }
-
-        #region ComparableObject
-
-        /// <summary>
-        /// Проверить образец на сходство с экземпляром.
-        /// </summary>
-        /// <param name="sample">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsSameAsObject(ComparableObject sample)
-        {
-            if (sample.GetType() != GetType())
-            {
-                return false;
-            }
-
-            ReferenceLink link = sample as ReferenceLink;
-
-            if (link.ColumnName != ColumnName)
-            {
-                return false;
-            }
-
-            if (link.ReferenceTableName != ReferenceTableName)
-            {
-                return false;
-            }
-
-            if (link.ReferenceColumnName != ReferenceColumnName)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         #endregion

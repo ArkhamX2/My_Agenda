@@ -3,100 +3,39 @@
 namespace MyAgenda.MVVM.Model
 {
     /// <summary>
-    /// Столбец типа INT в SQL.
-    /// Соответствует int в C#.
+    /// Столбец.
+    /// Может хранить в себе данные.
     /// </summary>
-    internal class IntColumn : Column
+    internal abstract class Column : ComparableObject
     {
-        /// <summary>
-        /// Конструктор.
-        /// </summary>
-        /// <param name="name">Название.</param>
-        public IntColumn(string name) : base(name)
-        {
-            // PASS.
-        }
-
-        /// <summary>
-        /// Доступ к данным.
-        /// </summary>
-        public override object Data
-        {
-            get => _data;
-            set
-            {
-                if (!IsDataTypeAllowed(value))
-                {
-                    throw new ArgumentException("Допускается использование данных только целочисленного типа.");
-                }
-
-                _data = value;
-            }
-        }
-
-        /// <summary>
-        /// Проверить корректность типа данных.
-        /// </summary>
-        /// <param name="data">Данные.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsDataTypeAllowed(object data)
-        {
-            return data is int;
-        }
-
-        /// <summary>
-        /// Проверить тип данных на возможность автоматического инкременирования.
-        /// </summary>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsDataTypeAutoIncrementable()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Получить представление типа данных в виде строки.
-        /// </summary>
-        /// <returns>Строка в формате SQL.</returns>
-        public override string DataTypeAsString()
-        {
-            return "INT";
-        }
-
+        /*                                            _     _              _     _           _
+         *   ___ ___  _ __ ___  _ __   __ _ _ __ __ _| |__ | | ___    ___ | |__ (_) ___  ___| |_
+         *  / __/ _ \| '_ ` _ \| '_ \ / _` | '__/ _` | '_ \| |/ _ \  / _ \| '_ \| |/ _ \/ __| __|
+         * | (_| (_) | | | | | | |_) | (_| | | | (_| | |_) | |  __/ | (_) | |_) | |  __/ (__| |_
+         *  \___\___/|_| |_| |_| .__/ \__,_|_|  \__,_|_.__/|_|\___|  \___/|_.__// |\___|\___|\__|
+         *                     |_|                                            |__/
+         */
         #region ComparableObject
 
         /// <summary>
-        /// Проверить образец на сходство с экземпляром.
+        /// Обработать проверку образца на сходство с экземпляром.
+        /// На данном этапе точно известно, что в роли экземпляра выступает столбец.
         /// </summary>
-        /// <param name="sample">Образец.</param>
+        /// <param name="column">Образец.</param>
         /// <returns>Статус проверки.</returns>
-        public override bool IsSameAsObject(ComparableObject sample)
+        public bool HandleIsSameAsObject(Column column)
         {
-            if (sample.GetType() != GetType())
+            if (column.IsNullable != IsNullable)
             {
                 return false;
             }
 
-            if (!HandleIsSameAsObject(sample as IntColumn))
+            if (column.IsPrimaryKey != IsPrimaryKey)
             {
                 return false;
             }
 
-            return true;
-        }
-
-        /// <summary>
-        /// Проверить образец на полное сходство с экземпляром.
-        /// </summary>
-        /// <param name="sample">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsExactSameAsObject(ComparableObject sample)
-        {
-            if (!IsSameAsObject(sample))
-            {
-                return false;
-            }
-
-            if (!HandleIsExactSameAsObject(sample as StringColumn))
+            if (column.IsAutoIncrementable != IsAutoIncrementable)
             {
                 return false;
             }
@@ -104,140 +43,21 @@ namespace MyAgenda.MVVM.Model
             return true;
         }
 
-        #endregion
-    }
-
-    /// <summary>
-    /// Столбец типа VARCHAR в SQL.
-    /// Соответствует string в C#.
-    /// </summary>
-    internal class StringColumn : Column
-    {
         /// <summary>
-        /// Максимальная длина данных по-умолчанию.
+        /// Обработать проверку образца на полное сходство с экземпляром.
+        /// На данном этапе точно известно, что в роли экземпляра выступает столбец.
+        /// Помимо сравнивания полей класса также сравниваются хранимые данные.
         /// </summary>
-        public const int DefaultMaxLength = 255;
-
-        /// <summary>
-        /// Максимальная длина данных.
-        /// </summary>
-        private int _maxLength = DefaultMaxLength;
-
-        /// <summary>
-        /// Конструктор.
-        /// </summary>
-        /// <param name="name">Название.</param>
-        public StringColumn(string name) : base(name)
-        {
-            // PASS.
-        }
-
-        /// <summary>
-        /// Расширенный конструктор.
-        /// </summary>
-        /// <param name="name">Название.</param>
-        /// <param name="maxLength">Максимальная длина данных.</param>
-        public StringColumn(string name, int maxLength) : this(name)
-        {
-            MaxLength = maxLength;
-        }
-
-        /// <summary>
-        /// Доступ к максимальной длине данных.
-        /// </summary>
-        public int MaxLength
-        {
-            get => _maxLength;
-            set => _maxLength = value;
-        }
-
-        /// <summary>
-        /// Доступ к данным.
-        /// </summary>
-        public override object Data
-        {
-            get => _data;
-            set
-            {
-                if (!IsDataTypeAllowed(value))
-                {
-                    throw new ArgumentException("Допускается использование данных только строкового типа.");
-                }
-
-                _data = value;
-            }
-        }
-
-        /// <summary>
-        /// Проверить корректность типа данных.
-        /// </summary>
-        /// <param name="data">Данные.</param>
+        /// <param name="column">Образец.</param>
         /// <returns>Статус проверки.</returns>
-        public override bool IsDataTypeAllowed(object data)
+        public bool HandleIsExactSameAsObject(Column column)
         {
-            return data is string;
-        }
-
-        /// <summary>
-        /// Проверить тип данных на возможность автоматического инкременирования.
-        /// </summary>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsDataTypeAutoIncrementable()
-        {
-            return false;
-        }
-
-        /// <summary>
-        /// Получить представление типа данных в виде строки.
-        /// </summary>
-        /// <returns>Строка в формате SQL.</returns>
-        public override string DataTypeAsString()
-        {
-            return $"VARCHAR({MaxLength})";
-        }
-
-        #region ComparableObject
-
-        /// <summary>
-        /// Проверить образец на сходство с экземпляром.
-        /// </summary>
-        /// <param name="sample">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsSameAsObject(ComparableObject sample)
-        {
-            if (sample.GetType() != GetType())
-            {
-                return false;
-            }
-
-            StringColumn column = sample as StringColumn;
-
             if (!HandleIsSameAsObject(column))
             {
                 return false;
             }
 
-            if (column.MaxLength != MaxLength)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Проверить образец на полное сходство с экземпляром.
-        /// </summary>
-        /// <param name="sample">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public override bool IsExactSameAsObject(ComparableObject sample)
-        {
-            if (!IsSameAsObject(sample))
-            {
-                return false;
-            }
-
-            if (!HandleIsExactSameAsObject(sample as StringColumn))
+            if (column.Data != Data)
             {
                 return false;
             }
@@ -246,20 +66,23 @@ namespace MyAgenda.MVVM.Model
         }
 
         #endregion
-    }
 
-    /// <summary>
-    /// Столбец.
-    /// </summary>
-    internal abstract class Column : ComparableObject
-    {
+        /*            _
+         *   ___ ___ | |_   _ _ __ ___  _ __
+         *  / __/ _ \| | | | | '_ ` _ \| '_ \
+         * | (_| (_) | | |_| | | | | | | | | |
+         *  \___\___/|_|\__,_|_| |_| |_|_| |_|
+         *
+         */
+        #region Column
+
         /// <summary>
         /// Название.
         /// </summary>
         private string _name;
 
         /// <summary>
-        /// Статус возможности использования значения null.
+        /// Статус возможности использования данных типа null.
         /// </summary>
         private bool _isNullable = false;
 
@@ -269,7 +92,7 @@ namespace MyAgenda.MVVM.Model
         private bool _isPrimaryKey = false;
 
         /// <summary>
-        /// Статус автоматического инкременирования значения.
+        /// Статус автоматического инкременирования данных.
         /// </summary>
         private bool _isAutoIncrementable = false;
 
@@ -334,10 +157,18 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Доступ к данным.
         /// </summary>
-        public abstract object Data
+        public object Data
         {
-            get;
-            set;
+            get => _data;
+            set
+            {
+                if (!IsDataTypeAllowed(value))
+                {
+                    throw new ArgumentException("Несоответствие типов данных.");
+                }
+
+                _data = value;
+            }
         }
 
         /// <summary>
@@ -382,53 +213,6 @@ namespace MyAgenda.MVVM.Model
             result += IsAutoIncrementable ? " AUTO_INCREMENT" : "";
 
             return result;
-        }
-
-        #region ComparableObject
-
-        /// <summary>
-        /// Обработать проверку образца на сходство с экземпляром.
-        /// </summary>
-        /// <param name="column">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public bool HandleIsSameAsObject(Column column)
-        {
-            if (column.IsNullable != IsNullable)
-            {
-                return false;
-            }
-
-            if (column.IsPrimaryKey != IsPrimaryKey)
-            {
-                return false;
-            }
-
-            if (column.IsAutoIncrementable != IsAutoIncrementable)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Обработать проверку образца на полное сходство с экземпляром.
-        /// </summary>
-        /// <param name="column">Образец.</param>
-        /// <returns>Статус проверки.</returns>
-        public bool HandleIsExactSameAsObject(Column column)
-        {
-            if (!HandleIsSameAsObject(column))
-            {
-                return false;
-            }
-
-            if (column.Data != Data)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         #endregion

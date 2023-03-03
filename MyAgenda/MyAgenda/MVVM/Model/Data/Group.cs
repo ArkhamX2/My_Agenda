@@ -75,11 +75,11 @@ namespace MyAgenda.MVVM.Model.Data
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать группу из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="course">Зависимая сущность.</param>
-        /// <returns>Сущность.</returns>
+        /// <param name="course">Курс.</param>
+        /// <returns>Группа.</returns>
         public static Group FromData(Schema data, Course course)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -161,17 +161,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Code
         {
             get => _code;
-            set
-            {
-                value = value.Trim().ToLower();
-
-                if (value.Length < CodeLengthMin || value.Length > CodeLengthMax)
-                {
-                    throw new ArgumentException("Длина кода не может выходить за допустимые пределы.");
-                }
-
-                _code = value;
-            }
+            set => _code = ValidateStringData(value, CodeLengthMin, CodeLengthMax);
         }
 
         #endregion

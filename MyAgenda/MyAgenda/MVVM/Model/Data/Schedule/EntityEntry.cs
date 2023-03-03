@@ -4,9 +4,10 @@ using System.Collections.Generic;
 namespace MyAgenda.MVVM.Model.Data.Schedule
 {
     /// <summary>
-    /// Тип позиции. Представление местоположения сущности в списке.
+    /// Позиция контейнера.
+    /// Фиксированное представление местоположения в списке.
     /// </summary>
-    internal enum PositionType
+    internal enum EntryPosition
     {
         First,
         Second,
@@ -30,79 +31,80 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public const int PositionTypeCount = 7;
 
         /// <summary>
-        /// Получить индекс через тип позиции.
+        /// Получить индекс через позицию.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
+        /// <param name="position">Позиция.</param>
         /// <returns>Индекс.</returns>
-        public static int GetIndex(PositionType type)
+        public static int GetIndex(EntryPosition position)
         {
-            return (int)type;
+            return (int)position;
         }
 
         /// <summary>
-        /// Получить тип позиции через индекс.
+        /// Получить позицию через индекс.
         /// </summary>
         /// <param name="index">Индекс.</param>
-        /// <returns>Тип позиции.</returns>
-        public static PositionType GetPositionType(int index)
+        /// <returns>Позиция.</returns>
+        public static EntryPosition GetPositionType(int index)
         {
-            return (PositionType)index;
+            return (EntryPosition)index;
         }
 
         /// <summary>
-        /// Получить список типов позиции.
+        /// Получить список позиций.
         /// </summary>
-        /// <returns>Список типов позиции.</returns>
-        public static List<PositionType> GetPositionTypeList()
+        /// <returns>Список позиций.</returns>
+        public static List<EntryPosition> GetPositionTypeList()
         {
-            return new List<PositionType>()
+            return new List<EntryPosition>()
             {
-                PositionType.First,
-                PositionType.Second,
-                PositionType.Third,
-                PositionType.Fourth,
-                PositionType.Fifth,
-                PositionType.Sixth,
-                PositionType.Seventh
+                EntryPosition.First,
+                EntryPosition.Second,
+                EntryPosition.Third,
+                EntryPosition.Fourth,
+                EntryPosition.Fifth,
+                EntryPosition.Sixth,
+                EntryPosition.Seventh
             };
         }
 
         /// <summary>
-        /// Тип позиции.
+        /// Позиция.
         /// </summary>
-        private PositionType _type;
+        private EntryPosition _position;
 
         /// <summary>
         /// Сущность.
+        /// Может быть не задана.
         /// </summary>
         private Entity _entity = null;
 
         /// <summary>
         /// Конструктор пустого контейнера.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
-        public EntityEntry(PositionType type)
+        /// <param name="position">Позиция.</param>
+        public EntityEntry(EntryPosition position)
         {
-            PositionType = type;
+            Position = position;
         }
 
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
+        /// <param name="position">Позиция.</param>
         /// <param name="entity">Сущность.</param>
-        protected EntityEntry(PositionType type, Entity entity) : this(type)
+        protected EntityEntry(EntryPosition position, Entity entity) : this(position)
         {
             Entity = entity;
         }
 
         /// <summary>
-        /// Доступ к типу позиции.
+        /// Доступ к позиции.
         /// </summary>
-        public PositionType PositionType
+        public EntryPosition Position
         {
-            get => _type;
-            private set => _type = value;
+            get => _position;
+            private set => _position = value;
         }
 
         /// <summary>
@@ -117,7 +119,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Доступ к индексу.
         /// </summary>
-        public int Index => GetIndex(PositionType);
+        public int Index => GetIndex(Position);
     }
 
     /// <summary>
@@ -128,44 +130,44 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
     internal class SubjectEntry : EntityEntry
     {
         /// <summary>
-        /// Получить время начала занятия через тип позиции.
+        /// Получить время начала занятия через позицию.
         /// </summary>
-        /// <param name="type">Тип позиции занятия.</param>
+        /// <param name="position">Позиция занятия.</param>
         /// <returns>Время начала занятия.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static string GetStartTime(PositionType type)
+        public static string GetStartTime(EntryPosition position)
         {
-            switch (type)
+            switch (position)
             {
-                case PositionType.First: return "8:30";
-                case PositionType.Second: return "10:15";
-                case PositionType.Third: return "12:15";
-                case PositionType.Fourth: return "14:00";
-                case PositionType.Fifth: return "15:45";
-                case PositionType.Sixth: return "17:30";
-                case PositionType.Seventh: return "19:15";
+                case EntryPosition.First: return "8:30";
+                case EntryPosition.Second: return "10:15";
+                case EntryPosition.Third: return "12:15";
+                case EntryPosition.Fourth: return "14:00";
+                case EntryPosition.Fifth: return "15:45";
+                case EntryPosition.Sixth: return "17:30";
+                case EntryPosition.Seventh: return "19:15";
             }
 
             throw new ArgumentException("Внутренняя ошибка.");
         }
 
         /// <summary>
-        /// Получить время окончания занятия через тип позиции.
+        /// Получить время окончания занятия через позицию.
         /// </summary>
-        /// <param name="type">Тип позиции занятия.</param>
+        /// <param name="position">Позиция занятия.</param>
         /// <returns>Время окончания занятия.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static string GetEndTime(PositionType type)
+        public static string GetEndTime(EntryPosition position)
         {
-            switch (type)
+            switch (position)
             {
-                case PositionType.First: return "10:05";
-                case PositionType.Second: return "11:50";
-                case PositionType.Third: return "13:50";
-                case PositionType.Fourth: return "15:35";
-                case PositionType.Fifth: return "17:20";
-                case PositionType.Sixth: return "19:05";
-                case PositionType.Seventh: return "20:50";
+                case EntryPosition.First: return "10:05";
+                case EntryPosition.Second: return "11:50";
+                case EntryPosition.Third: return "13:50";
+                case EntryPosition.Fourth: return "15:35";
+                case EntryPosition.Fifth: return "17:20";
+                case EntryPosition.Sixth: return "19:05";
+                case EntryPosition.Seventh: return "20:50";
             }
 
             throw new ArgumentException("Внутренняя ошибка.");
@@ -174,8 +176,8 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Конструктор пустого контейнера.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
-        public SubjectEntry(PositionType type) : base(type)
+        /// <param name="position">Позиция.</param>
+        public SubjectEntry(EntryPosition position) : base(position)
         {
             // PASS.
         }
@@ -183,9 +185,9 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
+        /// <param name="position">Позиция.</param>
         /// <param name="subject">Занятие.</param>
-        public SubjectEntry(PositionType type, Subject subject) : base(type, subject)
+        public SubjectEntry(EntryPosition position, Subject subject) : base(position, subject)
         {
             // PASS
         }
@@ -202,12 +204,12 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Доступ к времени начала занятия.
         /// </summary>
-        public string StartTime => GetStartTime(PositionType);
+        public string StartTime => GetStartTime(Position);
 
         /// <summary>
         /// Доступ к времени окончания занятия.
         /// </summary>
-        public string EndTime => GetEndTime(PositionType);
+        public string EndTime => GetEndTime(Position);
     }
 
     /// <summary>
@@ -218,22 +220,22 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
     internal class DayScheduleEntry : EntityEntry
     {
         /// <summary>
-        /// Получить день недели через тип позиции.
+        /// Получить день недели через позицию.
         /// </summary>
-        /// <param name="type">Тип позиции учебного дня.</param>
+        /// <param name="position">Позиция учебного дня.</param>
         /// <returns>День недели.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static string GetWeekDay(PositionType type)
+        public static string GetWeekDay(EntryPosition position)
         {
-            switch (type)
+            switch (position)
             {
-                case PositionType.First: return "понедельник";
-                case PositionType.Second: return "вторник";
-                case PositionType.Third: return "среда";
-                case PositionType.Fourth: return "четверг";
-                case PositionType.Fifth: return "пятница";
-                case PositionType.Sixth: return "суббота";
-                case PositionType.Seventh: return "воскресенье";
+                case EntryPosition.First: return "понедельник";
+                case EntryPosition.Second: return "вторник";
+                case EntryPosition.Third: return "среда";
+                case EntryPosition.Fourth: return "четверг";
+                case EntryPosition.Fifth: return "пятница";
+                case EntryPosition.Sixth: return "суббота";
+                case EntryPosition.Seventh: return "воскресенье";
             }
 
             throw new ArgumentException("Внутренняя ошибка.");
@@ -242,8 +244,8 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Конструктор пустого контейнера.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
-        public DayScheduleEntry(PositionType type) : base(type)
+        /// <param name="position">Позиция.</param>
+        public DayScheduleEntry(EntryPosition position) : base(position)
         {
             // PASS.
         }
@@ -251,9 +253,9 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="type">Тип позиции.</param>
+        /// <param name="position">Позиция.</param>
         /// <param name="day">Учебный день.</param>
-        public DayScheduleEntry(PositionType type, DaySchedule day) : base(type, day)
+        public DayScheduleEntry(EntryPosition position, DaySchedule day) : base(position, day)
         {
             // PASS
         }
@@ -270,6 +272,6 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Доступ к дню недели.
         /// </summary>
-        public string WeekDay => GetWeekDay(PositionType);
+        public string WeekDay => GetWeekDay(Position);
     }
 }

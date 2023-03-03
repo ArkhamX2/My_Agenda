@@ -4,6 +4,9 @@ namespace MyAgenda.MVVM.Model
 {
     /// <summary>
     /// Сущность данных.
+    /// В отличие от базовой сущности, позволяет наследникам иметь
+    /// схему таблицы и, соответственно, иметь возможность конвертации
+    /// данных объекта в схему для сохранения в базе данных.
     /// </summary>
     internal class DataEntity : Entity, ISchemable
     {
@@ -81,12 +84,12 @@ namespace MyAgenda.MVVM.Model
         #region DataEntity
 
         /// <summary>
-        /// Идентификатор
+        /// Идентификатор.
         /// </summary>
         private int _id;
 
         /// <summary>
-        /// Пустой конструктор.
+        /// Конструктор.
         /// </summary>
         public DataEntity(int id)
         {

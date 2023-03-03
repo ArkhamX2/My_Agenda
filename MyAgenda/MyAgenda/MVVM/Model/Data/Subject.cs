@@ -44,6 +44,7 @@ namespace MyAgenda.MVVM.Model.Data
 
         /// <summary>
         /// Минимальная длина кабинета.
+        /// Нулевое значение означает, что кабинет может быть не задан.
         /// </summary>
         public const int ClassroomLengthMin = 0;
 
@@ -91,10 +92,10 @@ namespace MyAgenda.MVVM.Model.Data
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать занятие из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <returns>Сущность.</returns>
+        /// <returns>Занятие.</returns>
         public static Subject FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -102,6 +103,7 @@ namespace MyAgenda.MVVM.Model.Data
                 throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
             }
 
+            // Если кабинет не задан.
             if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
             {
                 return new Subject(
@@ -116,11 +118,11 @@ namespace MyAgenda.MVVM.Model.Data
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать заняте из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="teacher">Зависимая сущность.</param>
-        /// <returns>Сущность.</returns>
+        /// <param name="teacher">Преподаватель.</param>
+        /// <returns>Занятие.</returns>
         public static Subject FromData(Schema data, Teacher teacher)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -133,6 +135,7 @@ namespace MyAgenda.MVVM.Model.Data
                 throw new ArgumentException("Переданные схема с данными и сущность не соответствуют друг другу.");
             }
 
+            // Если кабинет не задан.
             if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
             {
                 return new Subject(
@@ -259,17 +262,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Name
         {
             get => _name;
-            set
-            {
-                value = value.Trim().ToLower();
-
-                if (value.Length < NameLengthMin || value.Length > NameLengthMax)
-                {
-                    throw new ArgumentException("Длина названия не может выходить за допустимые пределы.");
-                }
-
-                _name = value;
-            }
+            set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         /// <summary>
@@ -278,17 +271,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Classroom
         {
             get => _classroom;
-            set
-            {
-                value = value.Trim().ToLower();
-
-                if (value.Length < ClassroomLengthMin || value.Length > ClassroomLengthMax)
-                {
-                    throw new ArgumentException("Длина кабинета не может выходить за допустимые пределы.");
-                }
-
-                _classroom = value;
-            }
+            set => _classroom = ValidateStringData(value, ClassroomLengthMin, ClassroomLengthMax);
         }
 
         /// <summary>

@@ -41,22 +41,22 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         #endregion
 
         /// <summary>
-        /// Получить тип позиции занятия через название столбца с идентификатором.
+        /// Получить позицию занятия через название столбца с идентификатором.
         /// </summary>
         /// <param name="columnName">Название столбца с идентификатором занятия.</param>
-        /// <returns>Тип позиции занятия.</returns>
+        /// <returns>Позиция занятия.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static PositionType GetPositionType(string columnName)
+        public static EntryPosition GetPositionType(string columnName)
         {
             switch (columnName)
             {
-                case FirstSubjectIdColumn: return PositionType.First;
-                case SecondSubjectIdColumn: return PositionType.Second;
-                case ThirdSubjectIdColumn: return PositionType.Third;
-                case FourthSubjectIdColumn: return PositionType.Fourth;
-                case FifthSubjectIdColumn: return PositionType.Fifth;
-                case SixthSubjectIdColumn: return PositionType.Sixth;
-                case SeventhSubjectIdColumn: return PositionType.Seventh;
+                case FirstSubjectIdColumn: return EntryPosition.First;
+                case SecondSubjectIdColumn: return EntryPosition.Second;
+                case ThirdSubjectIdColumn: return EntryPosition.Third;
+                case FourthSubjectIdColumn: return EntryPosition.Fourth;
+                case FifthSubjectIdColumn: return EntryPosition.Fifth;
+                case SixthSubjectIdColumn: return EntryPosition.Sixth;
+                case SeventhSubjectIdColumn: return EntryPosition.Seventh;
             }
 
             throw new ArgumentException("Некорректное название столбца.");
@@ -73,22 +73,22 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Получить название столбца с идентификатором занятия через тип позиции.
+        /// Получить название столбца с идентификатором занятия через позицию.
         /// </summary>
-        /// <param name="type">Тип позиции занятия.</param>
+        /// <param name="position">Позиция занятия.</param>
         /// <returns>Название столбца с идентификатором занятия.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static string GetIdColumnName(PositionType type)
+        public static string GetIdColumnName(EntryPosition position)
         {
-            switch (type)
+            switch (position)
             {
-                case PositionType.First: return FirstSubjectIdColumn;
-                case PositionType.Second: return SecondSubjectIdColumn;
-                case PositionType.Third: return ThirdSubjectIdColumn;
-                case PositionType.Fourth: return FourthSubjectIdColumn;
-                case PositionType.Fifth: return FifthSubjectIdColumn;
-                case PositionType.Sixth: return SixthSubjectIdColumn;
-                case PositionType.Seventh: return SeventhSubjectIdColumn;
+                case EntryPosition.First: return FirstSubjectIdColumn;
+                case EntryPosition.Second: return SecondSubjectIdColumn;
+                case EntryPosition.Third: return ThirdSubjectIdColumn;
+                case EntryPosition.Fourth: return FourthSubjectIdColumn;
+                case EntryPosition.Fifth: return FifthSubjectIdColumn;
+                case EntryPosition.Sixth: return SixthSubjectIdColumn;
+                case EntryPosition.Seventh: return SeventhSubjectIdColumn;
             }
 
             throw new ArgumentException("Внутренняя ошибка.");
@@ -101,7 +101,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <returns>Название столбца с идентификатором занятия.</returns>
         public static string GetIdColumnName(SubjectEntry entry)
         {
-            return GetIdColumnName(entry.PositionType);
+            return GetIdColumnName(entry.Position);
         }
 
         /*           _                          _     _
@@ -146,10 +146,10 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать учебный день из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <returns>Сущность.</returns>
+        /// <returns>Учебный день.</returns>
         public static DaySchedule FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -161,11 +161,11 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Инициализировать сущность из схемы с данными.
+        /// Инициализировать учебный день из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="subjectList">Список зависимых сущностей.</param>
-        /// <returns>Сущность.</returns>
+        /// <param name="subjectList">Список контейнеров занятий.</param>
+        /// <returns>Учебный день.</returns>
         public static DaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -186,6 +186,8 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
 
             data.SetColumnData(IdColumn, Id);
 
+            // "Расчехляем" контейнеры и вставляем занятия
+            // в нужные столбцы.
             foreach (SubjectEntry entry in SubjectList)
             {
                 if (entry.Subject == null)
@@ -211,7 +213,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         #region DaySchedule
 
         /// <summary>
-        /// Список занятий.
+        /// Список контейнеров занятий.
         /// Каждое занятие хранится в контейнере с закрепленной за ним позицией
         /// в списке и дополнительной связанной с ней информацией.
         /// </summary>
@@ -224,7 +226,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public DaySchedule(int id) : base(id)
         {
             // Заполнение списка занятий пустыми контейнерами.
-            foreach (PositionType type in SubjectEntry.GetPositionTypeList())
+            foreach (EntryPosition type in SubjectEntry.GetPositionTypeList())
             {
                 SubjectList[SubjectEntry.GetIndex(type)] = new SubjectEntry(type);
             }
@@ -234,8 +236,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="subjectList">Список занятий.</param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="subjectList">Список контейнеров занятий.</param>
         public DaySchedule(int id, List<SubjectEntry> subjectList) : this(id)
         {
             // Замена пустых контейнеров.
@@ -246,7 +247,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         }
 
         /// <summary>
-        /// Доступ к списку занятий.
+        /// Доступ к списку контейнеров занятий.
         /// </summary>
         public List<SubjectEntry> SubjectList => _subjectList;
 

@@ -133,6 +133,8 @@
   <ItemGroup>
     <Compile Include="MVVM\Model\ComparableObject.cs" />
     <Compile Include="MVVM\Model\Data\Schedule\EntityEntry.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\TeacherWeekSchedule.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\WeekSchedule.cs" />
     <Compile Include="MVVM\Model\IIndirectlySchemable.cs" />
     <Compile Include="MVVM\Model\ISchemable.cs" />
     <Compile Include="MVVM\Model\Schema.cs" />
@@ -142,7 +144,7 @@
     <Compile Include="MVVM\Model\Data\Faculty.cs" />
     <Compile Include="MVVM\Model\Data\Group.cs" />
     <Compile Include="MVVM\Model\Data\Schedule\DaySchedule.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\WeekSchedule.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\GroupWeekSchedule.cs" />
     <Compile Include="MVVM\Model\Data\Subject.cs" />
     <Compile Include="MVVM\Model\Data\Teacher.cs" />
     <Compile Include="MVVM\Model\Data\WeekType.cs" />

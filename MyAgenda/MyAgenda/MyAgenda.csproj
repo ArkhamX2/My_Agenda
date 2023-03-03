@@ -132,7 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Model\ComparableObject.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\DayScheduleEntry.cs" />
     <Compile Include="MVVM\Model\Data\Schedule\EntityEntry.cs" />
+    <Compile Include="MVVM\Model\Data\Schedule\SubjectEntry.cs" />
     <Compile Include="MVVM\Model\Data\Schedule\TeacherWeekSchedule.cs" />
     <Compile Include="MVVM\Model\Data\Schedule\WeekSchedule.cs" />
     <Compile Include="MVVM\Model\IIndirectlySchemable.cs" />

@@ -215,7 +215,7 @@ namespace MyAgenda.MVVM.Model.Data
             {
                 value = value.Trim().ToLower();
 
-                if (value.Length < NameLengthMin || value.Length > NameLengthMax)
+                if (value.Length < SurnameLengthMin || value.Length > SurnameLengthMax)
                 {
                     throw new ArgumentException("Длина фамилии не может выходить за допустимые пределы.");
                 }
@@ -234,7 +234,7 @@ namespace MyAgenda.MVVM.Model.Data
             {
                 value = value.Trim().ToLower();
 
-                if (value.Length < NameLengthMin || value.Length > NameLengthMax)
+                if (value.Length < PatronymicLengthMin || value.Length > PatronymicLengthMax)
                 {
                     throw new ArgumentException("Длина отчества не может выходить за допустимые пределы.");
                 }

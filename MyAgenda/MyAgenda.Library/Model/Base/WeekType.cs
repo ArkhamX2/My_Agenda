@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.Library.Entity.Base
+namespace MyAgenda.Library.Model.Base
 {
     /// <summary>
     /// Доступные типы учебой недели.

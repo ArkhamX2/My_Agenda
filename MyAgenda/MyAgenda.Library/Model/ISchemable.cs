@@ -1,4 +1,4 @@
-﻿namespace MyAgenda.Library.Entity
+﻿namespace MyAgenda.Library.Model
 {
     /// <summary>
     /// Интерфейс, позволяющий классу иметь схему таблицы в базе данных

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyAgenda.Library.Entity.Base;
-using MyAgenda.Library.Entity.Schedule.Entry;
+using MyAgenda.Library.Model.Base;
+using MyAgenda.Library.Model.Schedule.Entry;
 
-namespace MyAgenda.Library.Entity.Schedule.Week
+namespace MyAgenda.Library.Model.Schedule.Week
 {
     /// <summary>
     /// Учебная неделя.
     /// </summary>
-    public abstract class WeekSchedule : BaseEntity
+    public abstract class WeekSchedule : Entity
     {
         /*                    _               _              _       _
          * __      _____  ___| | __  ___  ___| |__   ___  __| |_   _| | ___

@@ -1,4 +1,4 @@
-﻿namespace MyAgenda.Library.Entity
+﻿namespace MyAgenda.Library.Model
 {
     /// <summary>
     /// Интерфейс, позволяющий классу унаследовать <see cref="ISchemable"/>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MyAgenda.Library.Entity.Schedule.Entry
+namespace MyAgenda.Library.Model.Schedule.Entry
 {
     /// <summary>
     /// Позиция контейнера.

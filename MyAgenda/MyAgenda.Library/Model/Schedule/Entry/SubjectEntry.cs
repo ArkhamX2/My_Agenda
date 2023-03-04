@@ -1,7 +1,7 @@
-﻿using MyAgenda.Library.Entity.Base;
+﻿using MyAgenda.Library.Model.Base;
 using System;
 
-namespace MyAgenda.Library.Entity.Schedule.Entry
+namespace MyAgenda.Library.Model.Schedule.Entry
 {
     /// <summary>
     /// Контейнер занятия с фиксированной позицией.

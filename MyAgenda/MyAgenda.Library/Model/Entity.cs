@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace MyAgenda.Library.Entity
+namespace MyAgenda.Library.Model
 {
     /// <summary>
     /// Базовая сущность.
     /// Представляет собой объект - строительный блок.
     /// Все объекты, участвующие в построении расписания наследуют этот класс.
     /// </summary>
-    public abstract class BaseEntity
+    public abstract class Entity
     {
         /// <summary>
         /// Произвести проверку и подготовку входных строковых данных.

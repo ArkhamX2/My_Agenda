@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyAgenda.Library.Entity.Schedule.Entry
+namespace MyAgenda.Library.Model.Schedule.Entry
 {
     /// <summary>
     /// Контейнер учебного дня с фиксированной позицией.

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.Library.Entity.Base
+namespace MyAgenda.Library.Model.Base
 {
     /// <summary>
-    /// Группа.
+    /// Курс.
     /// </summary>
-    public class Group : DataEntity
+    public class Course : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -22,27 +22,27 @@ namespace MyAgenda.Library.Entity.Base
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        internal const string Table = "group";
+        internal const string Table = "course";
 
         /// <summary>
-        /// Название столбца с идентификатором курса.
+        /// Название столбца с идентификатором факультета.
         /// </summary>
-        internal const string CourseIdColumn = "course_id";
+        internal const string FacultyIdColumn = "faculty_id";
 
         /// <summary>
-        /// Название столбца с кодом.
+        /// Название столбца с названием.
         /// </summary>
-        internal const string CodeColumn = "code";
+        internal const string NameColumn = "name";
 
         /// <summary>
         /// Минимальная длина названия.
         /// </summary>
-        public const int CodeLengthMin = 1;
+        public const int NameLengthMin = 1;
 
         /// <summary>
         /// Максимальная длина названия.
         /// </summary>
-        public const int CodeLengthMax = 32;
+        public const int NameLengthMax = 128;
 
         #endregion
 
@@ -65,39 +65,39 @@ namespace MyAgenda.Library.Entity.Base
                 List<DataColumn> columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
-                    new IntColumn(CourseIdColumn),
-                    new StringColumn(CodeColumn, CodeLengthMax)
+                    new IntColumn(FacultyIdColumn),
+                    new StringColumn(NameColumn, NameLengthMax)
                 };
 
                 return new Schema(Table, columnList, new List<ReferenceLink>()
                 {
-                    new ReferenceLink(CourseIdColumn, Course.Table, Course.IdColumn)
+                    new ReferenceLink(FacultyIdColumn, Faculty.Table, Faculty.IdColumn)
                 });
             }
         }
 
         /// <summary>
-        /// Инициализировать группу из схемы с данными.
+        /// Инициализировать курс из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="course">Курс.</param>
-        /// <returns>Группа.</returns>
-        internal static Group FromData(Schema data, Course course)
+        /// <param name="faculty">Факультет.</param>
+        /// <returns>Курс.</returns>
+        internal static Course FromData(Schema data, Faculty faculty)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
                 throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
             }
 
-            if (data.GetIntColumnData(CourseIdColumn) != course.Id)
+            if (data.GetIntColumnData(FacultyIdColumn) != faculty.Id)
             {
                 throw new ArgumentException("Переданные схема с данными и сущность не соответствуют друг другу.");
             }
 
-            return new Group(
+            return new Course(
                 data.GetIntColumnData(IdColumn),
-                course,
-                data.GetStringColumnData(CodeColumn));
+                faculty,
+                data.GetStringColumnData(NameColumn));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace MyAgenda.Library.Entity.Base
             Schema data = Schema;
 
             data.SetColumnData(IdColumn, Id);
-            data.SetColumnData(CourseIdColumn, Course.Id);
-            data.SetColumnData(CodeColumn, Code);
+            data.SetColumnData(FacultyIdColumn, Faculty.Id);
+            data.SetColumnData(NameColumn, Name);
 
             return data;
         }
@@ -118,52 +118,52 @@ namespace MyAgenda.Library.Entity.Base
         #endregion
 
         /*
-         *   __ _ _ __ ___  _   _ _ __
-         *  / _` | '__/ _ \| | | | '_ \
-         * | (_| | | | (_) | |_| | |_) |
-         *  \__, |_|  \___/ \__,_| .__/
-         *  |___/                |_|
+         *   ___ ___  _   _ _ __ ___  ___
+         *  / __/ _ \| | | | '__/ __|/ _ \
+         * | (_| (_) | |_| | |  \__ \  __/
+         *  \___\___/ \__,_|_|  |___/\___|
+         *
          */
-        #region Group
+        #region Course
 
         /// <summary>
-        /// Курс.
+        /// Факультет.
         /// </summary>
-        private Course _course;
+        private Faculty _faculty;
 
         /// <summary>
-        /// Код.
+        /// Название.
         /// </summary>
-        private string _code;
+        private string _name;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="course">Курс.</param>
-        /// <param name="code">Код.</param>
-        public Group(int id, Course course, string code) : base(id)
+        /// <param name="faculty">Факультет.</param>
+        /// <param name="name">Название.</param>
+        public Course(int id, Faculty faculty, string name) : base(id)
         {
-            Course = course;
-            Code = code;
+            Faculty = faculty;
+            Name = name;
         }
 
         /// <summary>
-        /// Доступ к курсу.
+        /// Доступ к факультету.
         /// </summary>
-        public Course Course
+        public Faculty Faculty
         {
-            get => _course;
-            private set => _course = value;
+            get => _faculty;
+            private set => _faculty = value;
         }
 
         /// <summary>
-        /// Доступ к коду.
+        /// Доступ к названию.
         /// </summary>
-        public string Code
+        public string Name
         {
-            get => _code;
-            private set => _code = ValidateStringData(value, CodeLengthMin, CodeLengthMax);
+            get => _name;
+            private set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         #endregion

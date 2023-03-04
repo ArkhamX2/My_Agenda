@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Data.Column;
-using MyAgenda.Library.Entity.Base;
-using MyAgenda.Library.Entity.Schedule.Entry;
+using MyAgenda.Library.Model.Base;
+using MyAgenda.Library.Model.Schedule.Entry;
 
-namespace MyAgenda.Library.Entity.Schedule.Week
+namespace MyAgenda.Library.Model.Schedule.Week
 {
     /// <summary>
     /// Учебная неделя для группы.

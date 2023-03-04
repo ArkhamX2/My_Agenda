@@ -1,7 +1,7 @@
 ﻿using System;
 using MyAgenda.Library.Data;
 
-namespace MyAgenda.Library.Entity
+namespace MyAgenda.Library.Model
 {
     /// <summary>
     /// Сущность данных.
@@ -9,7 +9,7 @@ namespace MyAgenda.Library.Entity
     /// схему таблицы и, соответственно, иметь возможность конвертации
     /// данных объекта в схему для сохранения в базе данных.
     /// </summary>
-    public class DataEntity : BaseEntity, ISchemable
+    public class DataEntity : Entity, ISchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___

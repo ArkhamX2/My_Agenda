@@ -1,9 +1,9 @@
-﻿namespace MyAgenda.MVVM.Model
+﻿namespace MyAgenda.Library
 {
     /// <summary>
     /// Класс для сравнения экземпляров различными способами.
     /// </summary>
-    internal abstract class ComparableObject
+    public abstract class ComparableObject
     {
         /// <summary>
         /// Проверить образец на сходство с экземпляром.

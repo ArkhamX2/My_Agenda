@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule.Entry
 {
     /// <summary>
     /// Позиция контейнера.
     /// Фиксированное представление местоположения в списке.
     /// </summary>
-    internal enum EntryPosition
+    public enum EntryPosition
     {
         First,
         Second,
@@ -22,7 +22,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
     /// Представляет собой связь индекса (ключа) и сущности (значения)
     /// для размещения в списке.
     /// </summary>
-    internal abstract class EntityEntry
+    public abstract class EntityEntry
     {
         /// <summary>
         /// Количество типов позиций.
@@ -76,7 +76,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Сущность.
         /// Может быть не задана.
         /// </summary>
-        private Entity _entity = null;
+        private DataEntity _entity = null;
 
         /// <summary>
         /// Конструктор пустого контейнера.
@@ -92,7 +92,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// </summary>
         /// <param name="position">Позиция.</param>
         /// <param name="entity">Сущность.</param>
-        protected EntityEntry(EntryPosition position, Entity entity) : this(position)
+        protected EntityEntry(EntryPosition position, DataEntity entity) : this(position)
         {
             Entity = entity;
         }
@@ -109,7 +109,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Доступ к сущности.
         /// </summary>
-        protected Entity Entity
+        protected DataEntity Entity
         {
             get => _entity;
             set => _entity = value;

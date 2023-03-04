@@ -1,4 +1,4 @@
-﻿namespace MyAgenda.MVVM.Model
+﻿namespace MyAgenda.Library.Entity
 {
     /// <summary>
     /// Интерфейс, позволяющий классу унаследовать <see cref="ISchemable"/>
@@ -6,7 +6,7 @@
     /// логика. Таким образом класс становится участником общения программы
     /// и базы данных, не принуждая к этому своих непосредственных родителей.
     /// </summary>
-    internal interface IIndirectlySchemable : ISchemable
+    public interface IIndirectlySchemable : ISchemable
     {
         /// <summary>
         /// Доступ к косвенному родителю со схемой таблицы.

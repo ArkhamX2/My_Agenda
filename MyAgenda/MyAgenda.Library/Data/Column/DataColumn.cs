@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace MyAgenda.MVVM.Model
+namespace MyAgenda.Library.Data.Column
 {
     /// <summary>
     /// Столбец.
     /// Может хранить в себе данные.
     /// </summary>
-    internal abstract class Column : ComparableObject
+    internal abstract class DataColumn : ComparableObject
     {
         /*                                            _     _              _     _           _
          *   ___ ___  _ __ ___  _ __   __ _ _ __ __ _| |__ | | ___    ___ | |__ (_) ___  ___| |_
@@ -23,7 +23,7 @@ namespace MyAgenda.MVVM.Model
         /// </summary>
         /// <param name="column">Образец.</param>
         /// <returns>Статус проверки.</returns>
-        public bool HandleIsSameAsObject(Column column)
+        public bool HandleIsSameAsObject(DataColumn column)
         {
             if (column.IsNullable != IsNullable)
             {
@@ -50,7 +50,7 @@ namespace MyAgenda.MVVM.Model
         /// </summary>
         /// <param name="column">Образец.</param>
         /// <returns>Статус проверки.</returns>
-        public bool HandleIsExactSameAsObject(Column column)
+        public bool HandleIsExactSameAsObject(DataColumn column)
         {
             if (!HandleIsSameAsObject(column))
             {
@@ -74,7 +74,7 @@ namespace MyAgenda.MVVM.Model
          *  \___\___/|_|\__,_|_| |_| |_|_| |_|
          *
          */
-        #region Column
+        #region DataColumn
 
         /// <summary>
         /// Название.
@@ -105,7 +105,7 @@ namespace MyAgenda.MVVM.Model
         /// Конструктор.
         /// </summary>
         /// <param name="name">Название.</param>
-        public Column(string name)
+        public DataColumn(string name)
         {
             Name = name;
         }

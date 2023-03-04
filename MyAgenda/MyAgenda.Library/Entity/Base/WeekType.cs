@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model.Data
+namespace MyAgenda.Library.Entity.Base
 {
     /// <summary>
     /// Доступные типы учебой недели.
@@ -11,12 +13,12 @@ namespace MyAgenda.MVVM.Model.Data
         Red,
         Blue
     }
-    
+
     /// <summary>
     /// Тип учебой недели.
     /// TODO: Решить, как с этим работать.
     /// </summary>
-    internal class WeekType : DataEntity
+    public class WeekType : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -30,12 +32,12 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "week_type";
+        internal const string Table = "week_type";
 
         /// <summary>
         /// Название столбца с типом.
         /// </summary>
-        public const string TypeColumn = "type";
+        internal const string TypeColumn = "type";
 
         #endregion
 
@@ -51,7 +53,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema => new Schema(Table, new List<Column>
+        internal static Schema Schema => new Schema(Table, new List<DataColumn>
         {
             new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
             new IntColumn(TypeColumn)
@@ -62,7 +64,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Тип учебной недели.</returns>
-        public static WeekType FromData(Schema data)
+        internal static WeekType FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -78,7 +80,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public override Schema ToData()
+        internal override Schema ToData()
         {
             Schema data = Schema;
 
@@ -119,7 +121,7 @@ namespace MyAgenda.MVVM.Model.Data
         public AvailableWeekType Type
         {
             get => _type;
-            set => _type = value;
+            private set => _type = value;
         }
 
         /// <summary>

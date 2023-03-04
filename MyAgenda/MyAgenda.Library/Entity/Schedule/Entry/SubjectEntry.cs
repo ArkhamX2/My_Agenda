@@ -1,13 +1,14 @@
-﻿using System;
+﻿using MyAgenda.Library.Entity.Base;
+using System;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule.Entry
 {
     /// <summary>
     /// Контейнер занятия с фиксированной позицией.
     /// Представляет собой связь индекса, занятия и дополнительной информации
     /// для размещения в списке.
     /// </summary>
-    internal class SubjectEntry : EntityEntry
+    public class SubjectEntry : EntityEntry
     {
         /// <summary>
         /// Получить время начала занятия через позицию.
@@ -78,7 +79,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public Subject Subject
         {
             get => Entity as Subject;
-            set => Entity = value;
+            private set => Entity = value;
         }
 
         /// <summary>

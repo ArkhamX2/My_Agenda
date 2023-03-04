@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule.Entry
 {
     /// <summary>
     /// Контейнер учебного дня с фиксированной позицией.
     /// Представляет собой связь индекса, учебного дня и дополнительной информации
     /// для размещения в списке.
     /// </summary>
-    internal class DayScheduleEntry : EntityEntry
+    public class DayScheduleEntry : EntityEntry
     {
         /// <summary>
         /// Получить день недели через позицию.
@@ -56,7 +56,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public DaySchedule DaySchedule
         {
             get => Entity as DaySchedule;
-            set => Entity = value;
+            private set => Entity = value;
         }
 
         /// <summary>

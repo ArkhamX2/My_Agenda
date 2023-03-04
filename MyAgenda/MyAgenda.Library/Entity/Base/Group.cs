@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model.Data
+namespace MyAgenda.Library.Entity.Base
 {
     /// <summary>
     /// Группа.
     /// </summary>
-    internal class Group : DataEntity
+    public class Group : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -20,17 +22,17 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "group";
+        internal const string Table = "group";
 
         /// <summary>
         /// Название столбца с идентификатором курса.
         /// </summary>
-        public const string CourseIdColumn = "course_id";
+        internal const string CourseIdColumn = "course_id";
 
         /// <summary>
         /// Название столбца с кодом.
         /// </summary>
-        public const string CodeColumn = "code";
+        internal const string CodeColumn = "code";
 
         /// <summary>
         /// Минимальная длина названия.
@@ -56,11 +58,11 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema
+        internal static Schema Schema
         {
             get
             {
-                List<Column> columnList = new List<Column>
+                List<DataColumn> columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(CourseIdColumn),
@@ -80,7 +82,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// <param name="data">Схема, заполненная данными.</param>
         /// <param name="course">Курс.</param>
         /// <returns>Группа.</returns>
-        public static Group FromData(Schema data, Course course)
+        internal static Group FromData(Schema data, Course course)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -102,7 +104,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public override Schema ToData()
+        internal override Schema ToData()
         {
             Schema data = Schema;
 
@@ -152,7 +154,7 @@ namespace MyAgenda.MVVM.Model.Data
         public Course Course
         {
             get => _course;
-            set => _course = value;
+            private set => _course = value;
         }
 
         /// <summary>
@@ -161,7 +163,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Code
         {
             get => _code;
-            set => _code = ValidateStringData(value, CodeLengthMin, CodeLengthMax);
+            private set => _code = ValidateStringData(value, CodeLengthMin, CodeLengthMax);
         }
 
         #endregion

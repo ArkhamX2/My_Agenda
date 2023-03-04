@@ -1,6 +1,7 @@
 ﻿using System;
+using MyAgenda.Library.Data;
 
-namespace MyAgenda.MVVM.Model
+namespace MyAgenda.Library.Entity
 {
     /// <summary>
     /// Сущность данных.
@@ -8,7 +9,7 @@ namespace MyAgenda.MVVM.Model
     /// схему таблицы и, соответственно, иметь возможность конвертации
     /// данных объекта в схему для сохранения в базе данных.
     /// </summary>
-    internal class DataEntity : Entity, ISchemable
+    public class DataEntity : BaseEntity, ISchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -22,7 +23,7 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Название столбца с идентификатором.
         /// </summary>
-        public const string IdColumn = "id";
+        internal const string IdColumn = "id";
 
         /// <summary>
         /// Минимальный идентификатор.
@@ -32,7 +33,7 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Незаданный идентификатор.
         /// </summary>
-        public const int IdUndefined = -1;
+        internal const int IdUndefined = -1;
 
         #endregion
 
@@ -51,7 +52,7 @@ namespace MyAgenda.MVVM.Model
         public int Id
         {
             get => _id;
-            set
+            protected set
             {
                 if (value < IdMin)
                 {
@@ -67,11 +68,11 @@ namespace MyAgenda.MVVM.Model
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
         /// <exception cref="NotSupportedException"></exception>
-        public virtual Schema ToData()
+        internal virtual Schema ToData()
         {
             throw new NotSupportedException("Получение схемы для базовой сущности данных невозможно.");
         }
-        
+
         #endregion
 
         /*      _       _                     _   _ _
@@ -91,7 +92,7 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Конструктор.
         /// </summary>
-        public DataEntity(int id)
+        internal DataEntity(int id)
         {
             Id = id;
         }

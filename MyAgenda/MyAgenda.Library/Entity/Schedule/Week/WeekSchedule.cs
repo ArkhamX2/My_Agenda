@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Entity.Base;
+using MyAgenda.Library.Entity.Schedule.Entry;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule.Week
 {
     /// <summary>
     /// Учебная неделя.
     /// </summary>
-    internal abstract class WeekSchedule : Entity
+    public abstract class WeekSchedule : BaseEntity
     {
         /*                    _               _              _       _
          * __      _____  ___| | __  ___  ___| |__   ___  __| |_   _| | ___
@@ -82,7 +84,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public WeekType WeekType
         {
             get => _weekType;
-            set => _weekType = value;
+            protected set => _weekType = value;
         }
 
         /// <summary>

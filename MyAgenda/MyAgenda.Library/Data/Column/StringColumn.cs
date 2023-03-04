@@ -1,11 +1,11 @@
-﻿namespace MyAgenda.MVVM.Model
+﻿namespace MyAgenda.Library.Data.Column
 {
     /// <summary>
-    /// Столбец типа INT в SQL.
-    /// Соответствует int в C#.
+    /// Столбец типа VARCHAR в SQL.
+    /// Соответствует string в C#.
     /// Может хранить в себе данные.
     /// </summary>
-    internal class IntColumn : Column
+    internal class StringColumn : DataColumn
     {
         /*                                            _     _              _     _           _
          *   ___ ___  _ __ ___  _ __   __ _ _ __ __ _| |__ | | ___    ___ | |__ (_) ___  ___| |_
@@ -28,7 +28,14 @@
                 return false;
             }
 
-            if (!HandleIsSameAsObject(sample as IntColumn))
+            StringColumn column = sample as StringColumn;
+
+            if (!HandleIsSameAsObject(column))
+            {
+                return false;
+            }
+
+            if (column.MaxLength != MaxLength)
             {
                 return false;
             }
@@ -66,15 +73,44 @@
          *  \___\___/|_|\__,_|_| |_| |_|_| |_|
          *
          */
-        #region Column
+        #region DataColumn
+
+        /// <summary>
+        /// Максимальная длина данных по-умолчанию.
+        /// </summary>
+        public const int DefaultMaxLength = 255;
+
+        /// <summary>
+        /// Максимальная длина данных.
+        /// </summary>
+        private int _maxLength = DefaultMaxLength;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="name">Название.</param>
-        public IntColumn(string name) : base(name)
+        public StringColumn(string name) : base(name)
         {
             // PASS.
+        }
+
+        /// <summary>
+        /// Расширенный конструктор.
+        /// </summary>
+        /// <param name="name">Название.</param>
+        /// <param name="maxLength">Максимальная длина данных.</param>
+        public StringColumn(string name, int maxLength) : this(name)
+        {
+            MaxLength = maxLength;
+        }
+
+        /// <summary>
+        /// Доступ к максимальной длине данных.
+        /// </summary>
+        public int MaxLength
+        {
+            get => _maxLength;
+            set => _maxLength = value;
         }
 
         /// <summary>
@@ -84,7 +120,7 @@
         /// <returns>Статус проверки.</returns>
         public override bool IsDataTypeAllowed(object data)
         {
-            return data is int;
+            return data is string;
         }
 
         /// <summary>
@@ -93,7 +129,7 @@
         /// <returns>Статус проверки.</returns>
         public override bool IsDataTypeAutoIncrementable()
         {
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -102,7 +138,7 @@
         /// <returns>Строка в формате SQL.</returns>
         public override string DataTypeAsString()
         {
-            return "INT";
+            return $"VARCHAR({MaxLength})";
         }
 
         #endregion

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Entity.Base;
+using MyAgenda.Library.Entity.Schedule.Entry;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule.Week
 {
     /// <summary>
     /// Учебная неделя для преподавателя.
     /// Собирается динамически. Не имеет схемы таблицы.
     /// </summary>
-    internal class TeacherWeekSchedule : WeekSchedule
+    public class TeacherWeekSchedule : WeekSchedule
     {
         /*                    _               _              _       _
          * __      _____  ___| | __  ___  ___| |__   ___  __| |_   _| | ___
@@ -46,7 +48,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public Teacher Teacher
         {
             get => Target as Teacher;
-            set => Target = value;
+            private set => Target = value;
         }
 
         #endregion

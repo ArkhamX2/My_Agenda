@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
+using MyAgenda.Library.Entity.Base;
+using MyAgenda.Library.Entity.Schedule.Entry;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule
 {
     /// <summary>
     /// Учебный день.
     /// </summary>
-    internal class DaySchedule : DataEntity
+    public class DaySchedule : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -20,18 +24,18 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "day_schedule";
+        internal const string Table = "day_schedule";
 
         /// <summary>
         /// Название столбца с идентификатором занятия.
         /// </summary>
-        public const string FirstSubjectIdColumn = "first_subject_id";
-        public const string SecondSubjectIdColumn = "second_subject_id";
-        public const string ThirdSubjectIdColumn = "third_subject_id";
-        public const string FourthSubjectIdColumn = "fourth_subject_id";
-        public const string FifthSubjectIdColumn = "fifth_subject_id";
-        public const string SixthSubjectIdColumn = "sixth_subject_id";
-        public const string SeventhSubjectIdColumn = "seventh_subject_id";
+        internal const string FirstSubjectIdColumn = "first_subject_id";
+        internal const string SecondSubjectIdColumn = "second_subject_id";
+        internal const string ThirdSubjectIdColumn = "third_subject_id";
+        internal const string FourthSubjectIdColumn = "fourth_subject_id";
+        internal const string FifthSubjectIdColumn = "fifth_subject_id";
+        internal const string SixthSubjectIdColumn = "sixth_subject_id";
+        internal const string SeventhSubjectIdColumn = "seventh_subject_id";
 
         /// <summary>
         /// Количество занятий.
@@ -116,11 +120,11 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema
+        internal static Schema Schema
         {
             get
             {
-                List<Column> columnList = new List<Column>
+                List<DataColumn> columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(FirstSubjectIdColumn) { IsNullable = true },
@@ -150,7 +154,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Учебный день.</returns>
-        public static DaySchedule FromData(Schema data)
+        internal static DaySchedule FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -166,7 +170,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <param name="data">Схема, заполненная данными.</param>
         /// <param name="subjectList">Список контейнеров занятий.</param>
         /// <returns>Учебный день.</returns>
-        public static DaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
+        internal static DaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -180,7 +184,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public override Schema ToData()
+        internal override Schema ToData()
         {
             Schema data = Schema;
 

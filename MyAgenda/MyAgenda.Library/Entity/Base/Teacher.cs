@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model.Data
+namespace MyAgenda.Library.Entity.Base
 {
     /// <summary>
     /// Преподаватель.
     /// </summary>
-    internal class Teacher : DataEntity
+    public class Teacher : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -20,22 +22,22 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "teacher";
+        internal const string Table = "teacher";
 
         /// <summary>
         /// Название столбца с именем.
         /// </summary>
-        public const string NameColumn = "name";
+        internal const string NameColumn = "name";
 
         /// <summary>
         /// Название столбца с фамилией.
         /// </summary>
-        public const string SurnameColumn = "surname";
+        internal const string SurnameColumn = "surname";
 
         /// <summary>
         /// Название столбца с отчеством.
         /// </summary>
-        public const string PatronymicColumn = "patronymic";
+        internal const string PatronymicColumn = "patronymic";
 
         /// <summary>
         /// Минимальная длина имени.
@@ -82,7 +84,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema => new Schema(Table, new List<Column>
+        internal static Schema Schema => new Schema(Table, new List<DataColumn>
         {
             new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
             new StringColumn(NameColumn, NameLengthMax),
@@ -95,7 +97,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Преподаватель.</returns>
-        public static Teacher FromData(Schema data)
+        internal static Teacher FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -122,7 +124,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public override Schema ToData()
+        internal override Schema ToData()
         {
             Schema data = Schema;
 
@@ -195,7 +197,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Name
         {
             get => _name;
-            set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
+            private set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         /// <summary>
@@ -204,7 +206,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Surname
         {
             get => _surname;
-            set => _surname = ValidateStringData(value, SurnameLengthMin, SurnameLengthMax);
+            private set => _surname = ValidateStringData(value, SurnameLengthMin, SurnameLengthMax);
         }
 
         /// <summary>
@@ -213,7 +215,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Patronymic
         {
             get => _patronymic;
-            set => _patronymic = ValidateStringData(value, PatronymicLengthMin, PatronymicLengthMax);
+            private set => _patronymic = ValidateStringData(value, PatronymicLengthMin, PatronymicLengthMax);
         }
 
         /// <summary>

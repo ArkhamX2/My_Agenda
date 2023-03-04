@@ -131,29 +131,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MVVM\Model\ComparableObject.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\DayScheduleEntry.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\EntityEntry.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\SubjectEntry.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\TeacherWeekSchedule.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\WeekSchedule.cs" />
-    <Compile Include="MVVM\Model\IIndirectlySchemable.cs" />
-    <Compile Include="MVVM\Model\IntColumn.cs" />
-    <Compile Include="MVVM\Model\ISchemable.cs" />
-    <Compile Include="MVVM\Model\Schema.cs" />
-    <Compile Include="MVVM\Model\Column.cs" />
-    <Compile Include="MVVM\Model\DataEntity.cs" />
-    <Compile Include="MVVM\Model\Data\Course.cs" />
-    <Compile Include="MVVM\Model\Data\Faculty.cs" />
-    <Compile Include="MVVM\Model\Data\Group.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\DaySchedule.cs" />
-    <Compile Include="MVVM\Model\Data\Schedule\GroupWeekSchedule.cs" />
-    <Compile Include="MVVM\Model\Data\Subject.cs" />
-    <Compile Include="MVVM\Model\Data\Teacher.cs" />
-    <Compile Include="MVVM\Model\Data\WeekType.cs" />
-    <Compile Include="MVVM\Model\Entity.cs" />
-    <Compile Include="MVVM\Model\ReferenceLink.cs" />
-    <Compile Include="MVVM\Model\StringColumn.cs" />
     <Compile Include="MVVM\ViewModel\DayViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
@@ -207,6 +184,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyAgenda.Library\MyAgenda.Library.csproj">
+      <Project>{9e9dc70d-9dcf-4114-a3fd-9edeb19e4a1e}</Project>
+      <Name>MyAgenda.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

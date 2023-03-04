@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model
+namespace MyAgenda.Library.Data
 {
     /// <summary>
     /// Схема таблицы. Служит одновременно и как описание таблицы
@@ -39,7 +40,7 @@ namespace MyAgenda.MVVM.Model
                 return false;
             }
 
-            foreach (Column item in ColumnList)
+            foreach (DataColumn item in ColumnList)
             {
                 if (!schema.HasColumn(item.Name))
                 {
@@ -95,7 +96,7 @@ namespace MyAgenda.MVVM.Model
                 return false;
             }
 
-            foreach (Column item in schema.ColumnList)
+            foreach (DataColumn item in schema.ColumnList)
             {
                 if (!HasColumn(item.Name))
                 {
@@ -150,7 +151,7 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Список столбцов.
         /// </summary>
-        private List<Column> _columnList = new List<Column>();
+        private List<DataColumn> _columnList = new List<DataColumn>();
 
         /// <summary>
         /// Список ссылок.
@@ -162,7 +163,7 @@ namespace MyAgenda.MVVM.Model
         /// </summary>
         /// <param name="name">Название.</param>
         /// <param name="columnList">Список столбцов.</param>
-        public Schema(string name, List<Column> columnList)
+        public Schema(string name, List<DataColumn> columnList)
         {
             Name = name;
             ColumnList = columnList;
@@ -174,7 +175,7 @@ namespace MyAgenda.MVVM.Model
         /// <param name="name">Название.</param>
         /// <param name="columnList">Список столбцов.</param>
         /// <param name="referenceList">Список ссылок.</param>
-        public Schema(string name, List<Column> columnList, List<ReferenceLink> referenceList) : this(name, columnList)
+        public Schema(string name, List<DataColumn> columnList, List<ReferenceLink> referenceList) : this(name, columnList)
         {
             ReferenceList = referenceList;
         }
@@ -191,7 +192,7 @@ namespace MyAgenda.MVVM.Model
         /// <summary>
         /// Доступ к списку столбцов.
         /// </summary>
-        public List<Column> ColumnList
+        public List<DataColumn> ColumnList
         {
             get => _columnList;
             protected set => _columnList = value;
@@ -213,7 +214,7 @@ namespace MyAgenda.MVVM.Model
                 {
                     found = false;
 
-                    foreach (Column column in ColumnList)
+                    foreach (DataColumn column in ColumnList)
                     {
                         if (link.ColumnName == column.Name)
                         {
@@ -240,7 +241,7 @@ namespace MyAgenda.MVVM.Model
         /// <returns>Статус проверки.</returns>
         public bool HasColumn(string columnName)
         {
-            foreach (Column item in ColumnList)
+            foreach (DataColumn item in ColumnList)
             {
                 if (item.Name == columnName)
                 {
@@ -257,9 +258,9 @@ namespace MyAgenda.MVVM.Model
         /// <param name="columnName">Название столбца.</param>
         /// <returns>Столбец.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public Column GetColumn(string columnName)
+        public DataColumn GetColumn(string columnName)
         {
-            foreach (Column item in ColumnList)
+            foreach (DataColumn item in ColumnList)
             {
                 if (item.Name == columnName)
                 {
@@ -271,13 +272,17 @@ namespace MyAgenda.MVVM.Model
         }
 
         /// <summary>
-        /// Проверить наличие данных в столбце с указанным названием.
+        /// Проверить наличие столбца с указанным названием и данных в в нем.
         /// </summary>
         /// <param name="columnName">Название столбца.</param>
         /// <returns>Статус проверки.</returns>
-        /// <exception cref="ArgumentException"></exception>
         public bool HasColumnData(string columnName)
         {
+            if (!HasColumn(columnName))
+            {
+                return false;
+            }
+
             return GetColumn(columnName).HasData();
         }
 
@@ -305,9 +310,7 @@ namespace MyAgenda.MVVM.Model
         /// <exception cref="ArgumentException"></exception>
         public int GetIntColumnData(string columnName)
         {
-            Column column = GetColumn(columnName);
-
-            if (column.GetType() != typeof(IntColumn))
+            if (GetColumn(columnName).GetType() != typeof(IntColumn))
             {
                 throw new ArgumentException("Столбец с указанным названием не предназначен для работы с целочисленным типом данных.");
             }
@@ -323,9 +326,7 @@ namespace MyAgenda.MVVM.Model
         /// <exception cref="ArgumentException"></exception>
         public string GetStringColumnData(string columnName)
         {
-            Column column = GetColumn(columnName);
-
-            if (column.GetType() != typeof(IntColumn))
+            if (GetColumn(columnName).GetType() != typeof(IntColumn))
             {
                 throw new ArgumentException("Столбец с указанным названием не предназначен для работы со строковым типом данных.");
             }
@@ -341,7 +342,7 @@ namespace MyAgenda.MVVM.Model
         /// <exception cref="ArgumentException"></exception>
         public void SetColumnData(string columnName, object data)
         {
-            Column column = GetColumn(columnName);
+            DataColumn column = GetColumn(columnName);
 
             if (!column.IsDataTypeAllowed(data))
             {
@@ -359,7 +360,7 @@ namespace MyAgenda.MVVM.Model
         {
             string result = $"CREATE TABLE IF NOT EXISTS \"{Name}\" (";
 
-            foreach (Column item in ColumnList)
+            foreach (DataColumn item in ColumnList)
             {
                 result += $"{item}, ";
             }

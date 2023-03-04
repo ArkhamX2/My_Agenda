@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model.Data
+namespace MyAgenda.Library.Entity.Base
 {
     /// <summary>
-    /// Курс.
+    /// Факультет.
     /// </summary>
-    internal class Course : DataEntity
+    public class Faculty : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -20,17 +22,12 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "course";
-
-        /// <summary>
-        /// Название столбца с идентификатором факультета.
-        /// </summary>
-        public const string FacultyIdColumn = "faculty_id";
+        internal const string Table = "faculty";
 
         /// <summary>
         /// Название столбца с названием.
         /// </summary>
-        public const string NameColumn = "name";
+        internal const string NameColumn = "name";
 
         /// <summary>
         /// Минимальная длина названия.
@@ -40,7 +37,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Максимальная длина названия.
         /// </summary>
-        public const int NameLengthMax = 128;
+        public const int NameLengthMax = 255;
 
         #endregion
 
@@ -56,45 +53,26 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema
+        internal static Schema Schema => new Schema(Table, new List<DataColumn>
         {
-            get
-            {
-                List<Column> columnList = new List<Column>
-                {
-                    new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
-                    new IntColumn(FacultyIdColumn),
-                    new StringColumn(NameColumn, NameLengthMax)
-                };
-
-                return new Schema(Table, columnList, new List<ReferenceLink>()
-                {
-                    new ReferenceLink(FacultyIdColumn, Faculty.Table, Faculty.IdColumn)
-                });
-            }
-        }
+            new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
+            new StringColumn(NameColumn, NameLengthMax)
+        });
 
         /// <summary>
-        /// Инициализировать курс из схемы с данными.
+        /// Инициализировать факультет из схемы с данными.
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
-        /// <param name="faculty">Факультет.</param>
-        /// <returns>Курс.</returns>
-        public static Course FromData(Schema data, Faculty faculty)
+        /// <returns>Факультет.</returns>
+        internal static Faculty FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
                 throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
             }
 
-            if (data.GetIntColumnData(FacultyIdColumn) != faculty.Id)
-            {
-                throw new ArgumentException("Переданные схема с данными и сущность не соответствуют друг другу.");
-            }
-
-            return new Course(
+            return new Faculty(
                 data.GetIntColumnData(IdColumn),
-                faculty,
                 data.GetStringColumnData(NameColumn));
         }
 
@@ -102,12 +80,11 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public override Schema ToData()
+        internal override Schema ToData()
         {
             Schema data = Schema;
 
             data.SetColumnData(IdColumn, Id);
-            data.SetColumnData(FacultyIdColumn, Faculty.Id);
             data.SetColumnData(NameColumn, Name);
 
             return data;
@@ -115,19 +92,14 @@ namespace MyAgenda.MVVM.Model.Data
 
         #endregion
 
-        /*
-         *   ___ ___  _   _ _ __ ___  ___
-         *  / __/ _ \| | | | '__/ __|/ _ \
-         * | (_| (_) | |_| | |  \__ \  __/
-         *  \___\___/ \__,_|_|  |___/\___|
-         *
+        /*   __                  _ _
+         *  / _| __ _  ___ _   _| | |_ _   _
+         * | |_ / _` |/ __| | | | | __| | | |
+         * |  _| (_| | (__| |_| | | |_| |_| |
+         * |_|  \__,_|\___|\__,_|_|\__|\__, |
+         *                             |___/
          */
-        #region Course
-
-        /// <summary>
-        /// Факультет.
-        /// </summary>
-        private Faculty _faculty;
+        #region Faculty
 
         /// <summary>
         /// Название.
@@ -138,21 +110,10 @@ namespace MyAgenda.MVVM.Model.Data
         /// Конструктор.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        /// <param name="faculty">Факультет.</param>
         /// <param name="name">Название.</param>
-        public Course(int id, Faculty faculty, string name) : base(id)
+        public Faculty(int id, string name) : base(id)
         {
-            Faculty = faculty;
             Name = name;
-        }
-
-        /// <summary>
-        /// Доступ к факультету.
-        /// </summary>
-        public Faculty Faculty
-        {
-            get => _faculty;
-            set => _faculty = value;
         }
 
         /// <summary>
@@ -161,7 +122,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Name
         {
             get => _name;
-            set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
+            private set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         #endregion

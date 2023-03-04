@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace MyAgenda.MVVM.Model
+namespace MyAgenda.Library.Entity
 {
     /// <summary>
     /// Базовая сущность.
     /// Представляет собой объект - строительный блок.
     /// Все объекты, участвующие в построении расписания наследуют этот класс.
     /// </summary>
-    internal abstract class Entity
+    public abstract class BaseEntity
     {
         /// <summary>
         /// Произвести проверку и подготовку входных строковых данных.

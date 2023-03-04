@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model.Data
+namespace MyAgenda.Library.Entity.Base
 {
     /// <summary>
     /// Занятие.
     /// </summary>
-    internal class Subject : DataEntity
+    public class Subject : DataEntity
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -20,22 +22,22 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "subject";
+        internal const string Table = "subject";
 
         /// <summary>
         /// Название столбца с идентификатором преподавателя.
         /// </summary>
-        public const string TeacherIdColumn = "teacher_id";
+        internal const string TeacherIdColumn = "teacher_id";
 
         /// <summary>
         /// Название столбца с названием.
         /// </summary>
-        public const string NameColumn = "name";
+        internal const string NameColumn = "name";
 
         /// <summary>
         /// Название столбца с кабинетом.
         /// </summary>
-        public const string ClassroomColumn = "classroom";
+        internal const string ClassroomColumn = "classroom";
 
         /// <summary>
         /// Минимальная длина названия.
@@ -72,11 +74,11 @@ namespace MyAgenda.MVVM.Model.Data
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema
+        internal static Schema Schema
         {
             get
             {
-                List<Column> columnList = new List<Column>
+                List<DataColumn> columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(TeacherIdColumn) { IsNullable = true },
@@ -96,7 +98,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Занятие.</returns>
-        public static Subject FromData(Schema data)
+        internal static Subject FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -123,7 +125,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// <param name="data">Схема, заполненная данными.</param>
         /// <param name="teacher">Преподаватель.</param>
         /// <returns>Занятие.</returns>
-        public static Subject FromData(Schema data, Teacher teacher)
+        internal static Subject FromData(Schema data, Teacher teacher)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -155,7 +157,7 @@ namespace MyAgenda.MVVM.Model.Data
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public override Schema ToData()
+        internal override Schema ToData()
         {
             Schema data = Schema;
 
@@ -253,7 +255,7 @@ namespace MyAgenda.MVVM.Model.Data
         public Teacher Teacher
         {
             get => _teacher;
-            set => _teacher = value;
+            private set => _teacher = value;
         }
 
         /// <summary>
@@ -262,7 +264,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Name
         {
             get => _name;
-            set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
+            private set => _name = ValidateStringData(value, NameLengthMin, NameLengthMax);
         }
 
         /// <summary>
@@ -271,7 +273,7 @@ namespace MyAgenda.MVVM.Model.Data
         public string Classroom
         {
             get => _classroom;
-            set => _classroom = ValidateStringData(value, ClassroomLengthMin, ClassroomLengthMax);
+            private set => _classroom = ValidateStringData(value, ClassroomLengthMin, ClassroomLengthMax);
         }
 
         /// <summary>

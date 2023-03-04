@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
+using MyAgenda.Library.Entity.Base;
+using MyAgenda.Library.Entity.Schedule.Entry;
 
-namespace MyAgenda.MVVM.Model.Data.Schedule
+namespace MyAgenda.Library.Entity.Schedule.Week
 {
     /// <summary>
     /// Учебная неделя для группы.
     /// Косвенно наследует <see cref="ISchemable"/> через второго
     /// родителя <see cref="DataEntity"/>.
     /// </summary>
-    internal class GroupWeekSchedule : WeekSchedule, IIndirectlySchemable
+    public class GroupWeekSchedule : WeekSchedule, IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -22,33 +26,33 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <summary>
         /// Название таблицы.
         /// </summary>
-        public const string Table = "week_schedule";
+        internal const string Table = "week_schedule";
 
         /// <summary>
         /// Название столбца с идентификатором.
         /// </summary>
-        public const string IdColumn = DataEntity.IdColumn;
+        internal const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором группы.
         /// </summary>
-        public const string GroupIdColumn = "group_id";
+        internal const string GroupIdColumn = "group_id";
 
         /// <summary>
         /// Название столбца с идентификатором типа недели.
         /// </summary>
-        public const string WeekTypeIdColumn = "week_type_id";
+        internal const string WeekTypeIdColumn = "week_type_id";
 
         /// <summary>
         /// Название столбца с идентификатором учебного дня.
         /// </summary>
-        public const string FirstDayIdColumn = "first_day_id";
-        public const string SecondDayIdColumn = "second_day_id";
-        public const string ThirdDayIdColumn = "third_day_id";
-        public const string FourthDayIdColumn = "fourth_day_id";
-        public const string FifthDayIdColumn = "fifth_day_id";
-        public const string SixthDayIdColumn = "sixth_day_id";
-        public const string SeventhDayIdColumn = "seventh_day_id";
+        internal const string FirstDayIdColumn = "first_day_id";
+        internal const string SecondDayIdColumn = "second_day_id";
+        internal const string ThirdDayIdColumn = "third_day_id";
+        internal const string FourthDayIdColumn = "fourth_day_id";
+        internal const string FifthDayIdColumn = "fifth_day_id";
+        internal const string SixthDayIdColumn = "sixth_day_id";
+        internal const string SeventhDayIdColumn = "seventh_day_id";
 
         /// <summary>
         /// Количество учебных дней.
@@ -136,26 +140,26 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public ISchemable Schemable
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
-        /// Доступ к идентификатору при помощи косвенного родителя.
+        /// Доступ к идентификатору.
         /// </summary>
-        public int Id
-        {
-            get => Schemable.Id;
-            set => Schemable.Id = value;
-        }
+        public int Id => Schemable.Id;
+
+        // UNDONE: Невозможно использовать из-за ограничений .Net Framework.
+        // Обновление до .Net должно решить проблему.
+        // public int Id { get => Schemable.Id; private set => Schemable.Id = value; }
 
         /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
-        public static Schema Schema
+        internal static Schema Schema
         {
             get
             {
-                List<Column> columnList = new List<Column>
+                List<DataColumn> columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(GroupIdColumn),
@@ -191,7 +195,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <param name="group">Группа.</param>
         /// <param name="weekType">Тип недели.</param>
         /// <returns>Учебная неделя для группы.</returns>
-        public static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType)
+        internal static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -222,7 +226,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// <param name="weekType">Тип недели.</param>
         /// <param name="dayList">Список контейнеров учебных дней.</param>
         /// <returns>Учебная неделя для группы.</returns>
-        public static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType, List<DayScheduleEntry> dayList)
+        internal static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType, List<DayScheduleEntry> dayList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
@@ -250,7 +254,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        public Schema ToData()
+        internal Schema ToData()
         {
             Schema data = Schema;
 
@@ -314,7 +318,7 @@ namespace MyAgenda.MVVM.Model.Data.Schedule
         public Group Group
         {
             get => Target as Group;
-            set => Target = value;
+            private set => Target = value;
         }
 
         #endregion

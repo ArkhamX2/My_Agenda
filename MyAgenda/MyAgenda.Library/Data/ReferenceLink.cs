@@ -1,6 +1,7 @@
 ﻿using System;
+using MyAgenda.Library.Data.Column;
 
-namespace MyAgenda.MVVM.Model
+namespace MyAgenda.Library.Data
 {
     /// <summary>
     /// Ссылка на таблицу.
@@ -93,12 +94,12 @@ namespace MyAgenda.MVVM.Model
         /// <param name="foreignKey">Внешний ключ.</param>
         /// <param name="reference">Схема таблицы, на которую ведет ссылка.</param>
         /// <param name="referenceColumnName">Название столбца - внутреннего ключа.</param>
-        public ReferenceLink(Column foreignKey, Schema reference, string referenceColumnName) : this(foreignKey.Name, reference.Name, referenceColumnName)
+        public ReferenceLink(DataColumn foreignKey, Schema reference, string referenceColumnName) : this(foreignKey.Name, reference.Name, referenceColumnName)
         {
             bool found = false;
 
             // Поиск в переданной схеме указанного внутреннего ключа.
-            foreach (Column item in reference.ColumnList)
+            foreach (DataColumn item in reference.ColumnList)
             {
                 if (item.Name != referenceColumnName)
                 {

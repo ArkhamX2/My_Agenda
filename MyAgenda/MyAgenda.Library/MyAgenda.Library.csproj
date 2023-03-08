@@ -42,12 +42,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComparableObject.cs" />
+    <Compile Include="Data\Column\DataColumn.cs" />
+    <Compile Include="Data\Column\IntColumn.cs" />
+    <Compile Include="Data\Column\StringColumn.cs" />
+    <Compile Include="Data\ReferenceLink.cs" />
+    <Compile Include="Data\Schema.cs" />
+    <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\Base\Course.cs" />
+    <Compile Include="Model\Base\Faculty.cs" />
+    <Compile Include="Model\Base\Group.cs" />
+    <Compile Include="Model\Base\Subject.cs" />
+    <Compile Include="Model\Base\Teacher.cs" />
+    <Compile Include="Model\Base\WeekType.cs" />
+    <Compile Include="Model\DataEntity.cs" />
+    <Compile Include="Model\IIndirectlySchemable.cs" />
+    <Compile Include="Model\ISchemable.cs" />
+    <Compile Include="Model\Schedule\DaySchedule.cs" />
+    <Compile Include="Model\Schedule\Entry\DayScheduleEntry.cs" />
+    <Compile Include="Model\Schedule\Entry\EntityEntry.cs" />
+    <Compile Include="Model\Schedule\Entry\SubjectEntry.cs" />
+    <Compile Include="Model\Schedule\Week\GroupWeekSchedule.cs" />
+    <Compile Include="Model\Schedule\Week\TeacherWeekSchedule.cs" />
+    <Compile Include="Model\Schedule\Week\WeekSchedule.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Entity\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

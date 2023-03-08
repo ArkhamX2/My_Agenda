@@ -14,7 +14,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// </summary>
         /// <param name="position">Позиция учебного дня.</param>
         /// <returns>День недели.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string GetWeekDay(EntryPosition position)
         {
             switch (position)
@@ -26,9 +26,8 @@ namespace MyAgenda.Library.Model.Schedule.Entry
                 case EntryPosition.Fifth: return "пятница";
                 case EntryPosition.Sixth: return "суббота";
                 case EntryPosition.Seventh: return "воскресенье";
+                default: throw new ArgumentOutOfRangeException(nameof(position), position, null);
             }
-
-            throw new ArgumentException("Внутренняя ошибка.");
         }
 
         /// <summary>
@@ -47,17 +46,13 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// <param name="day">Учебный день.</param>
         public DayScheduleEntry(EntryPosition position, DaySchedule day) : base(position, day)
         {
-            // PASS
+            // PASS.
         }
 
         /// <summary>
         /// Доступ к учебному дню.
         /// </summary>
-        public DaySchedule DaySchedule
-        {
-            get => Entity as DaySchedule;
-            private set => Entity = value;
-        }
+        public DaySchedule DaySchedule => Entity as DaySchedule;
 
         /// <summary>
         /// Доступ к дню недели.

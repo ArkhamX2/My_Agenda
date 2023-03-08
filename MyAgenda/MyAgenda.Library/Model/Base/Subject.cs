@@ -78,7 +78,7 @@ namespace MyAgenda.Library.Model.Base
         {
             get
             {
-                List<DataColumn> columnList = new List<DataColumn>
+                var columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(TeacherIdColumn) { IsNullable = true },
@@ -98,6 +98,7 @@ namespace MyAgenda.Library.Model.Base
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Занятие.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static Subject FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -106,7 +107,7 @@ namespace MyAgenda.Library.Model.Base
             }
 
             // Если кабинет не задан.
-            if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
+            if (string.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
             {
                 return new Subject(
                     data.GetIntColumnData(IdColumn),
@@ -125,6 +126,7 @@ namespace MyAgenda.Library.Model.Base
         /// <param name="data">Схема, заполненная данными.</param>
         /// <param name="teacher">Преподаватель.</param>
         /// <returns>Занятие.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static Subject FromData(Schema data, Teacher teacher)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -138,7 +140,7 @@ namespace MyAgenda.Library.Model.Base
             }
 
             // Если кабинет не задан.
-            if (String.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
+            if (string.IsNullOrWhiteSpace(data.GetStringColumnData(ClassroomColumn)))
             {
                 return new Subject(
                     data.GetIntColumnData(IdColumn),
@@ -159,7 +161,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Схема, заполненная данными.</returns>
         internal override Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
             data.SetColumnData(NameColumn, Name);
@@ -203,7 +205,7 @@ namespace MyAgenda.Library.Model.Base
         /// Кабинет.
         /// Может быть не задан.
         /// </summary>
-        private string _classroom = String.Empty;
+        private string _classroom = string.Empty;
 
         /// <summary>
         /// Минимальный конструктор.
@@ -291,7 +293,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Статус проверки.</returns>
         public bool HasClassroom()
         {
-            return String.IsNullOrWhiteSpace(Classroom);
+            return string.IsNullOrWhiteSpace(Classroom);
         }
 
         #endregion

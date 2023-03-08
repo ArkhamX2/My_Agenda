@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Entry;
 
@@ -47,9 +48,9 @@ namespace MyAgenda.Library.Model.Schedule.Week
             WeekType = weekType;
 
             // Заполнение списка учебных дней пустыми контейнерами.
-            foreach (EntryPosition type in DayScheduleEntry.GetPositionTypeList())
+            foreach (var type in EntityEntry.GetPositionTypeList())
             {
-                DayList[DayScheduleEntry.GetIndex(type)] = new DayScheduleEntry(type);
+                DayList[EntityEntry.GetIndex(type)] = new DayScheduleEntry(type);
             }
         }
 
@@ -63,7 +64,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         protected WeekSchedule(DataEntity target, WeekType weekType, List<DayScheduleEntry> dayList) : this(target, weekType)
         {
             // Замена пустых контейнеров.
-            foreach (DayScheduleEntry entry in dayList)
+            foreach (var entry in dayList)
             {
                 DayList[entry.Index] = entry;
             }
@@ -75,7 +76,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         protected DataEntity Target
         {
             get => _target;
-            set => _target = value;
+            private set => _target = value;
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         public WeekType WeekType
         {
             get => _weekType;
-            protected set => _weekType = value;
+            private set => _weekType = value;
         }
 
         /// <summary>
@@ -98,15 +99,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <returns>Статус проверки.</returns>
         public bool HasAnyDays()
         {
-            foreach (DayScheduleEntry entry in DayList)
-            {
-                if (entry.DaySchedule != null)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return DayList.Any(entry => entry.DaySchedule != null);
         }
 
         /// <summary>
@@ -114,19 +107,15 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Статус проверки.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public bool HasDay(int index)
         {
-            foreach (DayScheduleEntry entry in DayList)
+            foreach (var entry in DayList.Where(entry => entry.Index == index))
             {
-                if (entry.Index != index)
-                {
-                    continue;
-                }
-
                 return entry.DaySchedule != null;
             }
 
-            throw new ArgumentOutOfRangeException("Указанный индекс вышел за допустимые рамки.");
+            throw new ArgumentOutOfRangeException(nameof(index), index, null);
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Data.Column;
 using MyAgenda.Library.Model.Base;
@@ -57,7 +58,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <summary>
         /// Количество учебных дней.
         /// </summary>
-        public const int DayCount = DayScheduleEntry.PositionTypeCount;
+        public const int DayCount = EntityEntry.PositionTypeCount;
 
         #endregion
 
@@ -75,7 +76,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// </summary>
         /// <param name="columnName">Название столбца с идентификатором учебного дня.</param>
         /// <returns>Позиция учебного дня.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static EntryPosition GetPositionType(string columnName)
         {
             switch (columnName)
@@ -87,9 +88,8 @@ namespace MyAgenda.Library.Model.Schedule.Week
                 case FifthDayIdColumn: return EntryPosition.Fifth;
                 case SixthDayIdColumn: return EntryPosition.Sixth;
                 case SeventhDayIdColumn: return EntryPosition.Seventh;
+                default: throw new ArgumentOutOfRangeException(nameof(columnName), columnName, null);
             }
-
-            throw new ArgumentException("Некорректное название столбца.");
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// </summary>
         /// <param name="position">Позиция учебного дня.</param>
         /// <returns>Название столбца с идентификатором учебного дня.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string GetIdColumnName(EntryPosition position)
         {
             switch (position)
@@ -119,9 +119,8 @@ namespace MyAgenda.Library.Model.Schedule.Week
                 case EntryPosition.Fifth: return FifthDayIdColumn;
                 case EntryPosition.Sixth: return SixthDayIdColumn;
                 case EntryPosition.Seventh: return SeventhDayIdColumn;
+                default: throw new ArgumentOutOfRangeException(nameof(position), position, null);
             }
-
-            throw new ArgumentException("Внутренняя ошибка.");
         }
 
         /// <summary>
@@ -151,7 +150,6 @@ namespace MyAgenda.Library.Model.Schedule.Week
         public ISchemable Schemable
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -170,7 +168,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         {
             get
             {
-                List<DataColumn> columnList = new List<DataColumn>
+                var columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(GroupIdColumn),
@@ -186,15 +184,15 @@ namespace MyAgenda.Library.Model.Schedule.Week
 
                 return new Schema(Table, columnList, new List<ReferenceLink>()
                 {
-                    new ReferenceLink(GroupIdColumn, Group.Table, Group.IdColumn),
-                    new ReferenceLink(WeekTypeIdColumn, WeekType.Table, WeekType.IdColumn),
-                    new ReferenceLink(FirstDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn),
-                    new ReferenceLink(SecondDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn),
-                    new ReferenceLink(ThirdDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn),
-                    new ReferenceLink(FourthDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn),
-                    new ReferenceLink(FifthDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn),
-                    new ReferenceLink(SixthDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn),
-                    new ReferenceLink(SeventhDayIdColumn, DaySchedule.Table, DaySchedule.IdColumn)
+                    new ReferenceLink(GroupIdColumn, Group.Table, DataEntity.IdColumn),
+                    new ReferenceLink(WeekTypeIdColumn, WeekType.Table, DataEntity.IdColumn),
+                    new ReferenceLink(FirstDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(SecondDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(ThirdDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(FourthDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(FifthDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(SixthDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(SeventhDayIdColumn, DaySchedule.Table, DataEntity.IdColumn)
                 });
             }
         }
@@ -206,6 +204,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <param name="group">Группа.</param>
         /// <param name="weekType">Тип недели.</param>
         /// <returns>Учебная неделя для группы.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -267,7 +266,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <returns>Схема, заполненная данными.</returns>
         internal Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
             data.SetColumnData(GroupIdColumn, Group.Id);
@@ -275,13 +274,8 @@ namespace MyAgenda.Library.Model.Schedule.Week
 
             // "Расчехляем" контейнеры и вставляем учебные дни
             // в нужные столбцы.
-            foreach (DayScheduleEntry entry in DayList)
+            foreach (var entry in DayList.Where(entry => entry.DaySchedule != null))
             {
-                if (entry.DaySchedule == null)
-                {
-                    continue;
-                }
-
                 data.SetColumnData(GetIdColumnName(entry), entry.DaySchedule.Id);
             }
 
@@ -326,11 +320,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <summary>
         /// Доступ к группе.
         /// </summary>
-        public Group Group
-        {
-            get => Target as Group;
-            private set => Target = value;
-        }
+        public Group Group => Target as Group;
 
         #endregion
     }

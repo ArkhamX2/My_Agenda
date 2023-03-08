@@ -97,6 +97,7 @@ namespace MyAgenda.Library.Model.Base
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Преподаватель.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static Teacher FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -105,7 +106,7 @@ namespace MyAgenda.Library.Model.Base
             }
 
             // Если отчество не задано.
-            if (String.IsNullOrWhiteSpace(data.GetStringColumnData(PatronymicColumn)))
+            if (string.IsNullOrWhiteSpace(data.GetStringColumnData(PatronymicColumn)))
             {
                 return new Teacher(
                     data.GetIntColumnData(IdColumn),
@@ -126,7 +127,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Схема, заполненная данными.</returns>
         internal override Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
             data.SetColumnData(NameColumn, Name);
@@ -165,7 +166,7 @@ namespace MyAgenda.Library.Model.Base
         /// Отчество.
         /// Может быть не задано.
         /// </summary>
-        private string _patronymic = String.Empty;
+        private string _patronymic = string.Empty;
 
         /// <summary>
         /// Конструктор.
@@ -224,7 +225,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Статус проверки.</returns>
         public bool HasPatronymic()
         {
-            return String.IsNullOrWhiteSpace(Patronymic);
+            return string.IsNullOrWhiteSpace(Patronymic);
         }
 
         #endregion

@@ -64,6 +64,7 @@ namespace MyAgenda.Library.Model.Base
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Факультет.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static Faculty FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -82,7 +83,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Схема, заполненная данными.</returns>
         internal override Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
             data.SetColumnData(NameColumn, Name);

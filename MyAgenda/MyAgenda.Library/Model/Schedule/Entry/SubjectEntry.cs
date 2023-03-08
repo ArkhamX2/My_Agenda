@@ -15,7 +15,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// </summary>
         /// <param name="position">Позиция занятия.</param>
         /// <returns>Время начала занятия.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string GetStartTime(EntryPosition position)
         {
             switch (position)
@@ -27,9 +27,8 @@ namespace MyAgenda.Library.Model.Schedule.Entry
                 case EntryPosition.Fifth: return "15:45";
                 case EntryPosition.Sixth: return "17:30";
                 case EntryPosition.Seventh: return "19:15";
+                default: throw new ArgumentOutOfRangeException(nameof(position), position, null);
             }
-
-            throw new ArgumentException("Внутренняя ошибка.");
         }
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// </summary>
         /// <param name="position">Позиция занятия.</param>
         /// <returns>Время окончания занятия.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string GetEndTime(EntryPosition position)
         {
             switch (position)
@@ -49,9 +48,8 @@ namespace MyAgenda.Library.Model.Schedule.Entry
                 case EntryPosition.Fifth: return "17:20";
                 case EntryPosition.Sixth: return "19:05";
                 case EntryPosition.Seventh: return "20:50";
+                default: throw new ArgumentOutOfRangeException(nameof(position), position, null);
             }
-
-            throw new ArgumentException("Внутренняя ошибка.");
         }
 
         /// <summary>
@@ -76,11 +74,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// <summary>
         /// Доступ к занятию.
         /// </summary>
-        public Subject Subject
-        {
-            get => Entity as Subject;
-            private set => Entity = value;
-        }
+        public Subject Subject => Entity as Subject;
 
         /// <summary>
         /// Доступ к времени начала занятия.

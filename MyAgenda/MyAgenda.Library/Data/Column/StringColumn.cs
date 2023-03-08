@@ -23,24 +23,17 @@
         /// <returns>Статус проверки.</returns>
         public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (sample.GetType() != GetType())
+            if (!(sample is StringColumn column))
             {
                 return false;
             }
-
-            StringColumn column = sample as StringColumn;
 
             if (!HandleIsSameAsObject(column))
             {
                 return false;
             }
 
-            if (column.MaxLength != MaxLength)
-            {
-                return false;
-            }
-
-            return true;
+            return column.MaxLength == MaxLength;
         }
 
         /// <summary>
@@ -51,17 +44,7 @@
         /// <returns>Статус проверки.</returns>
         public override bool IsExactSameAsObject(ComparableObject sample)
         {
-            if (!IsSameAsObject(sample))
-            {
-                return false;
-            }
-
-            if (!HandleIsExactSameAsObject(sample as StringColumn))
-            {
-                return false;
-            }
-
-            return true;
+            return IsSameAsObject(sample) && HandleIsExactSameAsObject(sample as StringColumn);
         }
 
         #endregion

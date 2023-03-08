@@ -112,7 +112,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         protected DataEntity Entity
         {
             get => _entity;
-            set => _entity = value;
+            private set => _entity = value;
         }
 
         /// <summary>

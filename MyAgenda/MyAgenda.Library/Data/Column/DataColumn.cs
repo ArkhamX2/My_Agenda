@@ -35,12 +35,7 @@ namespace MyAgenda.Library.Data.Column
                 return false;
             }
 
-            if (column.IsAutoIncrementable != IsAutoIncrementable)
-            {
-                return false;
-            }
-
-            return true;
+            return column.IsAutoIncrementable == IsAutoIncrementable;
         }
 
         /// <summary>
@@ -57,12 +52,7 @@ namespace MyAgenda.Library.Data.Column
                 return false;
             }
 
-            if (column.Data != Data)
-            {
-                return false;
-            }
-
-            return true;
+            return column.Data == Data;
         }
 
         #endregion
@@ -99,13 +89,13 @@ namespace MyAgenda.Library.Data.Column
         /// <summary>
         /// Данные.
         /// </summary>
-        protected object _data = null;
+        private object _data = null;
 
         /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="name">Название.</param>
-        public DataColumn(string name)
+        protected DataColumn(string name)
         {
             Name = name;
         }
@@ -116,7 +106,7 @@ namespace MyAgenda.Library.Data.Column
         public string Name
         {
             get => _name;
-            set => _name = value;
+            private set => _name = value;
         }
 
         /// <summary>
@@ -140,6 +130,7 @@ namespace MyAgenda.Library.Data.Column
         /// <summary>
         /// Доступ к статусу автоматического инкременирования значения.
         /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
         public bool IsAutoIncrementable
         {
             get => _isAutoIncrementable;
@@ -157,6 +148,7 @@ namespace MyAgenda.Library.Data.Column
         /// <summary>
         /// Доступ к данным.
         /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         public object Data
         {
             get => _data;
@@ -206,7 +198,7 @@ namespace MyAgenda.Library.Data.Column
         /// <returns>Строка в формате SQL.</returns>
         public override string ToString()
         {
-            string result = $"\"{Name}\" {DataTypeAsString()}";
+            var result = $"\"{Name}\" {DataTypeAsString()}";
 
             result += IsNullable ? "" : " NOT NULL";
             result += IsPrimaryKey ? " PRIMARY KEY" : "";

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MyAgenda.Library.Data.Column;
 
 namespace MyAgenda.Library.Data
@@ -24,12 +25,10 @@ namespace MyAgenda.Library.Data
         /// <returns>Статус проверки.</returns>
         public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (sample.GetType() != GetType())
+            if (!(sample is ReferenceLink link))
             {
                 return false;
             }
-
-            ReferenceLink link = sample as ReferenceLink;
 
             if (link.ColumnName != ColumnName)
             {
@@ -41,12 +40,7 @@ namespace MyAgenda.Library.Data
                 return false;
             }
 
-            if (link.ReferenceColumnName != ReferenceColumnName)
-            {
-                return false;
-            }
-
-            return true;
+            return link.ReferenceColumnName == ReferenceColumnName;
         }
 
         #endregion
@@ -96,22 +90,8 @@ namespace MyAgenda.Library.Data
         /// <param name="referenceColumnName">Название столбца - внутреннего ключа.</param>
         public ReferenceLink(DataColumn foreignKey, Schema reference, string referenceColumnName) : this(foreignKey.Name, reference.Name, referenceColumnName)
         {
-            bool found = false;
-
             // Поиск в переданной схеме указанного внутреннего ключа.
-            foreach (DataColumn item in reference.ColumnList)
-            {
-                if (item.Name != referenceColumnName)
-                {
-                    continue;
-                }
-
-                found = true;
-
-                break;
-            }
-
-            if (!found)
+            if (reference.ColumnList.All(item => item.Name != referenceColumnName))
             {
                 throw new ArgumentException("В указанной таблице не найден указанный внутренний ключ.");
             }

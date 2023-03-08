@@ -20,7 +20,7 @@ namespace MyAgenda.Library.Model
         /// <param name="lengthMax">Максимальная длина.</param>
         /// <returns>Подготовленная строка в нижнем регистре без лишних пробелов.</returns>
         /// <exception cref="ArgumentException"></exception>
-        protected string ValidateStringData(string data, int lengthMin, int lengthMax)
+        protected static string ValidateStringData(string data, int lengthMin, int lengthMax)
         {
             data = data.Trim().ToLower();
 

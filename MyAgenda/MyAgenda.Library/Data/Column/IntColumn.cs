@@ -23,17 +23,12 @@
         /// <returns>Статус проверки.</returns>
         public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (sample.GetType() != GetType())
+            if (!(sample is IntColumn column))
             {
                 return false;
             }
 
-            if (!HandleIsSameAsObject(sample as IntColumn))
-            {
-                return false;
-            }
-
-            return true;
+            return HandleIsSameAsObject(column);
         }
 
         /// <summary>
@@ -44,17 +39,7 @@
         /// <returns>Статус проверки.</returns>
         public override bool IsExactSameAsObject(ComparableObject sample)
         {
-            if (!IsSameAsObject(sample))
-            {
-                return false;
-            }
-
-            if (!HandleIsExactSameAsObject(sample as IntColumn))
-            {
-                return false;
-            }
-
-            return true;
+            return IsSameAsObject(sample) && HandleIsExactSameAsObject(sample as IntColumn);
         }
 
         #endregion

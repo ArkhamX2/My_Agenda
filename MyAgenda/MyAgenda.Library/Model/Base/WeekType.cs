@@ -64,6 +64,7 @@ namespace MyAgenda.Library.Model.Base
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Тип учебной недели.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static WeekType FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -82,7 +83,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Схема, заполненная данными.</returns>
         internal override Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
             data.SetColumnData(TypeColumn, (int)Type);
@@ -136,9 +137,8 @@ namespace MyAgenda.Library.Model.Base
             {
                 case AvailableWeekType.Red: return "красная";
                 case AvailableWeekType.Blue: return "синяя";
+                default: return "неизвестная";
             }
-
-            return "неизвестная";
         }
 
         #endregion

@@ -45,11 +45,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <summary>
         /// Доступ к преподавателю.
         /// </summary>
-        public Teacher Teacher
-        {
-            get => Target as Teacher;
-            private set => Target = value;
-        }
+        public Teacher Teacher => Target as Teacher;
 
         #endregion
     }

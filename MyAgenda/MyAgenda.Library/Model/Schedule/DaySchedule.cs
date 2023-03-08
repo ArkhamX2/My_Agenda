@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Data.Column;
 using MyAgenda.Library.Model.Base;
@@ -40,7 +41,7 @@ namespace MyAgenda.Library.Model.Schedule
         /// <summary>
         /// Количество занятий.
         /// </summary>
-        public const int SubjectCount = SubjectEntry.PositionTypeCount;
+        public const int SubjectCount = EntityEntry.PositionTypeCount;
 
         #endregion
 
@@ -58,7 +59,7 @@ namespace MyAgenda.Library.Model.Schedule
         /// </summary>
         /// <param name="columnName">Название столбца с идентификатором занятия.</param>
         /// <returns>Позиция занятия.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static EntryPosition GetPositionType(string columnName)
         {
             switch (columnName)
@@ -70,9 +71,8 @@ namespace MyAgenda.Library.Model.Schedule
                 case FifthSubjectIdColumn: return EntryPosition.Fifth;
                 case SixthSubjectIdColumn: return EntryPosition.Sixth;
                 case SeventhSubjectIdColumn: return EntryPosition.Seventh;
+                default: throw new ArgumentOutOfRangeException(nameof(columnName), columnName, null);
             }
-
-            throw new ArgumentException("Некорректное название столбца.");
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace MyAgenda.Library.Model.Schedule
         /// </summary>
         /// <param name="position">Позиция занятия.</param>
         /// <returns>Название столбца с идентификатором занятия.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string GetIdColumnName(EntryPosition position)
         {
             switch (position)
@@ -102,9 +102,8 @@ namespace MyAgenda.Library.Model.Schedule
                 case EntryPosition.Fifth: return FifthSubjectIdColumn;
                 case EntryPosition.Sixth: return SixthSubjectIdColumn;
                 case EntryPosition.Seventh: return SeventhSubjectIdColumn;
+                default: throw new ArgumentOutOfRangeException(nameof(position), position, null);
             }
-
-            throw new ArgumentException("Внутренняя ошибка.");
         }
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace MyAgenda.Library.Model.Schedule
         {
             get
             {
-                List<DataColumn> columnList = new List<DataColumn>
+                var columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(FirstSubjectIdColumn) { IsNullable = true },
@@ -165,6 +164,7 @@ namespace MyAgenda.Library.Model.Schedule
         /// </summary>
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Учебный день.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static DaySchedule FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -181,6 +181,7 @@ namespace MyAgenda.Library.Model.Schedule
         /// <param name="data">Схема, заполненная данными.</param>
         /// <param name="subjectList">Список контейнеров занятий.</param>
         /// <returns>Учебный день.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static DaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -197,19 +198,14 @@ namespace MyAgenda.Library.Model.Schedule
         /// <returns>Схема, заполненная данными.</returns>
         internal override Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
 
             // "Расчехляем" контейнеры и вставляем занятия
             // в нужные столбцы.
-            foreach (SubjectEntry entry in SubjectList)
+            foreach (var entry in SubjectList.Where(entry => entry.Subject != null))
             {
-                if (entry.Subject == null)
-                {
-                    continue;
-                }
-
                 data.SetColumnData(GetIdColumnName(entry), entry.Subject.Id);
             }
 
@@ -241,9 +237,9 @@ namespace MyAgenda.Library.Model.Schedule
         public DaySchedule(int id) : base(id)
         {
             // Заполнение списка занятий пустыми контейнерами.
-            foreach (EntryPosition type in SubjectEntry.GetPositionTypeList())
+            foreach (var type in EntityEntry.GetPositionTypeList())
             {
-                SubjectList[SubjectEntry.GetIndex(type)] = new SubjectEntry(type);
+                SubjectList[EntityEntry.GetIndex(type)] = new SubjectEntry(type);
             }
         }
 
@@ -255,7 +251,7 @@ namespace MyAgenda.Library.Model.Schedule
         public DaySchedule(int id, List<SubjectEntry> subjectList) : this(id)
         {
             // Замена пустых контейнеров.
-            foreach (SubjectEntry entry in subjectList)
+            foreach (var entry in subjectList)
             {
                 SubjectList[entry.Index] = entry;
             }
@@ -272,15 +268,7 @@ namespace MyAgenda.Library.Model.Schedule
         /// <returns>Статус проверки.</returns>
         public bool HasAnySubjects()
         {
-            foreach (SubjectEntry entry in SubjectList)
-            {
-                if (entry.Subject != null)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return SubjectList.Any(entry => entry.Subject != null);
         }
 
         /// <summary>
@@ -288,19 +276,15 @@ namespace MyAgenda.Library.Model.Schedule
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Статус проверки.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public bool HasSubject(int index)
         {
-            foreach (SubjectEntry entry in SubjectList)
+            foreach (var entry in SubjectList.Where(entry => entry.Index == index))
             {
-                if (entry.Index != index)
-                {
-                    continue;
-                }
-
                 return entry.Subject != null;
             }
 
-            throw new ArgumentOutOfRangeException("Указанный индекс вышел за допустимые рамки.");
+            throw new ArgumentOutOfRangeException(nameof(index), index, null);
         }
 
         #endregion

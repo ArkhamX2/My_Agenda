@@ -62,7 +62,7 @@ namespace MyAgenda.Library.Model.Base
         {
             get
             {
-                List<DataColumn> columnList = new List<DataColumn>
+                var columnList = new List<DataColumn>
                 {
                     new IntColumn(IdColumn) { IsPrimaryKey = true, IsAutoIncrementable = true },
                     new IntColumn(CourseIdColumn),
@@ -82,6 +82,7 @@ namespace MyAgenda.Library.Model.Base
         /// <param name="data">Схема, заполненная данными.</param>
         /// <param name="course">Курс.</param>
         /// <returns>Группа.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static Group FromData(Schema data, Course course)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -106,7 +107,7 @@ namespace MyAgenda.Library.Model.Base
         /// <returns>Схема, заполненная данными.</returns>
         internal override Schema ToData()
         {
-            Schema data = Schema;
+            var data = Schema;
 
             data.SetColumnData(IdColumn, Id);
             data.SetColumnData(CourseIdColumn, Course.Id);

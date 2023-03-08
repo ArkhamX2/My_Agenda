@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MyAgenda.Library.Data.Column;
 
 namespace MyAgenda.Library.Data
@@ -22,25 +23,22 @@ namespace MyAgenda.Library.Data
 
         /// <summary>
         /// Проверить образец на сходство с экземпляром.
-        /// TODO: Декомпозировать Schema.IsSameAsObject().
         /// </summary>
         /// <param name="sample">Образец.</param>
         /// <returns>Статус проверки.</returns>
         public override bool IsSameAsObject(ComparableObject sample)
         {
-            if (sample.GetType() != GetType())
+            if (!(sample is Schema schema))
             {
                 return false;
             }
-
-            Schema schema = sample as Schema;
 
             if (schema.Name != Name)
             {
                 return false;
             }
 
-            foreach (DataColumn item in ColumnList)
+            foreach (var item in ColumnList)
             {
                 if (!schema.HasColumn(item.Name))
                 {
@@ -53,50 +51,28 @@ namespace MyAgenda.Library.Data
                 }
             }
 
-            foreach (ReferenceLink linkA in ReferenceList)
-            {
-                bool found = false;
-
-                foreach (ReferenceLink linkB in schema.ReferenceList)
-                {
-                    if (!linkA.IsSameAsObject(linkB))
-                    {
-                        found = true;
-
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            // Проверка списков ссылок на соответствие друг другу.
+            return ReferenceList.All(linkA => schema.ReferenceList.All(linkA.IsSameAsObject));
         }
 
         /// <summary>
         /// Проверить экземпляр на сходство с образцом.
-        /// TODO: Декомпозировать Schema.IsSameAsSample().
         /// </summary>
         /// <param name="sample">Образец.</param>
         /// <returns>Статус проверки.</returns>
         public override bool IsSameAsSample(ComparableObject sample)
         {
-            if (sample.GetType() != GetType())
+            if (!(sample is Schema schema))
             {
                 return false;
             }
-
-            Schema schema = sample as Schema;
 
             if (schema.Name != Name)
             {
                 return false;
             }
 
-            foreach (DataColumn item in schema.ColumnList)
+            foreach (var item in schema.ColumnList)
             {
                 if (!HasColumn(item.Name))
                 {
@@ -109,27 +85,8 @@ namespace MyAgenda.Library.Data
                 }
             }
 
-            foreach (ReferenceLink linkA in schema.ReferenceList)
-            {
-                bool found = false;
-
-                foreach (ReferenceLink linkB in ReferenceList)
-                {
-                    if (!linkA.IsSameAsObject(linkB))
-                    {
-                        found = true;
-
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            // Проверка списков ссылок на соответствие друг другу.
+            return ReferenceList.All(linkA => schema.ReferenceList.All(linkA.IsSameAsObject));
         }
 
         #endregion
@@ -186,7 +143,7 @@ namespace MyAgenda.Library.Data
         public string Name
         {
             get => _name;
-            protected set => _name = value;
+            private set => _name = value;
         }
 
         /// <summary>
@@ -195,39 +152,23 @@ namespace MyAgenda.Library.Data
         public List<DataColumn> ColumnList
         {
             get => _columnList;
-            protected set => _columnList = value;
+            private set => _columnList = value;
         }
 
         /// <summary>
         /// Доступ к списку ссылок.
         /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         public List<ReferenceLink> ReferenceList
         {
             get => _referenceList;
             protected set
             {
-                bool found;
-
                 // Перекрестная проверка переданного списка ссылок
                 // и списка столбцов на соответствие.
-                foreach (ReferenceLink link in value)
+                if (value.Any(link => ColumnList.Any(column => link.ColumnName != column.Name)))
                 {
-                    found = false;
-
-                    foreach (DataColumn column in ColumnList)
-                    {
-                        if (link.ColumnName == column.Name)
-                        {
-                            found = true;
-
-                            break;
-                        }
-                    }
-
-                    if (!found)
-                    {
-                        throw new ArgumentException("Список ссылок не соответствует списку столбцов.");
-                    }
+                    throw new ArgumentException("Список ссылок не соответствует списку столбцов.");
                 }
 
                 _referenceList = value;
@@ -241,15 +182,7 @@ namespace MyAgenda.Library.Data
         /// <returns>Статус проверки.</returns>
         public bool HasColumn(string columnName)
         {
-            foreach (DataColumn item in ColumnList)
-            {
-                if (item.Name == columnName)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return ColumnList.Any(item => item.Name == columnName);
         }
 
         /// <summary>
@@ -260,12 +193,9 @@ namespace MyAgenda.Library.Data
         /// <exception cref="ArgumentException"></exception>
         public DataColumn GetColumn(string columnName)
         {
-            foreach (DataColumn item in ColumnList)
+            foreach (var item in ColumnList.Where(item => item.Name == columnName))
             {
-                if (item.Name == columnName)
-                {
-                    return item;
-                }
+                return item;
             }
 
             throw new ArgumentException("Не найден столбец с указанным названием.");
@@ -278,12 +208,7 @@ namespace MyAgenda.Library.Data
         /// <returns>Статус проверки.</returns>
         public bool HasColumnData(string columnName)
         {
-            if (!HasColumn(columnName))
-            {
-                return false;
-            }
-
-            return GetColumn(columnName).HasData();
+            return HasColumn(columnName) && GetColumn(columnName).HasData();
         }
 
         /// <summary>
@@ -342,7 +267,7 @@ namespace MyAgenda.Library.Data
         /// <exception cref="ArgumentException"></exception>
         public void SetColumnData(string columnName, object data)
         {
-            DataColumn column = GetColumn(columnName);
+            var column = GetColumn(columnName);
 
             if (!column.IsDataTypeAllowed(data))
             {
@@ -358,17 +283,10 @@ namespace MyAgenda.Library.Data
         /// <returns>Строка в формате SQL.</returns>
         public string ToCreateQuery()
         {
-            string result = $"CREATE TABLE IF NOT EXISTS \"{Name}\" (";
+            var result = $"CREATE TABLE IF NOT EXISTS \"{Name}\" (";
 
-            foreach (DataColumn item in ColumnList)
-            {
-                result += $"{item}, ";
-            }
-
-            foreach (ReferenceLink item in ReferenceList)
-            {
-                result += $"{item}, ";
-            }
+            result = ColumnList.Aggregate(result, (current, item) => current + $"{item}, ");
+            result = ReferenceList.Aggregate(result, (current, item) => current + $"{item}, ");
 
             // Удалить последние запятую и пробел,
             // закрыть скобку и вернуть результат.

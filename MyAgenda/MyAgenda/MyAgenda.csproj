@@ -191,5 +191,11 @@
       <Name>MyAgenda.Library</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\strelka2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\strelka2obr.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

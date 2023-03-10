@@ -24,12 +24,26 @@
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Image x:Name="NextWeek"
+               Grid.Row="0"
+               HorizontalAlignment="Center"
+               Margin="185,0,0,0"
+               Width="18"
+               Source="Resources\Images\strelka2.png"
+            />
+        <Image x:Name="LastWeek"
+               Grid.Row="0"
+               HorizontalAlignment="Center"
+               Margin="-185,0,0,0"
+               Width="18"
+               Source="Resources\Images\strelka2obr.png"
+            />
         <TextBox x:Name="Date"
                  Grid.Row="0" 
-                 HorizontalAlignment="Left" 
+                 HorizontalAlignment="Center" 
                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                  Width="150" 
-                 Margin="10,0,0,0"
+                 Margin="5,0,5,0"
                  FontSize="14"
                  IsReadOnly="True" />
 

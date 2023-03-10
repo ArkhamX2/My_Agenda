@@ -1,6 +1,9 @@
-﻿using MyAgenda.MVVM.ViewModel;
+﻿using MyAgenda.MVVM.View;
+using MyAgenda.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -15,6 +18,10 @@ namespace MyAgenda
         MainViewModel ShowModel = new MainViewModel();
         private bool isNavigationVisible = false;
         int _Mode;
+        bool first;
+        bool second;
+        bool third;
+        bool fourth;
 
         DoubleAnimation topMenuShowAnimation = new DoubleAnimation();
         DoubleAnimation topMenuHideAnimation = new DoubleAnimation();
@@ -32,11 +39,35 @@ namespace MyAgenda
         {
             InitializeComponent();
 
+            StartScreen();
+
             SizeChanged += MainWindow_SizeChanged;
 
             TopMenu.Orientation = Orientation.Horizontal;
 
             WeekDate();
+        }
+
+        private void StartScreen()
+        {
+            if (MainWind.ActualWidth > 1100)
+            {
+                first = true;
+                second = true;
+                third = true;
+            }
+            else if (MainWind.ActualWidth > 740)
+            {
+                first = false;
+                second = false;
+                third = true;
+            }
+            else
+            {
+                first = false;
+                second = true;
+                third = false;
+            }
         }
 
         private void WeekDate()
@@ -63,21 +94,37 @@ namespace MyAgenda
         {
             if (MainWind.ActualWidth > 1100)
             {
-                Content.Content = ShowModel.HomeCurrentView;
+                if ((first && second) || !fourth)
+                {
+                    frame.Navigate(new MainPageView(this));
+                    first = false;
+                    second = false;
+                    fourth = true;
+                }
             }
             else
-                if (MainWind.ActualWidth > 740)
+            if (MainWind.ActualWidth > 740)
             {
-                Content.Content = ShowModel.MidCurrentView;
+                if ((!second && third) || fourth)
+                {
+                    frame.Navigate(new MedPageView(this));
+                    second = true;
+                    third = false;
+                    fourth= false;
+                }
             }
             else
-                Content.Content = ShowModel.MinCurrentView;
+            if ((!first && !third) || !fourth)
+            {
+                frame.Navigate(new MinPageView(this));
+                first = true;
+                third = true;
+                fourth = true;
+            }
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Content.Content != ShowModel.MinCurrentView)
-            {
                 if (isNavigationVisible)
                 {
                     HideNavigation();
@@ -86,8 +133,6 @@ namespace MyAgenda
                 {
                     ShowNavigation();
                 }
-            }
-            
         }
 
         void HideNavigation()

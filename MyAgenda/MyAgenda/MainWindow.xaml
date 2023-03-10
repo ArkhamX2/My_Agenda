@@ -17,13 +17,14 @@
     </Window.DataContext>
 
     <Grid>
-        
+
 
 
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <TextBox x:Name="Date"
                  Grid.Row="0" 
                  HorizontalAlignment="Left" 
@@ -91,12 +92,13 @@
             </Button>
         </StackPanel>
 
-        <ContentControl x:Name="Content"
-                        Grid.Row="1"
-                        Margin="10,0,10,0"                        
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Content="{Binding HomeCurrentView}"/>
+        <Frame x:Name="frame" 
+               NavigationUIVisibility="Hidden" 
+               Grid.Row="1" 
+               Margin="10,0,10,0" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               />
 
     </Grid>
    

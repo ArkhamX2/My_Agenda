@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace MyAgenda.MVVM.View
 {
     /// <summary>
-    /// Логика взаимодействия для MinSizeMainView.xaml
+    /// Логика взаимодействия для MedPageView.xaml
     /// </summary>
-    public partial class MinSizeMainView : UserControl
+    public partial class MedPageView : Page
     {
+        public MainWindow mainWindow;
+
         CultureInfo myCI = new CultureInfo("en-US");
         System.Globalization.Calendar myCalendar;
         CalendarWeekRule calendarWeekRule;
@@ -29,14 +40,26 @@ namespace MyAgenda.MVVM.View
             DayOfWeek.Sunday };
 
         const int DayCardHeight = 360;
-
-        public MinSizeMainView()
+        public MedPageView(MainWindow _mainWindow)
         {
             InitializeComponent();
+
+            mainWindow = _mainWindow;
+
+            OpenPages();
 
             InitializeCalendar();
 
             CurrentDayOutline();
+        }
+        public void OpenPages()
+        {
+            mondayframe.Navigate(new MondayPageView());
+            tuesdayframe.Navigate(new TuesdayPageView());
+            wednesdayframe.Navigate(new WednesdayPageView());
+            thursdayframe.Navigate(new ThursdayPageView());
+            fridayframe.Navigate(new FridayPageView());
+            saturdayframe.Navigate(new SaturdayPageView());
         }
 
         private void InitializeCalendar()
@@ -48,6 +71,7 @@ namespace MyAgenda.MVVM.View
 
         void CurrentDayOutline()
         {
+
             if (IsEvenWeek())
             {
                 ChangeWeekType();
@@ -55,10 +79,9 @@ namespace MyAgenda.MVVM.View
 
             ShowCurrentDayMark();
 
-            ScrollToCurrentDay(findCurrentDayIndex());
+            ScrollToCurrentDay(findCurrentDayPairIndex());
 
         }
-
         private bool IsEvenWeek()
         {
             return myCalendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek) % 2 == 0;
@@ -70,10 +93,11 @@ namespace MyAgenda.MVVM.View
             MondayMark.Source = new BitmapImage(uriSource);
             TuesdayMark.Source = new BitmapImage(uriSource);
             WednesdayMark.Source = new BitmapImage(uriSource);
-            ThuesdayMark.Source = new BitmapImage(uriSource);
+            ThursdayMark.Source = new BitmapImage(uriSource);
             FridayMark.Source = new BitmapImage(uriSource);
             SaturdayMark.Source = new BitmapImage(uriSource);
         }
+
         private void ShowCurrentDayMark()
         {
             switch (DT.DayOfWeek)
@@ -88,7 +112,7 @@ namespace MyAgenda.MVVM.View
                     WednesdayMark.Visibility = Visibility.Visible;
                     break;
                 case DayOfWeek.Thursday:
-                    ThuesdayMark.Visibility = Visibility.Visible;
+                    ThursdayMark.Visibility = Visibility.Visible;
                     break;
                 case DayOfWeek.Friday:
                     FridayMark.Visibility = Visibility.Visible;
@@ -98,13 +122,14 @@ namespace MyAgenda.MVVM.View
                     break;
             }
         }
-        private int findCurrentDayIndex()
+
+        private int findCurrentDayPairIndex()
         {
-            for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex++)
+            for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex += 2)
             {
                 if (week[dayIndex] == DT.DayOfWeek)
                 {
-                    return dayIndex;
+                    return dayIndex / 2;
                 }
             }
             return 0;
@@ -114,7 +139,5 @@ namespace MyAgenda.MVVM.View
         {
             Scroll.ScrollToVerticalOffset(DayCardHeight * currentDayIndex);
         }
-
-        
     }
 }

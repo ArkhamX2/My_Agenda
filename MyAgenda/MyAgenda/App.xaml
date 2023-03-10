@@ -1,32 +1,12 @@
 ﻿<Application x:Class="MyAgenda.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MyAgenda"
              StartupUri="MainWindow.xaml"
-             xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
-             xmlns:view="clr-namespace:MyAgenda.MVVM.View"
              >
 
     <Application.Resources>
         <ResourceDictionary>
-
-            <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-                <view:MainView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:MedSizeViewModel}">
-                <view:MedSizeMainView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:MinSizeViewModel}">
-                <view:MinSizeMainView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:DayViewModel}">
-                <view:DayView/>
-            </DataTemplate>
             
-
             <!--#region Style-->
             <!--Styles-->
 

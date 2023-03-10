@@ -18,13 +18,11 @@
 
     <Grid>
 
-
-
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <TextBox x:Name="Date"
                  Grid.Row="0" 
                  HorizontalAlignment="Left" 
@@ -34,64 +32,6 @@
                  FontSize="14"
                  IsReadOnly="True" />
 
-        <StackPanel  x:Name="TopMenu"
-                     Grid.RowSpan="2"
-                     Orientation="Horizontal"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Right" Grid.Row="0" Width="50" Height="34">
-            <TextBox x:Name="Enter"
-                     Text="Войти как:" 
-                     Style="{StaticResource MainWindowModeTextBoxTheme}"
-                     Width="80"
-                     Margin="5,0,5,0"
-                     Visibility="Collapsed"
-                     >
-
-            </TextBox>
-            <Button x:Name="Stud"
-                    Content="Студент"
-                    Style="{StaticResource MainWindowModeButtonTheme}"
-                    Click="Stud_Click"
-                    Visibility="Collapsed"
-                    >
-                
-            </Button>
-            <Button x:Name="Teach"
-                    Content="Преподватель"
-                    Style="{StaticResource MainWindowModeButtonTheme}"
-                    Click="Teach_Click"
-                    Visibility="Collapsed"
-                    >
-
-            </Button>
-            <Button x:Name="Modif"
-                    Content="Редактор"
-                    Style="{StaticResource MainWindowModeButtonTheme}"
-                    Click="Modif_Click"
-                    Visibility="Collapsed"
-                    >
-
-            </Button>
-            <TextBox x:Name="Mode"
-                     Style="{StaticResource MainWindowModeTextBoxTheme}"
-                     Width="0"
-                     Margin="0,0,0,0"
-                     >
-                
-            </TextBox>
-            <Button x:Name="Menu"
-                    Margin="2,4,2,4"
-                    Width="50"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Click="MenuButton_Click"
-                    >
-                <Image Source="Resources\Images\Menu.png"                    
-                    >                    
-                </Image>
-            </Button>
-        </StackPanel>
-
         <Frame x:Name="frame" 
                NavigationUIVisibility="Hidden" 
                Grid.Row="1" 
@@ -99,7 +39,6 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                />
-
     </Grid>
    
 </Window>

@@ -21,6 +21,9 @@
                 <ResourceDictionary Source="Theme/MainDayTextBlockTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DayViewLineTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DayDotTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayEditSubjectTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayEditTeacherTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DayEditRoomTheme.xaml"/>
 
                 <ResourceDictionary Source="Resources/Colors/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>

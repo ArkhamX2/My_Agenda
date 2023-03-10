@@ -40,7 +40,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <summary>
         /// Конструктор учебной недели без учебных дней.
         /// </summary>
-        /// <param name="target">Сущность, для которой предназначено расписание..</param>
+        /// <param name="target">Сущность, для которой предназначено расписание.</param>
         /// <param name="weekType">Тип недели.</param>
         protected WeekSchedule(DataEntity target, WeekType weekType)
         {
@@ -50,14 +50,14 @@ namespace MyAgenda.Library.Model.Schedule.Week
             // Заполнение списка учебных дней пустыми контейнерами.
             foreach (var type in EntityEntry.GetPositionTypeList())
             {
-                DayList[EntityEntry.GetIndex(type)] = new DayScheduleEntry(type);
+                DayList.Add(new DayScheduleEntry(type));
             }
         }
 
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="target">Сущность, для которой предназначено расписание..</param>
+        /// <param name="target">Сущность, для которой предназначено расписание.</param>
         /// <param name="weekType">Тип недели.</param>
         /// <param name="dayList">Список контейнеров учебных дней.</param>
         /// <exception cref="ArgumentException"></exception>

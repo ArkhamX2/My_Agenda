@@ -45,7 +45,11 @@
                  Width="150" 
                  Margin="5,0,5,0"
                  FontSize="14"
-                 IsReadOnly="True" />
+                 IsReadOnly="True"
+                 BorderBrush="White"
+                 BorderThickness="0"
+                 Cursor="Arrow"
+                 Focusable="False"/>
 
         <StackPanel  x:Name="TopMenu"
                      Grid.RowSpan="2"

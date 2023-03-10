@@ -21,8 +21,6 @@ namespace MyAgenda.MVVM.View
     /// </summary>
     public partial class MinPageView : Page
     {
-        public MainWindow mainWindow;
-
         CultureInfo myCI = new CultureInfo("en-US");
         System.Globalization.Calendar myCalendar;
         CalendarWeekRule calendarWeekRule;
@@ -40,11 +38,9 @@ namespace MyAgenda.MVVM.View
             DayOfWeek.Sunday };
 
         const int DayCardHeight = 360;
-        public MinPageView(MainWindow _mainWindow)
+        public MinPageView()
         {
             InitializeComponent();
-
-            mainWindow = _mainWindow;
 
             OpenPages();
 

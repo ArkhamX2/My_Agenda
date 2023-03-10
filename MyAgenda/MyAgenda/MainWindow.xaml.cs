@@ -96,7 +96,7 @@ namespace MyAgenda
             {
                 if ((first && second) || !fourth)
                 {
-                    frame.Navigate(new MainPageView(this));
+                    frame.Navigate(new MainPageView());
                     first = false;
                     second = false;
                     fourth = true;
@@ -107,7 +107,7 @@ namespace MyAgenda
             {
                 if ((!second && third) || fourth)
                 {
-                    frame.Navigate(new MedPageView(this));
+                    frame.Navigate(new MedPageView());
                     second = true;
                     third = false;
                     fourth= false;
@@ -116,7 +116,7 @@ namespace MyAgenda
             else
             if ((!first && !third) || !fourth)
             {
-                frame.Navigate(new MinPageView(this));
+                frame.Navigate(new MinPageView());
                 first = true;
                 third = true;
                 fourth = true;

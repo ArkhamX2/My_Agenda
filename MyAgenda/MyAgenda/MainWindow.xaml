@@ -4,26 +4,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MyAgenda"
-        xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="Расписание" Height="550" Width="700"
         MinHeight="400" MinWidth="380"
         ResizeMode="CanResizeWithGrip"
         >
-    
-    <Window.DataContext >
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
 
     <Grid>
         
-
-
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <Image x:Name="NextWeek"
                Grid.Row="0"
                HorizontalAlignment="Center"
@@ -31,6 +24,7 @@
                Width="18"
                Source="Resources\Images\strelka2.png"
             />
+        
         <Image x:Name="LastWeek"
                Grid.Row="0"
                HorizontalAlignment="Center"
@@ -38,6 +32,7 @@
                Width="18"
                Source="Resources\Images\strelka2obr.png"
             />
+        
         <TextBox x:Name="Date"
                  Grid.Row="0" 
                  HorizontalAlignment="Center" 
@@ -51,70 +46,13 @@
                  Cursor="Arrow"
                  Focusable="False"/>
 
-        <StackPanel  x:Name="TopMenu"
-                     Grid.RowSpan="2"
-                     Orientation="Horizontal"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Right" Grid.Row="0" Width="50" Height="34">
-            <TextBox x:Name="Enter"
-                     Text="Войти как:" 
-                     Style="{StaticResource MainWindowModeTextBoxTheme}"
-                     Width="80"
-                     Margin="5,0,5,0"
-                     Visibility="Collapsed"
-                     >
-
-            </TextBox>
-            <Button x:Name="Stud"
-                    Content="Студент"
-                    Style="{StaticResource MainWindowModeButtonTheme}"
-                    Click="Stud_Click"
-                    Visibility="Collapsed"
-                    >
-                
-            </Button>
-            <Button x:Name="Teach"
-                    Content="Преподватель"
-                    Style="{StaticResource MainWindowModeButtonTheme}"
-                    Click="Teach_Click"
-                    Visibility="Collapsed"
-                    >
-
-            </Button>
-            <Button x:Name="Modif"
-                    Content="Редактор"
-                    Style="{StaticResource MainWindowModeButtonTheme}"
-                    Click="Modif_Click"
-                    Visibility="Collapsed"
-                    >
-
-            </Button>
-            <TextBox x:Name="Mode"
-                     Style="{StaticResource MainWindowModeTextBoxTheme}"
-                     Width="0"
-                     Margin="0,0,0,0"
-                     >
-                
-            </TextBox>
-            <Button x:Name="Menu"
-                    Margin="2,4,2,4"
-                    Width="50"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Click="MenuButton_Click"
-                    >
-                <Image Source="Resources\Images\Menu.png"                    
-                    >                    
-                </Image>
-            </Button>
-        </StackPanel>
-
-        <ContentControl x:Name="Content"
-                        Grid.Row="1"
-                        Margin="10,0,10,0"                        
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Content="{Binding HomeCurrentView}"/>
+        <Frame x:Name="frame" 
+               NavigationUIVisibility="Hidden" 
+               Grid.Row="1" 
+               Margin="10,0,10,0" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               />
 
     </Grid>
    

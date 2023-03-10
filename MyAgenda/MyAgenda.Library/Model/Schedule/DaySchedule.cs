@@ -239,7 +239,7 @@ namespace MyAgenda.Library.Model.Schedule
             // Заполнение списка занятий пустыми контейнерами.
             foreach (var type in EntityEntry.GetPositionTypeList())
             {
-                SubjectList.Add(new SubjectEntry(type));
+                SubjectList[EntityEntry.GetIndex(type)] = new SubjectEntry(type);
             }
         }
 

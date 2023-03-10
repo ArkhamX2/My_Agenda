@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAgenda", "MyAgenda\MyAgen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAgenda.Library", "MyAgenda.Library\MyAgenda.Library.csproj", "{9E9DC70D-9DCF-4114-A3FD-9EDEB19E4A1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAgenda.Test.Integration", "MyAgenda.Test.Integration\MyAgenda.Test.Integration.csproj", "{3699C2CE-2EE1-44FC-B8A0-A1BF88ED1FE0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{9E9DC70D-9DCF-4114-A3FD-9EDEB19E4A1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E9DC70D-9DCF-4114-A3FD-9EDEB19E4A1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E9DC70D-9DCF-4114-A3FD-9EDEB19E4A1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3699C2CE-2EE1-44FC-B8A0-A1BF88ED1FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3699C2CE-2EE1-44FC-B8A0-A1BF88ED1FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3699C2CE-2EE1-44FC-B8A0-A1BF88ED1FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3699C2CE-2EE1-44FC-B8A0-A1BF88ED1FE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

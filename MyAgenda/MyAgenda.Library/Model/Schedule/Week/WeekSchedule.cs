@@ -50,7 +50,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
             // Заполнение списка учебных дней пустыми контейнерами.
             foreach (var type in EntityEntry.GetPositionTypeList())
             {
-                DayList[EntityEntry.GetIndex(type)] = new DayScheduleEntry(type);
+                DayList.Add(new DayScheduleEntry(type));
             }
         }
 

@@ -55,7 +55,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// <returns>Список позиций.</returns>
         public static List<EntryPosition> GetPositionTypeList()
         {
-            return new List<EntryPosition>()
+            return new List<EntryPosition>
             {
                 EntryPosition.First,
                 EntryPosition.Second,
@@ -76,7 +76,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// Сущность.
         /// Может быть не задана.
         /// </summary>
-        private DataEntity _entity = null;
+        private Entity _entity = null;
 
         /// <summary>
         /// Конструктор пустого контейнера.
@@ -92,7 +92,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// </summary>
         /// <param name="position">Позиция.</param>
         /// <param name="entity">Сущность.</param>
-        protected EntityEntry(EntryPosition position, DataEntity entity) : this(position)
+        protected EntityEntry(EntryPosition position, Entity entity) : this(position)
         {
             Entity = entity;
         }
@@ -109,7 +109,7 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// <summary>
         /// Доступ к сущности.
         /// </summary>
-        protected DataEntity Entity
+        protected Entity Entity
         {
             get => _entity;
             private set => _entity = value;

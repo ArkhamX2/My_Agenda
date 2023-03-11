@@ -6,12 +6,16 @@ using MyAgenda.Library.Data.Column;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Entry;
 
-namespace MyAgenda.Library.Model.Schedule
+namespace MyAgenda.Library.Model.Schedule.Day
 {
     /// <summary>
-    /// Учебный день.
+    /// Учебный день для группы.
+    /// От <see cref="DaySchedule"/> отличается наличием идентификатора
+    /// и схемы таблицы.
+    /// Косвенно наследует <see cref="ISchemable"/> через второго
+    /// родителя <see cref="DataEntity"/>.
     /// </summary>
-    public class DaySchedule : DataEntity
+    public class GroupDaySchedule : DaySchedule, IIndirectlySchemable
     {
         /*                      _              _
          *   ___ ___  _ __  ___| |_ __ _ _ __ | |_ ___
@@ -26,6 +30,11 @@ namespace MyAgenda.Library.Model.Schedule
         /// Название таблицы.
         /// </summary>
         internal const string Table = "day_schedule";
+
+        /// <summary>
+        /// Название столбца с идентификатором.
+        /// </summary>
+        internal const string IdColumn = DataEntity.IdColumn;
 
         /// <summary>
         /// Название столбца с идентификатором занятия.
@@ -128,6 +137,23 @@ namespace MyAgenda.Library.Model.Schedule
         #region ISchemable
 
         /// <summary>
+        /// Доступ к косвенному родителю со схемой таблицы.
+        /// </summary>
+        public ISchemable Schemable
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Доступ к идентификатору.
+        /// </summary>
+        public int Id => Schemable.Id;
+
+        // UNDONE: Невозможно использовать из-за ограничений .Net Framework.
+        // Обновление до .Net должно решить проблему.
+        // public int Id { get => Schemable.Id; private set => Schemable.Id = value; }
+
+        /// <summary>
         /// Доступ к схеме данных.
         /// </summary>
         internal static Schema Schema
@@ -165,14 +191,14 @@ namespace MyAgenda.Library.Model.Schedule
         /// <param name="data">Схема, заполненная данными.</param>
         /// <returns>Учебный день.</returns>
         /// <exception cref="ArgumentException"></exception>
-        internal static DaySchedule FromData(Schema data)
+        internal static GroupDaySchedule FromData(Schema data)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
                 throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
             }
 
-            return new DaySchedule(data.GetIntColumnData(IdColumn));
+            return new GroupDaySchedule(data.GetIntColumnData(IdColumn));
         }
 
         /// <summary>
@@ -182,21 +208,21 @@ namespace MyAgenda.Library.Model.Schedule
         /// <param name="subjectList">Список контейнеров занятий.</param>
         /// <returns>Учебный день.</returns>
         /// <exception cref="ArgumentException"></exception>
-        internal static DaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
+        internal static GroupDaySchedule FromData(Schema data, List<SubjectEntry> subjectList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
             {
                 throw new ArgumentException("Переданная схема не соответствует схеме для сущности.");
             }
 
-            return new DaySchedule(data.GetIntColumnData(IdColumn), subjectList);
+            return new GroupDaySchedule(data.GetIntColumnData(IdColumn), subjectList);
         }
 
         /// <summary>
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
-        internal override Schema ToData()
+        internal Schema ToData()
         {
             var data = Schema;
 
@@ -224,23 +250,12 @@ namespace MyAgenda.Library.Model.Schedule
         #region DaySchedule
 
         /// <summary>
-        /// Список контейнеров занятий.
-        /// Каждое занятие хранится в контейнере с закрепленной за ним позицией
-        /// в списке и дополнительной связанной с ней информацией.
-        /// </summary>
-        private readonly List<SubjectEntry> _subjectList = new List<SubjectEntry>();
-
-        /// <summary>
         /// Конструктор учебного дня без занятий.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
-        public DaySchedule(int id) : base(id)
+        public GroupDaySchedule(int id) : base()
         {
-            // Заполнение списка занятий пустыми контейнерами.
-            foreach (var type in EntityEntry.GetPositionTypeList())
-            {
-                SubjectList.Add(new SubjectEntry(type));
-            }
+            Schemable = new DataEntity(id);
         }
 
         /// <summary>
@@ -248,43 +263,9 @@ namespace MyAgenda.Library.Model.Schedule
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <param name="subjectList">Список контейнеров занятий.</param>
-        public DaySchedule(int id, List<SubjectEntry> subjectList) : this(id)
+        public GroupDaySchedule(int id, List<SubjectEntry> subjectList) : base(subjectList)
         {
-            // Замена пустых контейнеров.
-            foreach (var entry in subjectList)
-            {
-                SubjectList[entry.Index] = entry;
-            }
-        }
-
-        /// <summary>
-        /// Доступ к списку контейнеров занятий.
-        /// </summary>
-        public List<SubjectEntry> SubjectList => _subjectList;
-
-        /// <summary>
-        /// Проверить наличие каких-либо занятий.
-        /// </summary>
-        /// <returns>Статус проверки.</returns>
-        public bool HasAnySubjects()
-        {
-            return SubjectList.Any(entry => entry.Subject != null);
-        }
-
-        /// <summary>
-        /// Проверить наличие занятия под указанным индексом.
-        /// </summary>
-        /// <param name="index">Индекс.</param>
-        /// <returns>Статус проверки.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public bool HasSubject(int index)
-        {
-            foreach (var entry in SubjectList.Where(entry => entry.Index == index))
-            {
-                return entry.Subject != null;
-            }
-
-            throw new ArgumentOutOfRangeException(nameof(index), index, null);
+            Schemable = new DataEntity(id);
         }
 
         #endregion

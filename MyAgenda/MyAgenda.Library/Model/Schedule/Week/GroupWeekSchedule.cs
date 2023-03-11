@@ -4,6 +4,7 @@ using System.Linq;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Data.Column;
 using MyAgenda.Library.Model.Base;
+using MyAgenda.Library.Model.Schedule.Day;
 using MyAgenda.Library.Model.Schedule.Entry;
 
 namespace MyAgenda.Library.Model.Schedule.Week
@@ -186,13 +187,13 @@ namespace MyAgenda.Library.Model.Schedule.Week
                 {
                     new ReferenceLink(GroupIdColumn, Group.Table, DataEntity.IdColumn),
                     new ReferenceLink(WeekTypeIdColumn, WeekType.Table, DataEntity.IdColumn),
-                    new ReferenceLink(FirstDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
-                    new ReferenceLink(SecondDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
-                    new ReferenceLink(ThirdDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
-                    new ReferenceLink(FourthDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
-                    new ReferenceLink(FifthDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
-                    new ReferenceLink(SixthDayIdColumn, DaySchedule.Table, DataEntity.IdColumn),
-                    new ReferenceLink(SeventhDayIdColumn, DaySchedule.Table, DataEntity.IdColumn)
+                    new ReferenceLink(FirstDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(SecondDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(ThirdDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(FourthDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(FifthDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(SixthDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn),
+                    new ReferenceLink(SeventhDayIdColumn, GroupDaySchedule.Table, DataEntity.IdColumn)
                 });
             }
         }
@@ -236,6 +237,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <param name="weekType">Тип недели.</param>
         /// <param name="dayList">Список контейнеров учебных дней.</param>
         /// <returns>Учебная неделя для группы.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal static GroupWeekSchedule FromData(Schema data, Group group, WeekType weekType, List<DayScheduleEntry> dayList)
         {
             if (data == null || !data.IsSameAsSample(Schema))
@@ -264,6 +266,7 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// Получить схему таблицы с данными.
         /// </summary>
         /// <returns>Схема, заполненная данными.</returns>
+        /// <exception cref="ArgumentException"></exception>
         internal Schema ToData()
         {
             var data = Schema;
@@ -276,7 +279,13 @@ namespace MyAgenda.Library.Model.Schedule.Week
             // в нужные столбцы.
             foreach (var entry in DayList.Where(entry => entry.DaySchedule != null))
             {
-                data.SetColumnData(GetIdColumnName(entry), entry.DaySchedule.Id);
+                // Допускаются только учебные дни для группы.
+                if (!(entry.DaySchedule is GroupDaySchedule schedule))
+                {
+                    throw new ArgumentException("Повреждение списка контейнеров.");
+                }
+
+                data.SetColumnData(GetIdColumnName(entry), schedule.Id);
             }
 
             return data;
@@ -315,6 +324,15 @@ namespace MyAgenda.Library.Model.Schedule.Week
         public GroupWeekSchedule(int id, Group group, WeekType weekType, List<DayScheduleEntry> dayList) : base(group, weekType, dayList)
         {
             Schemable = new DataEntity(id);
+
+            // Дополнительная проверка учебных дней.
+            foreach (var entry in dayList)
+            {
+                if (!(entry.DaySchedule is GroupDaySchedule))
+                {
+                    throw new ArgumentException("Допускаются только учебные дни для группы.");
+                }
+            }
         }
 
         /// <summary>

@@ -60,7 +60,6 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <param name="target">Сущность, для которой предназначено расписание.</param>
         /// <param name="weekType">Тип недели.</param>
         /// <param name="dayList">Список контейнеров учебных дней.</param>
-        /// <exception cref="ArgumentException"></exception>
         protected WeekSchedule(DataEntity target, WeekType weekType, List<DayScheduleEntry> dayList) : this(target, weekType)
         {
             // Замена пустых контейнеров.

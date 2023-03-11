@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Entry;
 
@@ -36,7 +35,6 @@ namespace MyAgenda.Library.Model.Schedule.Week
         /// <param name="teacher">Преподаватель.</param>
         /// <param name="weekType">Тип недели.</param>
         /// <param name="dayList">Список контейнеров учебных дней.</param>
-        /// <exception cref="ArgumentException"></exception>
         public TeacherWeekSchedule(Teacher teacher, WeekType weekType, List<DayScheduleEntry> dayList) : base(teacher, weekType, dayList)
         {
             // PASS.

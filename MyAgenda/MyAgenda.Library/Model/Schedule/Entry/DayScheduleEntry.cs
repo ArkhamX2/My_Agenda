@@ -1,4 +1,5 @@
 ﻿using System;
+using MyAgenda.Library.Model.Schedule.Day;
 
 namespace MyAgenda.Library.Model.Schedule.Entry
 {

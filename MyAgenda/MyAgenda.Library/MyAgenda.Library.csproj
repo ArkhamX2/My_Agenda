@@ -57,7 +57,8 @@
     <Compile Include="Model\DataEntity.cs" />
     <Compile Include="Model\IIndirectlySchemable.cs" />
     <Compile Include="Model\ISchemable.cs" />
-    <Compile Include="Model\Schedule\DaySchedule.cs" />
+    <Compile Include="Model\Schedule\Day\DaySchedule.cs" />
+    <Compile Include="Model\Schedule\Day\GroupDaySchedule.cs" />
     <Compile Include="Model\Schedule\Entry\DayScheduleEntry.cs" />
     <Compile Include="Model\Schedule\Entry\EntityEntry.cs" />
     <Compile Include="Model\Schedule\Entry\SubjectEntry.cs" />

@@ -23,12 +23,13 @@ namespace MyAgenda.Test.Integration
             Manager.GetGroup(0);
             Manager.GetSubject(0);
             Manager.GetCourse(0);
-            Manager.GetDaySchedule(0);
+            Manager.GetGroupDaySchedule(0);
             Manager.GetFaculty(0);
             Manager.GetTeacher(0);
             Manager.GetWeekType(0);
-            Manager.GetGroupWeekSchedule(0, Manager.GetGroup(0), Manager.GetWeekType(0));
-            Manager.GetTeacherWeekSchedule(Manager.GetTeacher(0), Manager.GetWeekType(0));
+            Manager.GetGroupWeekSchedule(0);
+
+            Manager.BuildTeacherWeekSchedule(Manager.GetTeacher(0), Manager.GetWeekType(0));
         }
     }
 }

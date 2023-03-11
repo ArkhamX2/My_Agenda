@@ -1,27 +1,22 @@
-﻿<UserControl x:Class="MyAgenda.MVVM.View.MedSizeMainView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MyAgenda.MVVM.View"
-             xmlns:viewModel="clr-namespace:MyAgenda.MVVM.ViewModel"
-             xmlns:view="clr-namespace:MyAgenda.MVVM.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="720">
-    
-    <UserControl.DataContext >
-        <viewModel:HomeViewModel/>
-    </UserControl.DataContext>
+﻿<Page x:Class="MyAgenda.MVVM.View.MedPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MyAgenda.MVVM.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="720"
+      Title="MedPageView">
 
     <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto" >
         <StackPanel>
-            
+
             <StackPanel Orientation="Horizontal">
 
                 <Border Style="{StaticResource DayBorderTheme}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                    
+
                     <Grid>
                         <Image x:Name="MondayMark" 
                                Style="{StaticResource DayDotTheme}">
@@ -29,25 +24,25 @@
                         <StackPanel>
                             <TextBlock Text="Понедельник"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
+                            <Frame x:Name="mondayframe" NavigationUIVisibility="Hidden" />
                         </StackPanel>
                     </Grid>
-                    
+
                 </Border>
 
                 <Border Style="{StaticResource DayBorderAltTheme}">
-                    
+
                     <Grid>
                         <Image x:Name="TuesdayMark" 
                                Style="{StaticResource DayDotTheme}">
                         </Image>
                         <StackPanel>
-                                <TextBlock Text="Вторник"
+                            <TextBlock Text="Вторник"
                                            Style="{StaticResource MainDayTextBlockTheme}"/>
-                                <ContentControl Content="{Binding CurrentDayView}" />
+                            <Frame x:Name="tuesdayframe" NavigationUIVisibility="Hidden" />
                         </StackPanel>
                     </Grid>
-                    
+
                 </Border>
 
 
@@ -56,7 +51,7 @@
             <StackPanel Orientation="Horizontal">
 
                 <Border Style="{StaticResource DayBorderTheme}">
-                    
+
                     <Grid>
                         <Image x:Name="WednesdayMark" 
                                Style="{StaticResource DayDotTheme}">
@@ -64,25 +59,25 @@
                         <StackPanel>
                             <TextBlock Text="Среда"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
+                            <Frame x:Name="wednesdayframe" NavigationUIVisibility="Hidden" />
                         </StackPanel>
                     </Grid>
-                    
+
                 </Border>
 
                 <Border Style="{StaticResource DayBorderAltTheme}">
-                    
+
                     <Grid>
-                        <Image x:Name="ThuesdayMark" 
+                        <Image x:Name="ThursdayMark" 
                                Style="{StaticResource DayDotTheme}">
                         </Image>
                         <StackPanel>
                             <TextBlock Style="{StaticResource MainDayTextBlockTheme}"
                                        Text="Четверг"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
+                            <Frame x:Name="thursdayframe" NavigationUIVisibility="Hidden" />
                         </StackPanel>
                     </Grid>
-                    
+
                 </Border>
 
 
@@ -91,7 +86,7 @@
             <StackPanel Orientation="Horizontal">
 
                 <Border Style="{StaticResource DayBorderTheme}">
-                    
+
                     <Grid>
                         <Image x:Name="FridayMark" 
                               Style="{StaticResource DayDotTheme}">
@@ -99,14 +94,14 @@
                         <StackPanel>
                             <TextBlock Text="Пятница"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
+                            <Frame x:Name="fridayframe" NavigationUIVisibility="Hidden" />
                         </StackPanel>
                     </Grid>
-                    
+
                 </Border>
 
                 <Border Style="{StaticResource DayBorderAltTheme}">
-                    
+
                     <Grid>
                         <Image x:Name="SaturdayMark" 
                                Style="{StaticResource DayDotTheme}">
@@ -114,12 +109,12 @@
                         <StackPanel>
                             <TextBlock Text="Суббота"
                                        Style="{StaticResource MainDayTextBlockTheme}"/>
-                            <ContentControl Content="{Binding CurrentDayView}" />
+                            <Frame x:Name="saturdayframe" NavigationUIVisibility="Hidden" />
                         </StackPanel>
                     </Grid>
-                    
+
                 </Border>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
-</UserControl>
+</Page>

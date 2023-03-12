@@ -27,38 +27,17 @@ namespace MyAgenda
             DayOfWeek.Friday,
             DayOfWeek.Saturday,
             DayOfWeek.Sunday };
+        private bool medDrawn;
+        private bool mainDrawn;
+        private bool minDrawn;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            StartScreen();
-
             SizeChanged += MainWindow_SizeChanged;
 
             WeekDate();
-        }
-
-        private void StartScreen()
-        {
-            if (MainWind.ActualWidth > 1100)
-            {
-                first = true;
-                second = true;
-                third = true;
-            }
-            else if (MainWind.ActualWidth > 740)
-            {
-                first = false;
-                second = false;
-                third = true;
-            }
-            else
-            {
-                first = false;
-                second = true;
-                third = false;
-            }
         }
 
         private void WeekDate()
@@ -83,34 +62,39 @@ namespace MyAgenda
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (MainWind.ActualWidth > 1100)
+            if (MainView.ActualWidth > 1100)
             {
-                if ((first && second) || !fourth)
+                if (!mainDrawn)
                 {
+
                     frame.Navigate(new MainPageView());
-                    first = false;
-                    second = false;
-                    fourth = true;
+                    mainDrawn = true;
+                    medDrawn= false;
+                    minDrawn= false;
                 }
             }
             else
-            if (MainWind.ActualWidth > 740)
+            if (MainView.ActualWidth > 740)
             {
-                if ((!second && third) || fourth)
+                if (!medDrawn)
                 {
+
                     frame.Navigate(new MedPageView());
-                    second = true;
-                    third = false;
-                    fourth = false;
+                    medDrawn = true;
+                    mainDrawn = false;
+                    minDrawn = false;
                 }
             }
             else
-            if ((!first && !third) || !fourth)
             {
-                frame.Navigate(new MinPageView());
-                first = true;
-                third = true;
-                fourth = true;
+                if (!minDrawn)
+                {
+
+                    frame.Navigate(new MinPageView());
+                    minDrawn = true;
+                    medDrawn = false;
+                    mainDrawn = false;
+                }
             }
         }
     }

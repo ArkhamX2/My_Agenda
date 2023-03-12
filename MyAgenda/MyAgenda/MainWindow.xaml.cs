@@ -14,10 +14,11 @@ namespace MyAgenda
     public partial class MainWindow : Window
     {
         int _Mode;
-        bool first;
-        bool second;
-        bool third;
-        bool fourth;
+
+        //Индикация отрисовки View разных размеров
+        private bool medDrawn;
+        private bool mainDrawn;
+        private bool minDrawn;
 
         List<DayOfWeek> week = new List<DayOfWeek>() {
             DayOfWeek.Monday,
@@ -27,9 +28,6 @@ namespace MyAgenda
             DayOfWeek.Friday,
             DayOfWeek.Saturday,
             DayOfWeek.Sunday };
-        private bool medDrawn;
-        private bool mainDrawn;
-        private bool minDrawn;
 
         public MainWindow()
         {
@@ -43,7 +41,7 @@ namespace MyAgenda
         private void WeekDate()
         {
             DateTime datenow = DateTime.Now;
-            for (int currentDayIndex = 0; currentDayIndex < week.Count - 1; currentDayIndex++)
+            for (int currentDayIndex = 0; currentDayIndex < week.Count; currentDayIndex++)
             {
                 if (week[currentDayIndex] == datenow.DayOfWeek)
                 {

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using MyAgenda.Library.Data;
+using MyAgenda.Library.Data.Column;
+using MyAgenda.Library.Data.Provider;
 using MyAgenda.Library.Model;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Day;
@@ -28,54 +31,11 @@ namespace MyAgenda.Library
         }
 
         /// <summary>
-        /// Подключение.
-        /// </summary>
-        private static MySqlConnection _connection = null;
-
-        /// <summary>
-        /// Установить подключение.
-        /// TODO: Держать открытым подключение в Manager.OpenConnection()?
-        /// </summary>
-        /// <returns>Подключение.</returns>
-        private static MySqlConnection OpenConnection()
-        {
-            if (_connection == null)
-            {
-                _connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
-            }
-
-            // Пингуем подключение на предмет обрыва связи.
-            // Создает небольшую задержку.
-            if (!_connection.Ping())
-            {
-                _connection.Close();
-                _connection.Open();
-            }
-
-            return _connection;
-        }
-
-        /// <summary>
-        /// Закрыть подключение.
-        /// </summary>
-        /// <returns>Подключение.</returns>
-        private static void CloseConnection()
-        {
-            if (_connection == null)
-            {
-                return;
-            }
-
-            _connection.Close();
-        }
-
-        /// <summary>
         /// Запустить миграции и создать таблицы для сущностей.
         /// TODO: Сделать миграции по-человечески.
         /// </summary>
         private static void Migrate()
         {
-            var link = OpenConnection();
             var query = string.Empty;
             var schemaList = new List<Schema>
             {
@@ -95,10 +55,7 @@ namespace MyAgenda.Library
                 query += schema.ToCreateQuery();
             }
 
-            var command = new MySqlCommand(query, link);
-
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>
@@ -107,12 +64,9 @@ namespace MyAgenda.Library
         /// <param name="faculty">Факультет.</param>
         public static void SetFaculty(Faculty faculty)
         {
-            var link = OpenConnection();
             var query = faculty.ToData().ToInsertQuery();
-            var command = new MySqlCommand(query, link);
 
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>
@@ -121,18 +75,13 @@ namespace MyAgenda.Library
         /// <param name="course">Курс.</param>
         public static void SetCourse(Course course)
         {
-            var link = OpenConnection();
             var query = string.Empty;
-
-            Faculty faculty = course.Faculty;
+            var faculty = course.Faculty;
 
             query += faculty.ToData().ToInsertQuery();
             query += course.ToData().ToInsertQuery();
 
-            var command = new MySqlCommand(query, link);
-
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>
@@ -141,20 +90,15 @@ namespace MyAgenda.Library
         /// <param name="group">Группа.</param>
         public static void SetGroup(Group group)
         {
-            var link = OpenConnection();
             var query = string.Empty;
-
-            Course course = group.Course;
-            Faculty faculty = course.Faculty;
+            var course = group.Course;
+            var faculty = course.Faculty;
 
             query += faculty.ToData().ToInsertQuery();
             query += course.ToData().ToInsertQuery();
             query += group.ToData().ToInsertQuery();
 
-            var command = new MySqlCommand(query, link);
-
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>
@@ -163,12 +107,9 @@ namespace MyAgenda.Library
         /// <param name="teacher">Преподаватель.</param>
         public static void SetTeacher(Teacher teacher)
         {
-            var link = OpenConnection();
             var query = teacher.ToData().ToInsertQuery();
-            var command = new MySqlCommand(query, link);
 
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>
@@ -178,7 +119,6 @@ namespace MyAgenda.Library
         /// <param name="day">Учебный день для группы.</param>
         public static void SetGroupDaySchedule(GroupDaySchedule day)
         {
-            var link = OpenConnection();
             var query = string.Empty;
 
             foreach (var entry in day.SubjectList)
@@ -194,10 +134,7 @@ namespace MyAgenda.Library
 
             query += day.ToData().ToInsertQuery();
 
-            var command = new MySqlCommand(query, link);
-
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>
@@ -207,16 +144,16 @@ namespace MyAgenda.Library
         /// <param name="week">Учебный день для группы.</param>
         public static void SetGroupWeekSchedule(GroupWeekSchedule week)
         {
-            var link = OpenConnection();
             var query = string.Empty;
-
-            Course course = week.Group.Course;
-            Faculty faculty = course.Faculty;
+            var weekType = week.WeekType;
+            var group = week.Group;
+            var course = group.Course;
+            var faculty = course.Faculty;
 
             query += faculty.ToData().ToInsertQuery();
             query += course.ToData().ToInsertQuery();
-            query += week.Group.ToData().ToInsertQuery();
-            query += week.WeekType.ToData().ToInsertQuery();
+            query += group.ToData().ToInsertQuery();
+            query += weekType.ToData().ToInsertQuery();
 
             foreach (var dayEntry in week.DayList)
             {
@@ -246,10 +183,7 @@ namespace MyAgenda.Library
 
             query += week.ToData().ToInsertQuery();
 
-            var command = new MySqlCommand(query, link);
-
-            command.ExecuteNonQuery();
-            CloseConnection();
+            ConnectionManager.ExecuteNonQuery(query);
         }
 
         /// <summary>

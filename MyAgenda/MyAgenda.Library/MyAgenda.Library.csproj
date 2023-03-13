@@ -80,6 +80,9 @@
     <Compile Include="Data\Column\DataColumn.cs" />
     <Compile Include="Data\Column\IntColumn.cs" />
     <Compile Include="Data\Column\StringColumn.cs" />
+    <Compile Include="Data\Provider\ConnectionManager.cs" />
+    <Compile Include="Data\Provider\EntityDataReader.cs" />
+    <Compile Include="Data\Provider\GroupProvider.cs" />
     <Compile Include="Data\ReferenceLink.cs" />
     <Compile Include="Data\Schema.cs" />
     <Compile Include="Model\Entity.cs" />

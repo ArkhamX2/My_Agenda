@@ -312,11 +312,11 @@ namespace MyAgenda.Library.Data
 
             // TODO: Пересмотреть Schema.ToInsertQuery().
 
-            result += $"INSERT INTO `{Name}` ({ImplodeInsertColumnNames()})";
-            result += $" VALUES({ImplodeInsertColumnValues()})";
-            result += $" ON DUPLICATE KEY UPDATE {ImplodeInsertColumnLinks()}";
+            result += $"INSERT INTO `{Name}` ({ImplodeInsertColumnNames()}) ";
+            result += $"VALUES({ImplodeInsertColumnValues()}) ";
+            result += $"ON DUPLICATE KEY UPDATE {ImplodeInsertColumnLinks()};";
 
-            return result + ";";
+            return result;
         }
 
         /// <summary>

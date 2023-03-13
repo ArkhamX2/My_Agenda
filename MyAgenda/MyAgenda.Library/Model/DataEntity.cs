@@ -56,7 +56,7 @@ namespace MyAgenda.Library.Model
             {
                 if (value < IdMin)
                 {
-                    throw new ArgumentException("Идентификатор не может быть отрицательным.");
+                    throw new ArgumentException("Идентификатор не может быть меньше минимального.");
                 }
 
                 _id = value;

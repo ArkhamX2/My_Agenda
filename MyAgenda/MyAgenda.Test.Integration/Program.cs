@@ -1,4 +1,5 @@
 ﻿using MyAgenda.Library.Model;
+using MyAgenda.Library.Model.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +21,12 @@ namespace MyAgenda.Test.Integration
         {
             // TODO: Начать разработку тестов интеграции.
 
-            Manager.GetGroup(0);
-            Manager.GetSubject(0);
-            Manager.GetCourse(0);
-            Manager.GetGroupDaySchedule(0);
-            Manager.GetFaculty(0);
-            Manager.GetTeacher(0);
-            Manager.GetWeekType(0);
-            Manager.GetGroupWeekSchedule(0);
+            var groupList = Manager.GetGroupList();
+            var teacherList = Manager.GetTeacherList();
+            var weekTypeList = Manager.GetWeekTypeList();
 
-            Manager.BuildTeacherWeekSchedule(Manager.GetTeacher(0), Manager.GetWeekType(0));
+            var groupWeek = Manager.GetGroupWeekSchedule(groupList[0], weekTypeList[0]);
+            var teacherWeek = Manager.GetTeacherWeekSchedule(teacherList[0], weekTypeList[0]);
         }
     }
 }

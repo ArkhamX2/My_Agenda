@@ -28,12 +28,12 @@ namespace MyAgenda.Library.Model
         /// <summary>
         /// Минимальный идентификатор.
         /// </summary>
-        public const int IdMin = 0;
+        public const int IdMin = 1;
 
         /// <summary>
         /// Незаданный идентификатор.
         /// </summary>
-        internal const int IdUndefined = -1;
+        internal const int IdUndefined = 0;
 
         #endregion
 

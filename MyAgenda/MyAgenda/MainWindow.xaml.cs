@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -33,6 +34,11 @@ namespace MyAgenda
             DayOfWeek.Saturday,
             DayOfWeek.Sunday };
 
+        CultureInfo myCI = new CultureInfo("en-US");
+        System.Globalization.Calendar myCalendar;
+        CalendarWeekRule calendarWeekRule;
+        DayOfWeek firstDayOfWeek;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +47,16 @@ namespace MyAgenda
 
             datenow = DateTime.Now;
 
+            InitializeCalendar();
+
             WeekDate();
+        }
+
+        private void InitializeCalendar()
+        {
+            myCalendar = myCI.Calendar;
+            calendarWeekRule = myCI.DateTimeFormat.CalendarWeekRule;
+            firstDayOfWeek = myCI.DateTimeFormat.FirstDayOfWeek;
         }
 
         private void WeekDate()
@@ -57,10 +72,16 @@ namespace MyAgenda
 
         private string CalculateWeekBorders(DateTime datenow, int currentDayOfWeekIndex)
         {
-            string leftBorder = datenow.AddDays(currentDayOfWeekIndex * (-1)).ToString("d");
-            string rightBorder = datenow.AddDays(week.Count - currentDayOfWeekIndex - 1).ToString("d");
+            string leftBorder = datenow.AddDays(currentDayOfWeekIndex * (-1)).ToString("M");
+            string rightBorder = datenow.AddDays(week.Count - currentDayOfWeekIndex - 1).ToString("M");
 
-            return leftBorder + "-" + rightBorder;
+            string weektype = IsEvenWeek(datenow) ? " (Красная)" : " (Синяя)";
+            return leftBorder + "-" + rightBorder + weektype;
+        }
+
+        private bool IsEvenWeek(DateTime DT)
+        {
+            return myCalendar.GetWeekOfYear(DT, calendarWeekRule, firstDayOfWeek) % 2 == 0;
         }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -15,7 +15,7 @@ namespace MyAgenda
     /// </summary>
     public partial class MainWindow : Window
     {
-        int _Mode;
+        int _Mode = 0;
         bool weekChanged;
         //Индикация отрисовки View разных размеров
         private bool medDrawn;
@@ -70,7 +70,7 @@ namespace MyAgenda
             {
                 if (!mainDrawn)
                 {
-                    frame.Navigate(new MainPageView(datenow));
+                    frame.Navigate(new MainPageView(datenow, _Mode));
                     mainDrawn = true;
                     medDrawn= false;
                     minDrawn= false;
@@ -82,7 +82,7 @@ namespace MyAgenda
             {
                 if (!medDrawn)
                 {
-                    frame.Navigate(new MedPageView(datenow));
+                    frame.Navigate(new MedPageView(datenow, _Mode));
                     medDrawn = true;
                     mainDrawn = false;
                     minDrawn = false;
@@ -93,7 +93,7 @@ namespace MyAgenda
             {
                 if (!minDrawn)
                 {
-                    frame.Navigate(new MinPageView(datenow));
+                    frame.Navigate(new MinPageView(datenow, _Mode));
                     minDrawn = true;
                     medDrawn = false;
                     mainDrawn = false;
@@ -119,11 +119,11 @@ namespace MyAgenda
         private void PageUpdate()
         {
             if (size == 3)
-                frame.Navigate(new MainPageView(datenow));
+                frame.Navigate(new MainPageView(datenow, _Mode));
             else if (size == 2)
-                frame.Navigate(new MedPageView(datenow));
+                frame.Navigate(new MedPageView(datenow, _Mode));
             else if (size == 1)
-                frame.Navigate(new MinPageView(datenow));
+                frame.Navigate(new MinPageView(datenow, _Mode));
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -139,19 +139,50 @@ namespace MyAgenda
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_Mode != 1)
+            {
+                _Mode = 1;
+                PageUpdate();
+            }
+            else
+            {
+                _Mode = 0;
+                PageUpdate();
+            }
         }
 
         private void TeacherButton_Click(object sender, RoutedEventArgs e)
         {
-            ComboBoxTeacher.Visibility = Visibility.Visible;
-            ComboBoxStudent.Visibility = Visibility.Collapsed;
+            if (_Mode != 2)
+            {
+                _Mode = 2;
+                PageUpdate();
+                ComboBoxTeacher.Visibility = Visibility.Visible;
+                ComboBoxStudent.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                _Mode = 0;
+                PageUpdate();
+                ComboBoxTeacher.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void StudentButton_Click(object sender, RoutedEventArgs e)
         {
-            ComboBoxTeacher.Visibility = Visibility.Collapsed;
-            ComboBoxStudent.Visibility = Visibility.Visible;
+            if (_Mode != 3)
+            {
+                _Mode = 3;
+                PageUpdate();
+                ComboBoxTeacher.Visibility = Visibility.Collapsed;
+                ComboBoxStudent.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                _Mode = 0;
+                PageUpdate();
+                ComboBoxStudent.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

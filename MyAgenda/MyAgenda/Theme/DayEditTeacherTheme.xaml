@@ -3,8 +3,8 @@
     <Style TargetType="{x:Type ComboBox}"
            x:Key="DayEditTeacherTheme">
         <Setter Property="VerticalAlignment" Value="Bottom"/>
-        <Setter Property="Margin" Value="5,32,5,5"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="Text" Value="Преподаватель"/>
     </Style>
 </ResourceDictionary>

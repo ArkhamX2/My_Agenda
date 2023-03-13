@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyAgenda.MVVM.View.Editor;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -38,26 +39,38 @@ namespace MyAgenda.MVVM.View
             DayOfWeek.Sunday };
 
         const int DayCardHeight = 360;
-        public MedPageView(DateTime MainDate)
+        public MedPageView(DateTime MainDate, int Mode)
         {
             DateTime DT = MainDate;
 
             InitializeComponent();
 
-            OpenPages();
+            OpenPages(Mode);
 
             InitializeCalendar();
 
             CurrentDayOutline(DT);
         }
-        public void OpenPages()
+        public void OpenPages(int Mode)
         {
-            mondayframe.Navigate(new MondayPageView());
-            tuesdayframe.Navigate(new TuesdayPageView());
-            wednesdayframe.Navigate(new WednesdayPageView());
-            thursdayframe.Navigate(new ThursdayPageView());
-            fridayframe.Navigate(new FridayPageView());
-            saturdayframe.Navigate(new SaturdayPageView());
+            if (Mode == 1)
+            {
+                mondayframe.Navigate(new MondayEditPageView());
+                tuesdayframe.Navigate(new TuesdayEditPageView());
+                wednesdayframe.Navigate(new WednesdayEditPageView());
+                thursdayframe.Navigate(new ThursdayEditPageView());
+                fridayframe.Navigate(new FridayEditPageView());
+                saturdayframe.Navigate(new SaturdayEditPageView());
+            }
+            else
+            {
+                mondayframe.Navigate(new MondayPageView());
+                tuesdayframe.Navigate(new TuesdayPageView());
+                wednesdayframe.Navigate(new WednesdayPageView());
+                thursdayframe.Navigate(new ThursdayPageView());
+                fridayframe.Navigate(new FridayPageView());
+                saturdayframe.Navigate(new SaturdayPageView());
+            }
         }
 
         private void InitializeCalendar()

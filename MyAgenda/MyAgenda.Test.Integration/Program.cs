@@ -21,6 +21,8 @@ namespace MyAgenda.Test.Integration
         {
             // TODO: Начать разработку тестов интеграции.
 
+            Manager.Initialize();
+
             var groupList = Manager.GetGroupList();
             var teacherList = Manager.GetTeacherList();
             var weekTypeList = Manager.GetWeekTypeList();

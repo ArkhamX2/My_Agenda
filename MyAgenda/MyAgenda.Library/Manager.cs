@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using MyAgenda.Library.Data;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Day;
 using MyAgenda.Library.Model.Schedule.Entry;
 using MyAgenda.Library.Model.Schedule.Week;
+using MySql.Data.MySqlClient;
 
 namespace MyAgenda.Library
 {
@@ -11,6 +14,51 @@ namespace MyAgenda.Library
     /// </summary>
     public static class Manager
     {
+        /// <summary>
+        /// Строка подключения.
+        /// </summary>
+        private static string _connectionString = "server=server;user=user;database=database;password=password;";
+
+        /// <summary>
+        /// Запустить инициализацию базы данных.
+        /// </summary>
+        public static void Initialize()
+        {
+            Migrate();
+        }
+
+        /// <summary>
+        /// Запустить миграции и создать таблицы для сущностей.
+        /// </summary>
+        private static void Migrate()
+        {
+            var link = new MySqlConnection(_connectionString);
+            var query = string.Empty;
+            var schemaList = new List<Schema>
+            {
+                Faculty.Schema,
+                Course.Schema,
+                Group.Schema,
+                Teacher.Schema,
+                Subject.Schema,
+                WeekType.Schema,
+                GroupDaySchedule.Schema,
+                GroupWeekSchedule.Schema
+            };
+
+            link.Open();
+
+            foreach (var schema in schemaList)
+            {
+                query += schema.ToCreateQuery();
+            }
+
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            link.Close();
+        }
+
         /// <summary>
         /// Получить список групп.
         /// </summary>

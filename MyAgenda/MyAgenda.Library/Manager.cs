@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using MyAgenda.Library.Data;
+using MyAgenda.Library.Model;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Day;
 using MyAgenda.Library.Model.Schedule.Entry;
@@ -24,11 +25,52 @@ namespace MyAgenda.Library
         }
 
         /// <summary>
+        /// Подключение.
+        /// </summary>
+        private static MySqlConnection _connection = null;
+
+        /// <summary>
+        /// Установить подключение.
+        /// </summary>
+        /// <returns>Подключение.</returns>
+        private static MySqlConnection OpenConnection()
+        {
+            if (_connection == null)
+            {
+                _connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
+            }
+
+            if (!_connection.Ping())
+            {
+                _connection.Close();
+                _connection.Open();
+            }
+
+            return _connection;
+        }
+
+        /// <summary>
+        /// Закрыть подключение.
+        /// </summary>
+        /// <returns>Подключение.</returns>
+        private static MySqlConnection CloseConnection()
+        {
+            if (_connection == null)
+            {
+                _connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
+            }
+
+            _connection.Close();
+
+            return _connection;
+        }
+
+        /// <summary>
         /// Запустить миграции и создать таблицы для сущностей.
         /// </summary>
         private static void Migrate()
         {
-            var link = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
+            var link = OpenConnection();
             var query = string.Empty;
             var schemaList = new List<Schema>
             {
@@ -42,8 +84,6 @@ namespace MyAgenda.Library
                 GroupWeekSchedule.Schema
             };
 
-            link.Open();
-
             foreach (var schema in schemaList)
             {
                 query += schema.ToCreateQuery();
@@ -52,7 +92,156 @@ namespace MyAgenda.Library
             var command = new MySqlCommand(query, link);
 
             command.ExecuteNonQuery();
-            link.Close();
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// Сохранить факультет.
+        /// </summary>
+        /// <param name="faculty">Факультет.</param>
+        public static void SetFaculty(Faculty faculty)
+        {
+            var link = OpenConnection();
+            var query = faculty.ToData().ToInsertQuery();
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// Сохранить курс.
+        /// </summary>
+        /// <param name="course">Курс.</param>
+        public static void SetCourse(Course course)
+        {
+            var link = OpenConnection();
+            var query = string.Empty;
+
+            Faculty faculty = course.Faculty;
+
+            query += faculty.ToData().ToInsertQuery();
+            query += course.ToData().ToInsertQuery();
+
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// Сохранить группу.
+        /// </summary>
+        /// <param name="group">Группа.</param>
+        public static void SetGroup(Group group)
+        {
+            var link = OpenConnection();
+            var query = string.Empty;
+
+            Course course = group.Course;
+            Faculty faculty = course.Faculty;
+
+            query += faculty.ToData().ToInsertQuery();
+            query += course.ToData().ToInsertQuery();
+            query += group.ToData().ToInsertQuery();
+
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// Сохранить преподавателя.
+        /// </summary>
+        /// <param name="teacher">Преподаватель.</param>
+        public static void SetTeacher(Teacher teacher)
+        {
+            var link = OpenConnection();
+            var query = teacher.ToData().ToInsertQuery();
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// Сохранить учебный день для группы.
+        /// </summary>
+        /// <param name="day">Учебный день для группы.</param>
+        public static void SetGroupDaySchedule(GroupDaySchedule day)
+        {
+            var link = OpenConnection();
+            var query = string.Empty;
+
+            foreach (var entry in day.SubjectList)
+            {
+                if (!entry.HasSubject())
+                {
+                    continue;
+                }
+
+                query += entry.Subject.Teacher.ToData().ToInsertQuery();
+                query += entry.Subject.ToData().ToInsertQuery();
+            }
+
+            query += day.ToData().ToInsertQuery();
+
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// Сохранить учебный день для группы.
+        /// </summary>
+        /// <param name="week">Учебный день для группы.</param>
+        public static void SetGroupWeekSchedule(GroupWeekSchedule week)
+        {
+            var link = OpenConnection();
+            var query = string.Empty;
+
+            Course course = week.Group.Course;
+            Faculty faculty = course.Faculty;
+
+            query += faculty.ToData().ToInsertQuery();
+            query += course.ToData().ToInsertQuery();
+            query += week.Group.ToData().ToInsertQuery();
+            query += week.WeekType.ToData().ToInsertQuery();
+
+            foreach (var dayEntry in week.DayList)
+            {
+                if (!dayEntry.HasDaySchedule())
+                {
+                    continue;
+                }
+
+                foreach (var subjectEntry in dayEntry.DaySchedule.SubjectList)
+                {
+                    if (!subjectEntry.HasSubject())
+                    {
+                        continue;
+                    }
+
+                    query += subjectEntry.Subject.Teacher.ToData().ToInsertQuery();
+                    query += subjectEntry.Subject.ToData().ToInsertQuery();
+                }
+
+                if (!(dayEntry.DaySchedule is GroupDaySchedule day))
+                {
+                    throw new Exception();
+                }
+
+                query += day.ToData().ToInsertQuery();
+            }
+
+            query += week.ToData().ToInsertQuery();
+
+            var command = new MySqlCommand(query, link);
+
+            command.ExecuteNonQuery();
+            CloseConnection();
         }
 
         /// <summary>
@@ -69,9 +258,9 @@ namespace MyAgenda.Library
 
             for (int i = 0; i < 10; i++)
             {
-                faculty = new Faculty(i, Faculty.NameColumn);
-                course = new Course(i, faculty, Course.NameColumn);
-                group = new Group(i, course, Group.CodeColumn);
+                faculty = new Faculty(i + 1, Faculty.NameColumn);
+                course = new Course(i + 1, faculty, Course.NameColumn);
+                group = new Group(i + 1, course, Group.CodeColumn);
 
                 groupList.Add(group);
             }
@@ -91,7 +280,7 @@ namespace MyAgenda.Library
 
             for (int i = 0; i < 10; i++)
             {
-                teacher = new Teacher(i, Teacher.NameColumn, Teacher.SurnameColumn, Teacher.PatronymicColumn);
+                teacher = new Teacher(i + 1, Teacher.NameColumn, Teacher.SurnameColumn, Teacher.PatronymicColumn);
 
                 teacherList.Add(teacher);
             }
@@ -109,8 +298,8 @@ namespace MyAgenda.Library
 
             var weekTypeList = new List<WeekType>();
 
-            weekTypeList.Add(new WeekType(0, AvailableWeekType.Red));
-            weekTypeList.Add(new WeekType(1, AvailableWeekType.Blue));
+            weekTypeList.Add(new WeekType(1, AvailableWeekType.Red));
+            weekTypeList.Add(new WeekType(2, AvailableWeekType.Blue));
 
             return weekTypeList;
         }
@@ -133,8 +322,8 @@ namespace MyAgenda.Library
 
             for (int i = 0; i < EntityEntry.PositionTypeCount * EntityEntry.PositionTypeCount; i++)
             {
-                teacher = new Teacher(i, Teacher.NameColumn, Teacher.SurnameColumn, Teacher.PatronymicColumn);
-                subject = new Subject(i, teacher, Subject.NameColumn, Subject.ClassroomColumn);
+                teacher = new Teacher(i + 1, Teacher.NameColumn, Teacher.SurnameColumn, Teacher.PatronymicColumn);
+                subject = new Subject(i + 1, teacher, Subject.NameColumn, Subject.ClassroomColumn);
 
                 int index = i;
 
@@ -148,12 +337,12 @@ namespace MyAgenda.Library
 
             for (int i = 0; i < EntityEntry.PositionTypeCount; i++)
             {
-                day = new GroupDaySchedule(i, subjectList.GetRange(i, EntityEntry.PositionTypeCount));
+                day = new GroupDaySchedule(i + 1, subjectList.GetRange(i, EntityEntry.PositionTypeCount));
 
                 dayList.Add(new DayScheduleEntry(EntityEntry.GetPositionType(i), day));
             }
 
-            week = new GroupWeekSchedule(0, group, weekType, dayList);
+            week = new GroupWeekSchedule(1, group, weekType, dayList);
 
             return week;
         }
@@ -197,7 +386,7 @@ namespace MyAgenda.Library
 
             for (int i = 0; i < EntityEntry.PositionTypeCount * EntityEntry.PositionTypeCount; i++)
             {
-                subject = new Subject(i, teacher, Subject.NameColumn, Subject.ClassroomColumn);
+                subject = new Subject(i + 1, teacher, Subject.NameColumn, Subject.ClassroomColumn);
 
                 int index = i;
 

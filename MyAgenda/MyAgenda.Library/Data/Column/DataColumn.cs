@@ -198,7 +198,7 @@ namespace MyAgenda.Library.Data.Column
         /// <returns>Строка в формате SQL.</returns>
         public override string ToString()
         {
-            var result = $"\"{Name}\" {DataTypeAsString()}";
+            var result = $"`{Name}` {DataTypeAsString()}";
 
             result += IsNullable ? "" : " NOT NULL";
             result += IsPrimaryKey ? " PRIMARY KEY" : "";

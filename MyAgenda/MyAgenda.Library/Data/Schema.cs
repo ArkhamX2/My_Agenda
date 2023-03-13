@@ -166,7 +166,7 @@ namespace MyAgenda.Library.Data
             {
                 // Перекрестная проверка переданного списка ссылок
                 // и списка столбцов на соответствие.
-                if (value.Any(link => ColumnList.Any(column => link.ColumnName != column.Name)))
+                if (value.Any(link => ColumnList.All(column => link.ColumnName != column.Name)))
                 {
                     throw new ArgumentException("Список ссылок не соответствует списку столбцов.");
                 }
@@ -283,7 +283,7 @@ namespace MyAgenda.Library.Data
         /// <returns>Строка в формате SQL.</returns>
         public string ToCreateQuery()
         {
-            var result = $"CREATE TABLE IF NOT EXISTS \"{Name}\" (";
+            var result = $"CREATE TABLE IF NOT EXISTS `{Name}` (";
 
             result = ColumnList.Aggregate(result, (current, item) => current + $"{item}, ");
             result = ReferenceList.Aggregate(result, (current, item) => current + $"{item}, ");
@@ -299,7 +299,7 @@ namespace MyAgenda.Library.Data
         /// <returns>Строка в формате SQL.</returns>
         public string ToDropQuery()
         {
-            return $"DROP TABLE \"{Name}\";";
+            return $"DROP TABLE `{Name}`;";
         }
 
         /// <summary>

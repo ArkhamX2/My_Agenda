@@ -131,7 +131,7 @@ namespace MyAgenda.Library.Data
         /// <returns>Строка в формате SQL.</returns>
         public override string ToString()
         {
-            return $"FOREIGN KEY (\"{ColumnName}\") REFERENCES \"{ReferenceTableName}\" (\"{ReferenceColumnName}\")";
+            return $"FOREIGN KEY (`{ColumnName}`) REFERENCES `{ReferenceTableName}` (`{ReferenceColumnName}`)";
         }
 
         #endregion

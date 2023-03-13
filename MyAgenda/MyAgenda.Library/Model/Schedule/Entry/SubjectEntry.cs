@@ -85,5 +85,14 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// Доступ к времени окончания занятия.
         /// </summary>
         public string EndTime => GetEndTime(Position);
+
+        /// <summary>
+        /// Проверить наличие занятия.
+        /// </summary>
+        /// <returns>Статус проверки.</returns>
+        public bool HasSubject()
+        {
+            return HasEntity();
+        }
     }
 }

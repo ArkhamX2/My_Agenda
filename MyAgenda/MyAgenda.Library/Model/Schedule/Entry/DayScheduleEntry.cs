@@ -59,5 +59,14 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// Доступ к дню недели.
         /// </summary>
         public string WeekDay => GetWeekDay(Position);
+
+        /// <summary>
+        /// Проверить наличие учебного дня.
+        /// </summary>
+        /// <returns>Статус проверки.</returns>
+        public bool HasDaySchedule()
+        {
+            return HasEntity();
+        }
     }
 }

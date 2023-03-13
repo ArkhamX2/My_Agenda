@@ -119,5 +119,14 @@ namespace MyAgenda.Library.Model.Schedule.Entry
         /// Доступ к индексу.
         /// </summary>
         public int Index => GetIndex(Position);
+
+        /// <summary>
+        /// Проверить наличие сущности.
+        /// </summary>
+        /// <returns>Статус проверки.</returns>
+        protected bool HasEntity()
+        {
+            return Entity != null;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MyAgenda.MVVM.View.Editor;
+﻿using MyAgenda.MVVM.View.Editor.EditWeekDays;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

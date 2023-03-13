@@ -75,7 +75,7 @@ namespace MyAgenda
             string leftBorder = datenow.AddDays(currentDayOfWeekIndex * (-1)).ToString("M");
             string rightBorder = datenow.AddDays(week.Count - currentDayOfWeekIndex - 1).ToString("M");
 
-            string weektype = IsEvenWeek(datenow) ? " (Красная)" : " (Синяя)";
+            string weektype = IsEvenWeek(datenow) ? " (Синяя)" : " (Красная)";
             return leftBorder + "-" + rightBorder + weektype;
         }
 

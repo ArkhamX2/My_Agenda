@@ -16,23 +16,33 @@
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <Image x:Name="NextWeek"
-               Grid.Row="0"
-               HorizontalAlignment="Center"
-               Margin="185,0,0,0"
+
+        <Button x:Name="NextWeek"
+                Margin="185,0,0,0"
+                Width="18"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="NextWeek_Click"
+                >
+            <Image
+               HorizontalAlignment="Center"               
                Width="18"
-               Source="Resources\Images\strelka2.png"
+               Source="Resources\Images\strelka2.png"               
             />
-        
-        <Image x:Name="LastWeek"
-               Grid.Row="0"
+        </Button>
+        <Button x:Name="LastWeek"
+                Margin="-185,0,0,0"
+                Width="18"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="LastWeek_Click"
+            >
+            <Image
                HorizontalAlignment="Center"
-               Margin="-185,0,0,0"
                Width="18"
                Source="Resources\Images\strelka2obr.png"
             />
-        
+        </Button>
         <TextBox x:Name="Date"
                  Grid.Row="0" 
                  HorizontalAlignment="Center" 

@@ -26,7 +26,7 @@ namespace MyAgenda.MVVM.View
         CalendarWeekRule calendarWeekRule;
         DayOfWeek firstDayOfWeek;
 
-        DateTime DT = DateTime.Now;
+        //DateTime DT = DateTime.Now;
 
         List<DayOfWeek> week = new List<DayOfWeek>() {
             DayOfWeek.Monday,
@@ -38,15 +38,17 @@ namespace MyAgenda.MVVM.View
             DayOfWeek.Sunday };
 
         const int DayCardHeight = 360;
-        public MedPageView()
+        public MedPageView(DateTime MainDate)
         {
+            DateTime DT = MainDate;
+
             InitializeComponent();
 
             OpenPages();
 
             InitializeCalendar();
 
-            CurrentDayOutline();
+            CurrentDayOutline(DT);
         }
         public void OpenPages()
         {
@@ -65,22 +67,22 @@ namespace MyAgenda.MVVM.View
             firstDayOfWeek = myCI.DateTimeFormat.FirstDayOfWeek;
         }
 
-        void CurrentDayOutline()
+        void CurrentDayOutline(DateTime DT)
         {
 
-            if (IsEvenWeek())
+            if (IsEvenWeek(DT))
             {
                 ChangeWeekType();
             }
 
-            ShowCurrentDayMark();
+            ShowCurrentDayMark(DT);
 
-            ScrollToCurrentDay(findCurrentDayPairIndex());
+            ScrollToCurrentDay(findCurrentDayPairIndex(DT));
 
         }
-        private bool IsEvenWeek()
+        private bool IsEvenWeek(DateTime DT)
         {
-            return myCalendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek) % 2 == 0;
+            return myCalendar.GetWeekOfYear(DT, calendarWeekRule, firstDayOfWeek) % 2 == 0;
         }
 
         private void ChangeWeekType()
@@ -94,7 +96,7 @@ namespace MyAgenda.MVVM.View
             SaturdayMark.Source = new BitmapImage(uriSource);
         }
 
-        private void ShowCurrentDayMark()
+        private void ShowCurrentDayMark(DateTime DT)
         {
             switch (DT.DayOfWeek)
             {
@@ -119,7 +121,7 @@ namespace MyAgenda.MVVM.View
             }
         }
 
-        private int findCurrentDayPairIndex()
+        private int findCurrentDayPairIndex(DateTime DT)
         {
             for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex += 2)
             {

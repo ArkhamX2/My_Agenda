@@ -26,7 +26,7 @@ namespace MyAgenda.MVVM.View
         CalendarWeekRule calendarWeekRule;
         DayOfWeek firstDayOfWeek;
 
-        DateTime DT = DateTime.Now;
+        //DateTime DT = DateTime.Now;
 
         List<DayOfWeek> week = new List<DayOfWeek>() {
             DayOfWeek.Monday,
@@ -39,15 +39,18 @@ namespace MyAgenda.MVVM.View
 
         const int DayCardHeight = 360;
 
-        public MainPageView()
+        public MainPageView(DateTime MainDate)
         {
+
+            DateTime DT = MainDate;
+
             InitializeComponent();
 
             OpenPages();
 
             InitializeCalendar();
 
-            CurrentDayOutline();
+            CurrentDayOutline(DT);
 
             int nWidth = (int)SystemParameters.PrimaryScreenWidth;
             int nHieght = (int)SystemParameters.PrimaryScreenHeight;
@@ -72,22 +75,22 @@ namespace MyAgenda.MVVM.View
             firstDayOfWeek = myCI.DateTimeFormat.FirstDayOfWeek;
         }
 
-        void CurrentDayOutline()
+        void CurrentDayOutline(DateTime DT)
         {
-            if (IsEvenWeek())
+            if (IsEvenWeek(DT))
             {
                 ChangeWeekType();
             }
 
-            ShowCurrentDayMark();
+            ShowCurrentDayMark(DT);
 
-            ScrollToCurrentDay(findCurrentDayTrioIndex());
+            ScrollToCurrentDay(findCurrentDayTrioIndex(DT));
 
         }
 
-        private bool IsEvenWeek()
+        private bool IsEvenWeek(DateTime DT)
         {
-            return myCalendar.GetWeekOfYear(DateTime.Now, calendarWeekRule, firstDayOfWeek) % 2 == 0;
+            return myCalendar.GetWeekOfYear(DT, calendarWeekRule, firstDayOfWeek) % 2 == 0;
         }
         private void ChangeWeekType()
         {
@@ -99,7 +102,7 @@ namespace MyAgenda.MVVM.View
             FridayMark.Source = new BitmapImage(uriSource);
             SaturdayMark.Source = new BitmapImage(uriSource);
         }
-        private void ShowCurrentDayMark()
+        private void ShowCurrentDayMark(DateTime DT)
         {
             switch (DT.DayOfWeek)
             {
@@ -123,7 +126,7 @@ namespace MyAgenda.MVVM.View
                     break;
             }
         }
-        private int findCurrentDayTrioIndex()
+        private int findCurrentDayTrioIndex(DateTime DT)
         {
             for (int dayIndex = 0; dayIndex < week.Count - 1; dayIndex += 3)
             {

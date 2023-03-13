@@ -125,5 +125,38 @@ namespace MyAgenda
             else if (size == 1)
                 frame.Navigate(new MinPageView(datenow));
         }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MenuWindow.Visibility == Visibility.Visible)
+            {
+                MenuWindow.Visibility = Visibility.Collapsed;
+                ComboBoxTeacher.Visibility = Visibility.Collapsed;
+                ComboBoxStudent.Visibility = Visibility.Collapsed;
+            }
+            else MenuWindow.Visibility = Visibility.Visible;
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TeacherButton_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxTeacher.Visibility = Visibility.Visible;
+            ComboBoxStudent.Visibility = Visibility.Collapsed;
+        }
+
+        private void StudentButton_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxTeacher.Visibility = Visibility.Collapsed;
+            ComboBoxStudent.Visibility = Visibility.Visible;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

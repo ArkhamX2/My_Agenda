@@ -11,7 +11,7 @@
         >
 
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="34" />
             <RowDefinition Height="*" />
@@ -43,6 +43,87 @@
                Source="Resources\Images\strelka2obr.png"
             />
         </Button>
+
+        <Button x:Name="MenuButton"
+                    Margin="0,0,10,0"
+                    Width="30"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    HorizontalAlignment="Right"
+                    Click="MenuButton_Click"
+                    >
+            <Image Source="Resources\Images\Menu.png"                    
+                    >
+            </Image>
+        </Button>
+        <Border x:Name="MenuWindow" 
+                    Grid.Row="0"
+                    Panel.ZIndex="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Grid.RowSpan="2"
+                    BorderThickness="1"
+                    BorderBrush="Black"
+                    Background="White"
+                    Visibility="Collapsed"
+                    Margin="0,0,50,0"
+                >
+            <StackPanel>
+                <Button x:Name="EditButton"
+                        Margin="5"
+                        Click="EditButton_Click"
+                        >
+                <TextBlock Text="Редактировать"                           
+                           FontSize="30"
+                           >                    
+                </TextBlock>
+                </Button>
+                <Button x:Name="TeacherButton"
+                        Margin="5"
+                        Click="TeacherButton_Click"
+                        >
+                    <TextBlock Text="Преподователь"                           
+                           FontSize="30"
+                           >
+                    </TextBlock>
+                </Button>
+                <Button x:Name="StudentButton"
+                        Margin="5"
+                        Click="StudentButton_Click"
+                        >
+                    <TextBlock Text="Студент"                           
+                           FontSize="30"
+                           >
+                    </TextBlock>
+                </Button>
+
+                <ComboBox x:Name="ComboBoxTeacher" 
+                          Margin="5" 
+                          FontSize="30"
+                          Visibility="Collapsed"
+                          >                    
+                </ComboBox>
+
+                <ComboBox x:Name="ComboBoxStudent" 
+                          Margin="5" 
+                          FontSize="30"
+                          Visibility="Collapsed"
+                          >
+                </ComboBox>
+
+                <Button x:Name="SaveButton"
+                        Margin="5"
+                        Click="SaveButton_Click"
+                        >
+                    <TextBlock Text="Сохранить"                           
+                           FontSize="30"
+                           >
+                    </TextBlock>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
         <TextBox x:Name="Date"
                  Grid.Row="0" 
                  HorizontalAlignment="Center" 
@@ -65,5 +146,5 @@
                />
 
     </Grid>
-   
+
 </Window>

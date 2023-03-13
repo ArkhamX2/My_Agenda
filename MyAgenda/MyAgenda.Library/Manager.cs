@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using MyAgenda.Library.Data;
 using MyAgenda.Library.Model.Base;
 using MyAgenda.Library.Model.Schedule.Day;
@@ -15,11 +16,6 @@ namespace MyAgenda.Library
     public static class Manager
     {
         /// <summary>
-        /// Строка подключения.
-        /// </summary>
-        private static string _connectionString = "server=server;user=user;database=database;password=password;";
-
-        /// <summary>
         /// Запустить инициализацию базы данных.
         /// </summary>
         public static void Initialize()
@@ -32,7 +28,7 @@ namespace MyAgenda.Library
         /// </summary>
         private static void Migrate()
         {
-            var link = new MySqlConnection(_connectionString);
+            var link = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
             var query = string.Empty;
             var schemaList = new List<Schema>
             {

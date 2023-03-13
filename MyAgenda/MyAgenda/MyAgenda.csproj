@@ -69,47 +69,47 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\DayEditor.xaml">
+    <Page Include="MVVM\View\Editor\DayEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\EditorMode.xaml">
+    <Page Include="MVVM\View\Editor\EditorMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\FridayPageView.xaml">
+    <Page Include="MVVM\View\WeekDays\FridayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MainPageView.xaml">
+    <Page Include="MVVM\View\Window\MainPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MedPageView.xaml">
+    <Page Include="MVVM\View\Window\MedPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MinPageView.xaml">
+    <Page Include="MVVM\View\Window\MinPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MondayPageView.xaml">
+    <Page Include="MVVM\View\WeekDays\MondayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\SaturdayPageView.xaml">
+    <Page Include="MVVM\View\WeekDays\SaturdayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\ThursdayPageView.xaml">
+    <Page Include="MVVM\View\WeekDays\ThursdayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\TuesdayPageView.xaml">
+    <Page Include="MVVM\View\WeekDays\TuesdayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\WednesdayPageView.xaml">
+    <Page Include="MVVM\View\WeekDays\WednesdayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,37 +172,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\View\DayEditor.xaml.cs">
+    <Compile Include="MVVM\View\Editor\DayEditor.xaml.cs">
       <DependentUpon>DayEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\EditorMode.xaml.cs">
+    <Compile Include="MVVM\View\Editor\EditorMode.xaml.cs">
       <DependentUpon>EditorMode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\FridayPageView.xaml.cs">
+    <Compile Include="MVVM\View\WeekDays\FridayPageView.xaml.cs">
       <DependentUpon>FridayPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\MainPageView.xaml.cs">
+    <Compile Include="MVVM\View\Window\MainPageView.xaml.cs">
       <DependentUpon>MainPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\MedPageView.xaml.cs">
+    <Compile Include="MVVM\View\Window\MedPageView.xaml.cs">
       <DependentUpon>MedPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\MinPageView.xaml.cs">
+    <Compile Include="MVVM\View\Window\MinPageView.xaml.cs">
       <DependentUpon>MinPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\MondayPageView.xaml.cs">
+    <Compile Include="MVVM\View\WeekDays\MondayPageView.xaml.cs">
       <DependentUpon>MondayPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\SaturdayPageView.xaml.cs">
+    <Compile Include="MVVM\View\WeekDays\SaturdayPageView.xaml.cs">
       <DependentUpon>SaturdayPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\ThursdayPageView.xaml.cs">
+    <Compile Include="MVVM\View\WeekDays\ThursdayPageView.xaml.cs">
       <DependentUpon>ThursdayPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\TuesdayPageView.xaml.cs">
+    <Compile Include="MVVM\View\WeekDays\TuesdayPageView.xaml.cs">
       <DependentUpon>TuesdayPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\WednesdayPageView.xaml.cs">
+    <Compile Include="MVVM\View\WeekDays\WednesdayPageView.xaml.cs">
       <DependentUpon>WednesdayPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -231,6 +231,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="MVVM\View\Editor\EditWeekDays\" />
     <Folder Include="Resources\Fonts\" />
   </ItemGroup>
   <ItemGroup>

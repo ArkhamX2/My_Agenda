@@ -303,6 +303,109 @@ namespace MyAgenda.Library.Data
         }
 
         /// <summary>
+        /// Получить SQL запрос для обновления данных в таблице.
+        /// </summary>
+        /// <returns>Строка в формате SQL.</returns>
+        public string ToInsertQuery()
+        {
+            var result = string.Empty;
+
+            result += $"INSERT INTO `{Name}` ({ImplodeInsertColumnNames()})";
+            result += $" VALUES({ImplodeInsertColumnValues()})";
+            result += $" ON DUPLICATE KEY UPDATE {ImplodeInsertColumnLinks()}";
+
+            return result + ";";
+        }
+
+        /// <summary>
+        /// Выстроить в SQL запросе для обновления данных
+        /// названия столбцов, содержащих данные.
+        /// </summary>
+        /// <returns>Строка в формате SQL.</returns>
+        /// <exception cref="Exception"></exception>
+        private string ImplodeInsertColumnNames()
+        {
+            var result = string.Empty;
+
+            foreach (var column in ColumnList)
+            {
+                if (!column.HasData())
+                {
+                    if (!column.IsNullable)
+                    {
+                        throw new Exception();
+                    }
+
+                    continue;
+                }
+
+                result += $"`{column.Name}`, ";
+            }
+
+            // Удалить последние запятую и пробел и вернуть результат.
+            return result.Remove(result.Length - 2);
+        }
+
+        /// <summary>
+        /// Выстроить в SQL запросе для обновления данных
+        /// значения столбцов, содержащих данные.
+        /// </summary>
+        /// <returns>Строка в формате SQL.</returns>
+        /// <exception cref="Exception"></exception>
+        private string ImplodeInsertColumnValues()
+        {
+            var result = string.Empty;
+
+            foreach (var column in ColumnList)
+            {
+                if (!column.HasData())
+                {
+                    if (!column.IsNullable)
+                    {
+                        throw new Exception();
+                    }
+
+                    continue;
+                }
+
+                result += $"'{column.Data}', ";
+            }
+
+            // Удалить последние запятую и пробел и вернуть результат.
+            return result.Remove(result.Length - 2);
+        }
+
+        /// <summary>
+        /// Выстроить в SQL запросе для обновления данных
+        /// названия столбцов, содержащих данные, вместе с ссылкой
+        /// на привязянное к нему значение.
+        /// </summary>
+        /// <returns>Строка в формате SQL.</returns>
+        /// <exception cref="Exception"></exception>
+        private string ImplodeInsertColumnLinks()
+        {
+            var result = string.Empty;
+
+            foreach (var column in ColumnList)
+            {
+                if (!column.HasData())
+                {
+                    if (!column.IsNullable)
+                    {
+                        throw new Exception();
+                    }
+
+                    continue;
+                }
+
+                result += $"`{column.Name}` = VALUES(`{column.Name}`), ";
+            }
+
+            // Удалить последние запятую и пробел и вернуть результат.
+            return result.Remove(result.Length - 2);
+        }
+
+        /// <summary>
         /// Получить представление в виде строки.
         /// Используется формат SQL.
         /// </summary>

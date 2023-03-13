@@ -1,0 +1,71 @@
+﻿<Window x:Class="MyAgenda.MVVM.View.Editor.GroupEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyAgenda.MVVM.View.Editor"
+        mc:Ignorable="d"
+        Title="GroupEditor" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" 
+                 Grid.Column="0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="210"
+                 Height="24"
+                 Margin="10,15,0,0"
+                 FontSize="16"
+                 Text="Группа"/>
+        
+        <Button Grid.Row="0"
+                Grid.Column="0"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                Height="24"
+                Width="90"
+                Margin="10,0,0,10"
+                FontSize="14"
+                Content="Добавить"/>
+        <Button Grid.Row="0"
+                Grid.Column="0"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                Height="24"
+                Width="90"
+                Margin="120,0,60,10"
+                FontSize="14"
+                Content="Назад"/>
+        <ListBox Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 Background="Azure"
+                 Margin="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="GroupNum"
+                                   Grid.Column="0"
+                                   Margin="5"
+                                   FontSize="14"
+                                   Text=""/>
+                        <TextBlock x:Name="GroupName"
+                                   Grid.Column="1"/>
+                        <Image x:Name="DeleteGroup"
+                               Source="/Resources/Images/Delete.png"
+                               Margin="5"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+    </Grid>
+</Window>

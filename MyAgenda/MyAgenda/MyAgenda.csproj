@@ -77,6 +77,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\Editor\GroupEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Editor\TeacherEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\WeekDays\FridayPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +186,12 @@
     <Compile Include="MVVM\View\Editor\EditorMode.xaml.cs">
       <DependentUpon>EditorMode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\Editor\GroupEditor.xaml.cs">
+      <DependentUpon>GroupEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Editor\TeacherEditor.xaml.cs">
+      <DependentUpon>TeacherEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\WeekDays\FridayPageView.xaml.cs">
       <DependentUpon>FridayPageView.xaml</DependentUpon>
     </Compile>
@@ -254,6 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\strelka2obr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -310,6 +310,8 @@ namespace MyAgenda.Library.Data
         {
             var result = string.Empty;
 
+            // TODO: Пересмотреть Schema.ToInsertQuery().
+
             result += $"INSERT INTO `{Name}` ({ImplodeInsertColumnNames()})";
             result += $" VALUES({ImplodeInsertColumnValues()})";
             result += $" ON DUPLICATE KEY UPDATE {ImplodeInsertColumnLinks()}";

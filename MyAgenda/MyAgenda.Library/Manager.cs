@@ -13,11 +13,14 @@ namespace MyAgenda.Library
 {
     /// <summary>
     /// Менеджер.
+    /// TODO: WIP.
+    /// TODO: Добавить провайдеры и спрятать реализацию.
     /// </summary>
     public static class Manager
     {
         /// <summary>
         /// Запустить инициализацию базы данных.
+        /// TODO: Так ли нужна эта инициализация в Manager.Initialize()?
         /// </summary>
         public static void Initialize()
         {
@@ -31,6 +34,7 @@ namespace MyAgenda.Library
 
         /// <summary>
         /// Установить подключение.
+        /// TODO: Держать открытым подключение в Manager.OpenConnection()?
         /// </summary>
         /// <returns>Подключение.</returns>
         private static MySqlConnection OpenConnection()
@@ -40,6 +44,8 @@ namespace MyAgenda.Library
                 _connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
             }
 
+            // Пингуем подключение на предмет обрыва связи.
+            // Создает небольшую задержку.
             if (!_connection.Ping())
             {
                 _connection.Close();
@@ -53,20 +59,19 @@ namespace MyAgenda.Library
         /// Закрыть подключение.
         /// </summary>
         /// <returns>Подключение.</returns>
-        private static MySqlConnection CloseConnection()
+        private static void CloseConnection()
         {
             if (_connection == null)
             {
-                _connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
+                return;
             }
 
             _connection.Close();
-
-            return _connection;
         }
 
         /// <summary>
         /// Запустить миграции и создать таблицы для сущностей.
+        /// TODO: Сделать миграции по-человечески.
         /// </summary>
         private static void Migrate()
         {
@@ -84,6 +89,7 @@ namespace MyAgenda.Library
                 GroupWeekSchedule.Schema
             };
 
+            // TODO: Добавить QueryBuilder?
             foreach (var schema in schemaList)
             {
                 query += schema.ToCreateQuery();
@@ -167,6 +173,7 @@ namespace MyAgenda.Library
 
         /// <summary>
         /// Сохранить учебный день для группы.
+        /// TODO: Manager.SetGroupDaySchedule() не будет использоваться.
         /// </summary>
         /// <param name="day">Учебный день для группы.</param>
         public static void SetGroupDaySchedule(GroupDaySchedule day)
@@ -195,6 +202,7 @@ namespace MyAgenda.Library
 
         /// <summary>
         /// Сохранить учебный день для группы.
+        /// TODO: Переделать ужас в Manager.SetGroupWeekSchedule().
         /// </summary>
         /// <param name="week">Учебный день для группы.</param>
         public static void SetGroupWeekSchedule(GroupWeekSchedule week)
